@@ -63,7 +63,7 @@ const ShareProjectForm = () => {
         </>
       ) : (
         <>
-          <h4>Vous êtes maire ou président d&apos;intercommunalité ?</h4>
+          <h4>Vous êtes maire ou président d&apos;intercommunalité&nbsp;?</h4>
           <p className="fr-text--lead fr-mb-8v">
             Ce formulaire vous permet de renseigner les projets de votre
             territoire, en quelques clics.

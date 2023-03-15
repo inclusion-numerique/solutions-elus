@@ -4,7 +4,7 @@ import styles from '@sde/web/app/(public)/projets/styles.module.css'
 
 export const ProjectListCta = ({ style }: { style?: CSSProperties }) => (
     <li key="cta" style={style}>
-      <div className={`${styles.legacyProjectCard}`} style={{ minHeight: 0 }}>
+      <div className={`${styles.projectCard}`} style={{ minHeight: 0 }}>
         <div
           className="fr-p-8v"
           style={{

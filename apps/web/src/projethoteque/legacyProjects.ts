@@ -1,4 +1,3 @@
-// TODO MAP THIS WITH OLD NAMES
 import { projethotequeUrl } from '@sde/web/projethoteque/projethoteque'
 import { Category } from '@sde/web/anctProjects'
 

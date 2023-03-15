@@ -38,11 +38,13 @@ export const Showcase = ({ projects }: { projects: ShowcaseProject[] }) => {
             <button
               type='button'
               className='fr-btn fr-btn--secondary fr-icon-arrow-left-line'
+              aria-label="Voir le projet précédent"
               onClick={previous}
             />
             <button
               type='button'
               className='fr-btn fr-btn--secondary fr-icon-arrow-right-line'
+              aria-label="Voir le projet suivant"
               onClick={next}
             />
           </div>

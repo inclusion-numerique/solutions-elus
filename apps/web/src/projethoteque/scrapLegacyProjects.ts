@@ -31,13 +31,13 @@ export const scrapLegacyProjects = async ({
   }
 
   const [projects, count] = await Promise.all([
-    prismaClient.legacyProject.findMany({
+    prismaClient.project.findMany({
       where,
       take: limit + 1, // get an extra item at the end which we'll use as next cursor
       cursor: cursor ? { id: cursor } : undefined,
       orderBy: { id: 'asc' },
     }),
-    prismaClient.legacyProject.count({
+    prismaClient.project.count({
       where,
     }),
   ])

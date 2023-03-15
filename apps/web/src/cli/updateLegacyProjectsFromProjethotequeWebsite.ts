@@ -12,8 +12,8 @@ const updateLegacyProjectsFromProjethotequeWebsite = async () => {
   }
   console.log('💾 Updating database')
   await prismaClient.$transaction([
-    prismaClient.legacyProject.deleteMany(),
-    prismaClient.legacyProject.createMany({
+    prismaClient.project.deleteMany(),
+    prismaClient.project.createMany({
       skipDuplicates: false,
       data: projectsList.projectItems,
     }),
@@ -37,7 +37,7 @@ const updateLegacyProjectsFromProjethotequeWebsite = async () => {
 
   await Promise.all(
     showcases.map((slug, showcase) =>
-      prismaClient.legacyProject.update({
+      prismaClient.project.update({
         data: {
           showcase,
         },

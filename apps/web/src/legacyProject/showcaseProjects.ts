@@ -1,7 +1,7 @@
 import { prismaClient } from '@sde/web/prismaClient'
 
 export const getShowcaseProjects = () =>
-  prismaClient.legacyProject.findMany({
+  prismaClient.project.findMany({
     where: {
       showcase: {
         not: null,

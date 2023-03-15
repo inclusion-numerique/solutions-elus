@@ -1,3 +1,4 @@
+/* eslint react/jsx-props-no-spreading: 0 */
 import { District } from '@sde/web/projethoteque/legacyProjects'
 import { useDistrictFilters } from '@sde/web/legacyProject/projectFiltersStore'
 

@@ -2,16 +2,13 @@
 
 import { ProjectsFilters } from '@sde/web/app/(public)/projets/ProjectsFilters'
 import { ProjectsCategories } from '@sde/web/app/(public)/projets/ProjectsCategories'
-import { ProjectListItem } from '@sde/web/legacyProject/projectsList'
 import { ProjectsList } from '@sde/web/app/(public)/projets/ProjectsList'
-import {
-  useCategoriesFilters,
-  useDistrictFilters,
-} from '@sde/web/legacyProject/projectFiltersStore'
-import { filterProjects } from '@sde/web/legacyProject/filterProjectList'
-import { District } from '@sde/web/projethoteque/legacyProjects'
 import { Category } from '@sde/web/anctProjects'
 import { useOnDiff } from '@sde/web/hooks/useOnDiff'
+import { useCategoriesFilters, useDistrictFilters } from '@sde/web/legacyProject/projectFiltersStore'
+import { filterProjects } from '@sde/web/legacyProject/filterProjectList'
+import { ProjectListItem } from '@sde/web/legacyProject/projectsList'
+import { District } from '@sde/web/projethoteque/legacyProjects'
 
 export const ProjectsListContainer = ({
   projects,

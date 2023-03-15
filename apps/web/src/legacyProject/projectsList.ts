@@ -1,7 +1,7 @@
 import { prismaClient } from '@sde/web/prismaClient'
 
 export const getProjectsList = () =>
-  prismaClient.legacyProject.findMany({
+  prismaClient.project.findMany({
     select: {
       program: true,
       categories: true,

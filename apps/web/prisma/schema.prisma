@@ -101,9 +101,9 @@ model Attachment {
   projectSubmission   ShareProjectFormSubmission  @relation(fields: [projectSubmissionId], references: [id])
 }
 
-model LegacyProject {
+model Project {
   id               String   @id
-  // Display the project in the showcase? If yes, its order in the showcase
+  // If showcase is set, the project will appear on home page shocases, ordered by showcase integer value
   showcase         Int?
   pageIndex        Int
   itemIndexInPage  Int
