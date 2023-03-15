@@ -21,7 +21,7 @@ export const ProjectsFilters = () => {
           <ProjectMap />
           <span className="fr-ml-6v">
             <ProjectFilterResetButton
-              label={'Voir toutes les régions'}
+              label="Voir toutes les régions"
               hidden={isEmpty}
               onClick={reset}
             />

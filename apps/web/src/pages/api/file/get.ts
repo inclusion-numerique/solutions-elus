@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { createSignedGetUrl } from '@sde/web/server/createSignedUrl'
+import { ServerWebAppConfig } from '@sde/web/webAppConfig'
 
 export type AttachmentGetApiResponse = { url: string }
 
@@ -14,13 +15,14 @@ const get = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const { url } = await createSignedGetUrl({
       key,
+      bucket: ServerWebAppConfig.S3.documentsBucket
     })
 
     res.status(200).json({ url })
-  } catch (err) {
+  } catch (error) {
     // TODO SENTRY
-    console.error(err)
-    res.status(400).json({ error: err as string })
+    console.error(error)
+    res.status(400).json({ error: error as string })
   }
 }
 export default get

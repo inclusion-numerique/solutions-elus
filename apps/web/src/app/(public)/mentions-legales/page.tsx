@@ -1,7 +1,6 @@
 import { PublicWebAppConfig } from '@sde/web/webAppConfig'
 
-const LegalPage = () => {
-  return (
+const LegalPage = () => (
     <div className="fr-container landing-main-container fr-my-8w">
       <h1>Mentions légales</h1>
       <p>
@@ -88,5 +87,4 @@ const LegalPage = () => {
       </p>
     </div>
   )
-}
 export default LegalPage

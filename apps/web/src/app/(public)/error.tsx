@@ -1,4 +1,5 @@
 'use client'
+
 import { useEffect } from 'react'
 
 const PublicError = ({ error, reset }: { error: Error; reset: () => void }) => {

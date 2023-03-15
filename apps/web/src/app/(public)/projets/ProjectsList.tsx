@@ -1,4 +1,5 @@
 'use client'
+
 import styles from '@sde/web/app/(public)/projets/styles.module.css'
 import { ProjectCards } from '@sde/web/app/(public)/projets/ProjectCards'
 import { Spinner } from '@sde/web/ui/Spinner'

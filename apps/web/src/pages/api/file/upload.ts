@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { createSignedUploadUrl } from '@sde/web/server/createSignedUrl'
+import { ServerWebAppConfig } from '@sde/web/webAppConfig'
 
 export type AttachmentUploadApiResponse = { url: string; key: string }
 
@@ -19,13 +20,14 @@ const upload = async (
       name,
       type,
       directory,
+      bucket: ServerWebAppConfig.S3.documentsBucket
     })
 
     res.status(200).json({ url, key })
-  } catch (err) {
+  } catch (error) {
     // TODO SENTRY
-    console.error(err)
-    res.status(400).json({ error: err as string })
+    console.error(error)
+    res.status(400).json({ error: error as string })
   }
 }
 export default upload

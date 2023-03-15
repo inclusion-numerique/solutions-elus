@@ -2,9 +2,7 @@
 import { projethotequeUrl } from '@sde/web/projethoteque/projethoteque'
 import { Category } from '@sde/web/anctProjects'
 
-export const categoryToLegacyCategory = (category: string): string => {
-  return category
-}
+export const categoryToLegacyCategory = (category: string): string => category
 
 const legacyCategories = [
   'Accès au numérique',

@@ -5,8 +5,7 @@ import { SessionUser } from '@sde/web/auth/sessionUser'
 import { getUserDisplayName } from '@sde/web/utils/user'
 import { dashboardRootPath } from '@sde/web/dashboard/dashboard'
 
-export const UserMenu = ({ user }: { user: SessionUser }) => {
-  return (
+export const UserMenu = ({ user }: { user: SessionUser }) => (
     <Link
       href={dashboardRootPath}
       target="_self"
@@ -15,4 +14,3 @@ export const UserMenu = ({ user }: { user: SessionUser }) => {
       {getUserDisplayName(user)}
     </Link>
   )
-}

@@ -1,7 +1,7 @@
 /// <reference types="jest" />
 import { createProjectRecord, uploadAttachments } from '@sde/web/grist/grist'
-import { createReadStream } from 'fs'
-import { resolve } from 'path'
+import { createReadStream } from 'node:fs'
+import { resolve } from 'node:path'
 import FormData from 'form-data'
 import Joi from 'joi'
 

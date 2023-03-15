@@ -5,7 +5,7 @@ import { Showcase } from '@sde/web/app/(public)/Showcase'
 import { getShowcaseProjects } from '@sde/web/legacyProject/showcaseProjects'
 
 // Revalidate this page every day
-export const revalidate = 86400
+export const revalidate = 86_400
 
 export default async function HomePage() {
   const projects = await getShowcaseProjects()
@@ -34,7 +34,7 @@ export default async function HomePage() {
                 transition écologique de nos territoires. Ensemble, partageons
                 les solutions. »
               </p>
-              <p className={`fr-text fr-mb-20v fr-text--bold`}>
+              <p className="fr-text fr-mb-20v fr-text--bold">
                 Christophe Béchu,
                 <br />
                 Ministre de la Transition écologique <br />
@@ -42,7 +42,7 @@ export default async function HomePage() {
               </p>
             </div>
 
-            <div className={`fr-hidden fr-unhidden-md fr-pl-4w`}>
+            <div className="fr-hidden fr-unhidden-md fr-pl-4w">
               <div
                 title="Photographie d'un village français"
                 className={`${styles.asideCover}`}

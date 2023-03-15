@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import { PublicHeaderNav } from '@sde/web/app/(public)/PublicHeaderNav'
 
-const PublicHeader = () => {
-  return (
+const PublicHeader = () => (
     <header role="banner" className="fr-header">
       <div className="fr-header__body">
         <div className="fr-container">
@@ -67,7 +66,7 @@ const PublicHeader = () => {
             Fermer
           </button>
           <div className="fr-header__menu-links">
-            <ul className="fr-btns-group" data-fr-js-header-links="true"></ul>
+            <ul className="fr-btns-group" data-fr-js-header-links="true" />
           </div>
           <nav
             className="fr-nav"
@@ -116,6 +115,5 @@ const PublicHeader = () => {
       </div>
     </header>
   )
-}
 
 export default PublicHeader

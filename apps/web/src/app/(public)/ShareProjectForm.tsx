@@ -1,28 +1,29 @@
 'use client'
+
 import { Controller, useForm } from 'react-hook-form'
 import { trpc } from '@sde/web/trpc'
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod'
 import { withTrpc } from '@sde/web/withTrpc'
 import {
   domainOptions,
-  ProjectData,
-  ProjectDataValidation,
-} from '@sde/web/project/project'
+  ShareProjectData,
+  ShareProjectFormDataValidation,
+} from '@sde/web/shareProject/project'
 import { InputFormField } from '@sde/web/form/InputFormField'
 import { useMemo } from 'react'
 import AttachmentUploader from '@sde/web/attachments/AttachmentUploader'
-import { generateReference } from '@sde/web/project/generateReference'
+import { generateReference } from '@sde/web/shareProject/generateReference'
 import { RadioFormField } from '@sde/web/form/RadioFormField'
 import { CommunitySearchFormField } from '@sde/web/form/CommunitySearchFormField'
 import Link from 'next/link'
 
-const ProjectForm = () => {
+const ShareProjectForm = () => {
   const createProject = trpc.createProject.useMutation()
   // Unique client side reference for this forms
   const reference = useMemo(generateReference, [])
 
-  const form = useForm<ProjectData>({
-    resolver: zodResolver(ProjectDataValidation),
+  const form = useForm<ShareProjectData>({
+    resolver: zodResolver(ShareProjectFormDataValidation),
     reValidateMode: 'onChange',
     mode: 'all',
     defaultValues: {
@@ -32,10 +33,10 @@ const ProjectForm = () => {
   })
   const { handleSubmit, control } = form
 
-  const onSubmit = async (data: ProjectData) => {
+  const onSubmit = async (data: ShareProjectData) => {
     try {
       await createProject.mutateAsync(data)
-    } catch (err) {
+    } catch {
       // Error message will be in hook result
     }
   }
@@ -198,4 +199,4 @@ const ProjectForm = () => {
   )
 }
 
-export default withTrpc(ProjectForm)
+export default withTrpc(ShareProjectForm)

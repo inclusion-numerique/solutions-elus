@@ -4,12 +4,12 @@ import Link from 'next/link'
 import { dashboardRootPath } from '@sde/web/dashboard/dashboard'
 import { ViewAttachmentButton } from '@sde/web/app/dashboard/(projets)/[reference]/ViewAttachmentButton'
 
-const ProjectPage = async ({
+const ShareProjectSubmissionPage = async ({
   params: { reference },
 }: {
   params: { reference: string }
 }) => {
-  const project = await prismaClient.project.findUnique({
+  const project = await prismaClient.shareProjectFormSubmission.findUnique({
     where: { reference },
     include: { community: true, attachments: true },
   })
@@ -194,4 +194,4 @@ const ProjectPage = async ({
     </>
   )
 }
-export default ProjectPage
+export default ShareProjectSubmissionPage

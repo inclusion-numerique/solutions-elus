@@ -12,8 +12,7 @@ const ErrorPage = async ({
   searchParams: { error } = {},
 }: {
   searchParams?: { error?: string }
-}) => {
-  return (
+}) => (
     <main role="main" id="content">
       <div className="fr-container fr-container--fluid fr-mb-md-14v">
         <div className="fr-grid-row fr-grid-row-gutters fr-grid-row--center">
@@ -53,6 +52,5 @@ const ErrorPage = async ({
       </div>
     </main>
   )
-}
 
 export default ErrorPage

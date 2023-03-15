@@ -4,7 +4,7 @@ import { ChangeEventHandler, useDeferredValue, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Spinner } from '@sde/web/ui/Spinner'
 import { Etablissement, searchCommunity, SirenCommunitySearchResponse } from '@sde/web/siren/siren'
-import { ProjectData } from '@sde/web/project/project'
+import { ShareProjectData } from '@sde/web/shareProject/project'
 import styles from './CommunitySearchBar.module.css'
 
 export const CommunitySearchBar = ({
@@ -16,7 +16,7 @@ export const CommunitySearchBar = ({
   id?: string
   disabled?: boolean
   placeholder?: string
-  onSelect: (value: ProjectData['community']) => void | Promise<void>
+  onSelect: (value: ShareProjectData['community']) => void | Promise<void>
 }) => {
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -36,7 +36,7 @@ export const CommunitySearchBar = ({
   }
 
   const onClick = ({ id, name, text, scale, zipcodes }: Etablissement) => {
-    const value: ProjectData['community'] = {
+    const value: ShareProjectData['community'] = {
       id,
       name,
       text,

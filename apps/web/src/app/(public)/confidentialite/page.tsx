@@ -1,7 +1,6 @@
 import { PublicWebAppConfig } from '@sde/web/webAppConfig'
 
-const ConfidentialityPage = () => {
-  return (
+const ConfidentialityPage = () => (
     <div className="fr-container landing-main-container fr-my-8w">
       <div className="fr-grid-row fr-grid-row--center">
         <div className="fr-col-md-8">
@@ -221,36 +220,36 @@ const ConfidentialityPage = () => {
                 <tr>
                   <th>Prénom/nom</th>
                   <td>Oui</td>
-                  <td></td>
-                  <td></td>
+                  <td />
+                  <td />
                   <td>Oui</td>
                 </tr>
                 <tr>
                   <th>Structure</th>
                   <td>Oui</td>
-                  <td></td>
-                  <td></td>
+                  <td />
+                  <td />
                   <td>Optionnel</td>
                 </tr>
                 <tr>
                   <th>Fonction</th>
                   <td>Oui</td>
-                  <td></td>
-                  <td></td>
+                  <td />
+                  <td />
                   <td>Optionnel</td>
                 </tr>
                 <tr>
                   <th>Adresse</th>
                   <td>Oui</td>
-                  <td></td>
-                  <td></td>
+                  <td />
+                  <td />
                   <td>Optionnel</td>
                 </tr>
                 <tr>
                   <th>Téléphone</th>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                  <td />
+                  <td />
+                  <td />
                   <td>Optionnel</td>
                 </tr>
                 <tr>
@@ -312,7 +311,7 @@ const ConfidentialityPage = () => {
               l’internaute sur d’autres sites
             </li>
           </ul>
-          <p></p>
+          <p />
 
           <p>
             Vous pouvez choisir de ne pas transmettre d&apos;informations à
@@ -361,7 +360,7 @@ const ConfidentialityPage = () => {
               </a>
             </li>
           </ul>
-          <p></p>
+          <p />
           <h3>Je contribue à enrichir vos données, puis-je y accéder ?</h3>
 
           <p>
@@ -460,5 +459,4 @@ const ConfidentialityPage = () => {
       </div>
     </div>
   )
-}
 export default ConfidentialityPage

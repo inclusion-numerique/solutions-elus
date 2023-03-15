@@ -39,7 +39,7 @@ const updateLegacyProjectsFromProjethotequeWebsite = async () => {
     showcases.map((slug, showcase) =>
       prismaClient.legacyProject.update({
         data: {
-          showcase: showcase,
+          showcase,
         },
         where: {
           slug,
@@ -57,7 +57,7 @@ updateLegacyProjectsFromProjethotequeWebsite()
   .then(() => {
     process.exit(0)
   })
-  .catch((err) => {
-    console.error(err)
+  .catch((error) => {
+    console.error(error)
     process.exit(1)
   })

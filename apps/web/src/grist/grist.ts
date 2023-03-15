@@ -28,10 +28,10 @@ export const uploadAttachments = async (upload: FormData): Promise<number[]> =>
         }
 
         let body = ''
-        response.on('data', function (chunk) {
+        response.on('data', (chunk) => {
           body += chunk
         })
-        response.on('end', function () {
+        response.on('end', () => {
           resolve(JSON.parse(body))
         })
       },
@@ -50,9 +50,9 @@ export const createProjectRecord = async (data: unknown): Promise<void> => {
       },
     })
     console.log('RESULT', result)
-  } catch (err) {
+  } catch (error) {
     // TODO Sentry / Email sur Mattermost
     // TODO Log data in case of Grist failure
-    console.log('FAIL', err)
+    console.log('FAIL', error)
   }
 }

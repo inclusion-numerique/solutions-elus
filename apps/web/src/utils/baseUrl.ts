@@ -13,6 +13,4 @@ export const getServerBaseUrl = () => {
   return `http://localhost:${process.env.PORT ?? 3000}`
 }
 
-export const getServerUrl = (path: string) => {
-  return `${getServerBaseUrl()}${path}`
-}
+export const getServerUrl = (path: string) => `${getServerBaseUrl()}${path}`

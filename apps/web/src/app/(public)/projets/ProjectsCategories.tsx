@@ -1,4 +1,5 @@
 'use client'
+
 import { categories } from '@sde/web/anctProjects'
 import { ProjectFilterResetButton } from '@sde/web/app/(public)/projets/ProjectFilterResetButton'
 import { useCategoriesFilters } from '@sde/web/legacyProject/projectFiltersStore'
@@ -32,7 +33,7 @@ export const ProjectsCategories = () => {
       <br />
       <div className="fr-mt-4v">
         <ProjectFilterResetButton
-          label={'Voir toutes les thématiques'}
+          label="Voir toutes les thématiques"
           onClick={reset}
           hidden={isEmpty}
         />

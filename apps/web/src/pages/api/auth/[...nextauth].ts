@@ -20,9 +20,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    signIn: ({ user }) => {
-      return !!user.email?.endsWith('@anct.gouv.fr')
-    },
+    signIn: ({ user }) => !!user.email?.endsWith('@anct.gouv.fr'),
 
     session: ({ session, user }) => {
       session.user.id = user.id

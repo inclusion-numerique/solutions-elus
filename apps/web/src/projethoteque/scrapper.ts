@@ -20,7 +20,7 @@ export const listProjects = async () => {
   if (!lastPageLink) {
     throw new Error('Cannot find last page link')
   }
-  const lastPageNumber = parseInt(lastPageLink.split('=').at(-1) ?? '')
+  const lastPageNumber = Number.parseInt(lastPageLink.split('=').at(-1) ?? '')
   if (!lastPageNumber) {
     throw new Error('Cannot parse last page number')
   }
@@ -59,15 +59,13 @@ const getProjectListPageDocument = (
   )
 }
 
-const parseProjectItems = (projectPage: HTMLElement, pageIndex: number) => {
-  return Promise.all(
+const parseProjectItems = (projectPage: HTMLElement, pageIndex: number) => Promise.all(
     projectPage
       .querySelectorAll('.entity-list-item.project-item')
       .map((projectItem, itemIndex) =>
         scrapProjectItem(projectItem, pageIndex, itemIndex),
       ),
   )
-}
 const scrapProjectItem = async (
   projectElement: HTMLElement,
   pageIndex: number,

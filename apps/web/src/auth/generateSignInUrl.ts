@@ -1,3 +1,1 @@
-export const generateSignInUrl = (callbackPath: string) => {
-  return `/api/auth/signin?callbackUrl=${encodeURIComponent(callbackPath)}`
-}
+export const generateSignInUrl = (callbackPath: string) => `/api/auth/signin?callbackUrl=${encodeURIComponent(callbackPath)}`

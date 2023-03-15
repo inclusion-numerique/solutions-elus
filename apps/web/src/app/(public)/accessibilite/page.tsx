@@ -1,7 +1,6 @@
 import { PublicWebAppConfig } from '@sde/web/webAppConfig'
 
-const AccessibilityStatementPage = () => {
-  return (
+const AccessibilityStatementPage = () => (
     <div className="fr-container landing-main-container fr-my-8w">
       <h1>Déclaration d’accessibilité</h1>
       <p>
@@ -88,5 +87,4 @@ const AccessibilityStatementPage = () => {
       </p>
     </div>
   )
-}
 export default AccessibilityStatementPage

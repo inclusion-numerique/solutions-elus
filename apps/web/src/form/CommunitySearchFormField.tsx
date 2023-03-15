@@ -2,7 +2,7 @@ import { HTMLInputTypeAttribute } from 'react'
 import { Control, Controller, FieldValues } from 'react-hook-form'
 import { FieldPath } from 'react-hook-form/dist/types/path'
 import { CommunitySearchBar } from '@sde/web/form/CommunitySearchBar'
-import { ProjectData } from '@sde/web/project/project'
+import { ShareProjectData } from '@sde/web/shareProject/project'
 
 // View design options here https://www.systeme-de-design.gouv.fr/elements-d-interface/composants/champ-de-saisie
 export function CommunitySearchFormField<T extends FieldValues>({
@@ -31,7 +31,7 @@ export function CommunitySearchFormField<T extends FieldValues>({
         field: { onChange, onBlur, value, name, ref },
         fieldState: { invalid, isTouched, isDirty, error },
       }) => {
-        const community = value as ProjectData['community']
+        const community = value as ShareProjectData['community']
 
         return (
           <div

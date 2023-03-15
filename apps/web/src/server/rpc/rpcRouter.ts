@@ -1,7 +1,7 @@
 import { initTRPC, TRPCError } from '@trpc/server'
 import { RpcContext } from '@sde/web/server/rpc/rpcContext'
 import { SessionUser } from '@sde/web/auth/sessionUser'
-import { ProjectDataValidation } from '@sde/web/project/project'
+import { ShareProjectFormDataValidation } from '@sde/web/shareProject/project'
 import { prismaClient } from '@sde/web/prismaClient'
 import { v4 } from 'uuid'
 import z from 'zod'
@@ -25,7 +25,7 @@ const enforceUserIsLoggedIn = (
 
 export const appRouter = t.router({
   createProject: t.procedure
-    .input(ProjectDataValidation)
+    .input(ShareProjectFormDataValidation)
     .mutation(
       async ({
         input: {
@@ -45,7 +45,7 @@ export const appRouter = t.router({
         },
       }) => {
         const id = v4()
-        const project = await prismaClient.project.create({
+        const project = await prismaClient.shareProjectFormSubmission.create({
           data: {
             id,
             reference,
@@ -82,14 +82,12 @@ export const appRouter = t.router({
         cursor: z.string().optional(),
       }),
     )
-    .query(async ({ input: { districts, categories, cursor, limit = 20 } }) => {
-      return scrapLegacyProjects({
+    .query(async ({ input: { districts, categories, cursor, limit = 20 } }) => scrapLegacyProjects({
         activeCategoriesFilters: categories as Category[],
         activeDistrictsFilters: districts as District[],
         limit,
         cursor,
-      })
-    }),
+      })),
 })
 // export type definition of API
 export type AppRouter = typeof appRouter

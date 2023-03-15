@@ -1,7 +1,6 @@
 import { Spinner } from '@sde/web/ui/Spinner'
 
-const PrivateLoading = () => {
-  return (
+const PrivateLoading = () => (
     <div
       style={{
         display: 'flex',
@@ -15,6 +14,5 @@ const PrivateLoading = () => {
       <Spinner />
     </div>
   )
-}
 
 export default PrivateLoading

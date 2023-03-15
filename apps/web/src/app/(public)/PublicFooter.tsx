@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 
-const PublicFooter = () => {
-  return (
+const PublicFooter = () => (
     <footer id="footer" role="contentinfo" className="fr-footer">
       <div className="fr-container">
         <div className="fr-footer__body fr-footer__body--operator">
@@ -134,6 +133,5 @@ const PublicFooter = () => {
       </div>
     </footer>
   )
-}
 
 export default PublicFooter

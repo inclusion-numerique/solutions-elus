@@ -5,6 +5,4 @@ export const useCssProperty = (propertyName: string): string => {
   return property.propertyValue
 }
 
-export const useCssProperties = (propertyNames: string[]): string[] => {
-  return propertyNames.map(useCssProperty)
-}
+export const useCssProperties = (propertyNames: string[]): string[] => propertyNames.map(useCssProperty)

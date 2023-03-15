@@ -3,9 +3,9 @@ import { stringify } from 'csv-stringify'
 import { sessionTokenFromCookies } from '@sde/web/security/authentication'
 import { sessionUserFromSessionToken } from '@sde/web/auth/sessionUserFromSessionToken'
 import {
-  generateProjectsCsvData,
-  projectsCsvFilename,
-} from '@sde/web/project/projectsDownload'
+  generateShareProjectSubmissionsData,
+  shareProjectSubmissionsCsvFilename,
+} from '@sde/web/shareProject/shareProjectSubmissionsDownload'
 
 const download: NextApiHandler = async (req, res) => {
   if (req.method !== 'GET') {
@@ -19,14 +19,14 @@ const download: NextApiHandler = async (req, res) => {
     return res.status(401).send('Unauthenticated')
   }
 
-  const data = await generateProjectsCsvData()
+  const data = await generateShareProjectSubmissionsData()
   const csv = stringify(data)
 
   res
     .setHeader('Content-Type', 'text/csv')
     .setHeader(
       'Content-Disposition',
-      `attachment;filename=${projectsCsvFilename()}`,
+      `attachment;filename=${shareProjectSubmissionsCsvFilename()}`,
     )
     .send(csv)
 }

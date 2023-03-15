@@ -58,8 +58,7 @@ export const ProjectCards = ({
 }: {
   projects: ProjectListItem[]
   displayCta?: boolean
-}) => {
-  return (
+}) => (
     <>
       {projects.map((project, i) => (
         <LegacyProjectCard key={project.id} project={project} />
@@ -67,4 +66,3 @@ export const ProjectCards = ({
       {displayCta ? <ProjectListCta key="cta" /> : null}
     </>
   )
-}

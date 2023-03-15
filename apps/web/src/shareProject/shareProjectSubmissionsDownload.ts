@@ -2,7 +2,7 @@ import { prismaClient } from '@sde/web/prismaClient'
 import { getServerUrl } from '@sde/web/utils/baseUrl'
 import { dashboardRootPath } from '@sde/web/dashboard/dashboard'
 
-export const projectsCsvFilename = () =>
+export const shareProjectSubmissionsCsvFilename = () =>
   `Solutions d'élus - ${new Date().toISOString().slice(0, 10)}.csv`
 
 const csvHeaders = [
@@ -25,8 +25,8 @@ const csvHeaders = [
   'Lien',
 ]
 
-export const generateProjectsCsvData = async (): Promise<string[][]> => {
-  const rows = await prismaClient.project.findMany({
+export const generateShareProjectSubmissionsData = async (): Promise<string[][]> => {
+  const rows = await prismaClient.shareProjectFormSubmission.findMany({
     include: { attachments: true, community: true },
   })
 

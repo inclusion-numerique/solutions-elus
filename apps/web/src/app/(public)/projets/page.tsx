@@ -28,7 +28,7 @@ const ProjectsPage = async ({
           style={{ position: 'relative' }}
         >
           <div className="fr-grid-row fr-grid-row--center">
-            <div className={`fr-col-12 fr-col-md-10 fr-col-lg-8`}>
+            <div className="fr-col-12 fr-col-md-10 fr-col-lg-8">
               <h1
                 className={`fr-display--xs  fr-mb-0 ${styles.titleOnBackground}`}
               >

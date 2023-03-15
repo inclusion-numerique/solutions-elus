@@ -1,12 +1,12 @@
 import { prismaClient } from '@sde/web/prismaClient'
-import { projectsCsvFilename } from '@sde/web/project/projectsDownload'
+import { shareProjectSubmissionsCsvFilename } from '@sde/web/shareProject/shareProjectSubmissionsDownload'
 import Link from 'next/link'
 
-const ProjectsPage = async () => {
-  const projectsCount = await prismaClient.project.count()
-  const downloadFilename = projectsCsvFilename()
+const ShareProjectSubmissionsPage = async () => {
+  const projectsCount = await prismaClient.shareProjectFormSubmission.count()
+  const downloadFilename = shareProjectSubmissionsCsvFilename()
 
-  const projects = await prismaClient.project.findMany({
+  const projects = await prismaClient.shareProjectFormSubmission.findMany({
     include: {
       attachments: true,
       community: true,
@@ -61,7 +61,8 @@ const ProjectsPage = async () => {
                   <th>Nom</th>
                   <th>Qualité</th>
                   <th>Email</th>
-                  <th></th>
+                  {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+                  <th/>
                 </tr>
               </thead>
               <tbody className="fr-table">
@@ -113,4 +114,4 @@ const ProjectsPage = async () => {
     </>
   )
 }
-export default ProjectsPage
+export default ShareProjectSubmissionsPage

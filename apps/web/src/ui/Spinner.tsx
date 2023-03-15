@@ -1,11 +1,11 @@
 'use client'
+
 import { ThreeDots } from 'react-loader-spinner'
 
 const sizes = { sm: 20, md: 40, lg: 60 }
 const color = '#000091'
 
-export const Spinner = ({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) => {
-  return (
+export const Spinner = ({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) => (
     <ThreeDots
       height={sizes[size]}
       width={sizes[size]}
@@ -15,4 +15,3 @@ export const Spinner = ({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) => {
       visible
     />
   )
-}

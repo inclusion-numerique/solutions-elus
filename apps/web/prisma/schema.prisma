@@ -64,7 +64,7 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Project {
+model ShareProjectFormSubmission {
   id          String       @id @db.Uuid
   reference   String       @unique
   name        String
@@ -89,7 +89,7 @@ model Community {
   text     String
   scale    String
   zipcodes String[]
-  projects Project[]
+  projectSubmissions ShareProjectFormSubmission[]
 }
 
 model Attachment {
@@ -97,8 +97,8 @@ model Attachment {
   type      String
   name      String
   created   DateTime @default(now())
-  projectId String   @db.Uuid
-  project   Project  @relation(fields: [projectId], references: [id])
+  projectSubmissionId String   @db.Uuid
+  projectSubmission   ShareProjectFormSubmission  @relation(fields: [projectSubmissionId], references: [id])
 }
 
 model LegacyProject {

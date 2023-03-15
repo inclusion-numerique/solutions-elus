@@ -2,8 +2,7 @@ import Link from 'next/link'
 import { UserMenu } from '@sde/web/app/dashboard/UserMenu'
 import { SessionUser } from '@sde/web/auth/sessionUser'
 
-const PrivateHeader = ({ user }: { user: SessionUser }) => {
-  return (
+const PrivateHeader = ({ user }: { user: SessionUser }) => (
     <header role="banner" className="fr-header">
       <div className="fr-header__body">
         <div className="fr-container">
@@ -95,6 +94,5 @@ const PrivateHeader = ({ user }: { user: SessionUser }) => {
       </div>
     </header>
   )
-}
 
 export default PrivateHeader

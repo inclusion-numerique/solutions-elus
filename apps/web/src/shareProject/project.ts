@@ -1,21 +1,7 @@
 import z, { string } from 'zod'
 import { Options } from '@sde/web/utils/options'
 
-/**
- * Nom et prénom
- * Qualité
- * Email
- * Numéro de téléphone
- * Votre idée concerne le domaine suivant : (avec les propositions  déjà présentes)
- * Nom de votre solution (max 100 caractères)
- * Pouvez-vous décrire votre projet en quelques lignes ? (max 2000 caractères)
- * Quelles ont été les dates clefs ? (max 500 caractères)
- * Qui sont les partenaires du projet ? (max 500 caractères)
- * Pouvez-vous décrire les aspects techniques du projet ? (max 1000 caractères)
- * Souhaitez-vous télécharger une PJ ?
- */
-
-export const ProjectDataValidation = z.object({
+export const ShareProjectFormDataValidation = z.object({
   community: z.object(
     {
       id: z.string(),
@@ -80,7 +66,7 @@ export const ProjectDataValidation = z.object({
   ),
 })
 
-export type ProjectData = z.infer<typeof ProjectDataValidation>
+export type ShareProjectData = z.infer<typeof ShareProjectFormDataValidation>
 
 const projectDomains = [
   'Accès au numérique',
