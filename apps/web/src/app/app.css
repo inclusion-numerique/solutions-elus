@@ -1,0 +1,13 @@
+/* Import dsfr with url, outside of webpack build, as a static file */
+@import url("/dsfr/dsfr.min.css");
+@import url("/dsfr/utility/utility.min.css");
+
+html, body, body > div {
+  min-height: 100% !important;
+  height: 100%;
+}
+
+textarea {
+  resize: none;
+}
+

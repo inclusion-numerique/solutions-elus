@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@sde/cli/*": ["apps/cli/src/*"],
+      "@sde/web/*": ["apps/web/src/*"],
+      "@sde/cdk/*": ["packages/cdk/src/*"],
+      "@sde/config/*": ["packages/config/src/*"],
+      "@sde/e2e/*": ["packages/e2e/src/*"],
+      "@sde/emails/*": ["packages/emails/src/*"],
+      "@sde/lint/*": ["packages/lint/src/*"],
+      "@sde/scaleway/*": ["packages/cdk/.gen/providers/scaleway/*"],
+      "@sde/storybook/*": ["packages/storybook/src/*"],
+      "@sde/test/*": ["packages/test/src/*"]
+    },
+    "typeRoots": [
+      "./node_modules/@types",
+      "./packages/test/node_modules/@types"
+    ]
+  },
+  "include": ["./packages/test/src/jest.setup.ts"],
+  "files": ["./packages/test/node_modules/jest-extended/types/index.d.ts"],
+  "exclude": ["node_modules"],
+  "ts-node": {
+    "experimentalResolver": true
+  }
+}
