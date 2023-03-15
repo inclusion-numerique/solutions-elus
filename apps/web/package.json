@@ -5,7 +5,6 @@
   "scripts": {
     "dev": "pnpm --silent with-env next dev",
     "build": "pnpm --silent with-env next build",
-    "scalingo-postbuild": "next build && modclean -Pr && npm prune --omit=dev",
     "modclean": "modclean -Pr",
     "modclean:root": "modclean -Pr -p ./../..",
     "start": "next start",

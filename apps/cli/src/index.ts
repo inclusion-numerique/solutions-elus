@@ -8,6 +8,9 @@ import { listSecrets } from '@sde/cli/commands/secrets/listSecrets'
 import { getSecretValue } from '@sde/cli/commands/secrets/getSecretValue'
 import { setupDatabaseSecret } from '@sde/cli/commands/secrets/setupDatabaseSecret'
 import { createTfVarsFileFromEnvironment } from '@sde/cli/commands/infrastructure/createTfVarsFileFromEnvironment'
+import { listProjectCategories } from '@sde/cli/commands/projects/listCategories'
+import { fetchDrupalProjects } from '@sde/cli/commands/projects/fetchDrupalProjects'
+import { updateShowcases } from '@sde/cli/commands/projects/updateShowcases'
 
 const program = new Command()
 
@@ -20,5 +23,8 @@ program.addCommand(createGithubDeployment)
 program.addCommand(updateGithubDeployment)
 program.addCommand(deactivateGithubDeployment)
 program.addCommand(createTfVarsFileFromEnvironment)
+program.addCommand(listProjectCategories)
+program.addCommand(fetchDrupalProjects)
+program.addCommand(updateShowcases)
 
 program.parse()
