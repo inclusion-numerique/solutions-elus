@@ -30,13 +30,16 @@ importers:
       csv-stringify: ^6.3.0
       dotenv: ^16.0.3
       eslint: ^8.36.0
+      form-data: ^4.0.0
       jest: ^29.5.0
+      joi: ^17.8.4
       lodash: ^4.17.21
       octokit: ^2.0.14
       picocolors: ^1.0.0
       ts-node: ^10.9.1
       tsconfig-paths: ^4.1.2
       typescript: ^4.9.5
+      undici: ^5.21.0
     dependencies:
       '@commander-js/extra-typings': 10.0.3_commander@10.0.0
       '@sde/cdk': link:../../packages/cdk
@@ -46,16 +49,19 @@ importers:
       csv-parse: 5.3.6
       csv-stringify: 6.3.0
       dotenv: 16.0.3
+      form-data: 4.0.0
       lodash: 4.17.21
       octokit: 2.0.14
       picocolors: 1.0.0
       ts-node: 10.9.1_cbfmry4sbbh4vatmdrsmatfg5a
       tsconfig-paths: 4.1.2
+      undici: 5.21.0
     devDependencies:
       '@types/lodash': 4.14.191
       '@types/node': 18.15.3
       eslint: 8.36.0
       jest: 29.5.0_d2dllaz5dte7avnjm55wl7fmsu
+      joi: 17.8.4
       typescript: 4.9.5
 
   apps/web:
@@ -138,6 +144,7 @@ importers:
       superjson: ^1.12.2
       typescript: ^4.9.5
       uglify-js: ^3.17.4
+      undici: ^5.21.0
       uuid: ^9.0.0
       zod: ^3.21.4
       zustand: ^4.3.6
@@ -194,6 +201,7 @@ importers:
       smooth-scroll-into-view-if-needed: 2.0.0
       superjson: 1.12.2
       uglify-js: 3.17.4
+      undici: 5.21.0
       uuid: 9.0.0
       zod: 3.21.4
       zustand: 4.3.6_react@18.2.0
@@ -8774,6 +8782,13 @@ packages:
   /builtins/1.0.3:
     resolution: {integrity: sha512-uYBjakWipfaO/bXI7E8rq6kpwHRZK5cNYrUv2OzZSI/FvmdMyXJ2tG9dKcjEC5YHmHpUAwsargWIZNWdxb/bnQ==}
 
+  /busboy/1.6.0:
+    resolution: {integrity: sha512-8SFQbg/0hQ9xy3UNTB0YEnsNBbWfhf7RtnzpL7TkBiTBRfrQ9Fxcnz7VJsleJpyp6rVLvXiuORqjlHi5q+PYuA==}
+    engines: {node: '>=10.16.0'}
+    dependencies:
+      streamsearch: 1.1.0
+    dev: false
+
   /bytes/3.0.0:
     resolution: {integrity: sha512-pMhOfFDPiv9t5jjIXkHosWmkSyQbvsgEVNkz0ERHbuLh2T/7j4Mqqpz523Fe8MVY89KC6Sh/QfS2sM+SjgFDcw==}
     engines: {node: '>= 0.8'}
@@ -13123,7 +13138,7 @@ packages:
       pretty-format: 29.5.0
       slash: 3.0.0
       strip-json-comments: 3.1.1
-      ts-node: 10.9.1_lxsr7vkqxpvg3jnjvosormbske
+      ts-node: 10.9.1_cbfmry4sbbh4vatmdrsmatfg5a
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -17800,6 +17815,11 @@ packages:
       - supports-color
     dev: false
 
+  /streamsearch/1.1.0:
+    resolution: {integrity: sha512-Mcc5wHehp9aXz1ax6bZUyY5afg9u2rv5cqQI3mRrYkGC8rW2hM02jWuwjtL++LS5qinSyhj2QfLyNsuc+VsExg==}
+    engines: {node: '>=10.0.0'}
+    dev: false
+
   /string-length/4.0.2:
     resolution: {integrity: sha512-+l6rNN5fYHNhZZy41RXsYptCjA2Igmq4EG7kZAYFQI1E1VTXarr6ZPXBg6eq7Y6eK4FEhY6AJlyuFIb/v/S0VQ==}
     engines: {node: '>=10'}
@@ -18770,6 +18790,13 @@ packages:
   /unc-path-regex/0.1.2:
     resolution: {integrity: sha512-eXL4nmJT7oCpkZsHZUOJo8hcX3GbsiDOa0Qu9F646fi8dT3XuSVopVqAcEiVzSKKH7UoDti23wNX3qGFxcW5Qg==}
     engines: {node: '>=0.10.0'}
+    dev: false
+
+  /undici/5.21.0:
+    resolution: {integrity: sha512-HOjK8l6a57b2ZGXOcUsI5NLfoTrfmbOl90ixJDl0AEFG4wgHNDQxtZy15/ZQp7HhjkpaGlp/eneMgtsu1dIlUA==}
+    engines: {node: '>=12.18'}
+    dependencies:
+      busboy: 1.6.0
     dev: false
 
   /unfetch/4.2.0:

@@ -1,14 +1,16 @@
 /// <reference types="jest" />
-import { createProjectRecord, uploadAttachments } from '@sde/web/grist/grist'
 import { createReadStream } from 'node:fs'
 import { resolve } from 'node:path'
 import FormData from 'form-data'
 import Joi from 'joi'
+import { createProjectRecord, listProjectRecords, uploadAttachments } from '@sde/cli/grist/grist'
 
-const publicDirFile = (path: string) => resolve(__dirname, '../../public', path)
+const publicDirFile = (path: string) => resolve(__dirname, '../../../web/public', path)
 
-describe.skip('Grist', () => {
-  it('Uploads attachements', async () => {
+describe('Grist', () => {
+
+  // ⚠️ No test grist for now, this impacts production
+  it.skip('Uploads attachements', async () => {
     const formData = new FormData()
     formData.append(
       'upload',
@@ -21,7 +23,8 @@ describe.skip('Grist', () => {
     )
   })
 
-  it('Create project records', async () => {
+  // ⚠️ No test grist for now, this impacts production
+  it.skip('Create project records', async () => {
     const result = await createProjectRecord({
       Test: true,
       Référence: 'TestId',
@@ -40,5 +43,17 @@ describe.skip('Grist', () => {
     })
 
     expect(result).toStrictEqual({ Nom: 'Roger' })
+  })
+
+  it('Lists projects', async () => {
+
+    const result = await listProjectRecords()
+
+    expect(result.records).toBeArray()
+
+    expect(result.records[0]).toBeObject()
+    expect(result.records[0].id).toBeInteger()
+    expect(result.records[0].fields).toBeObject()
+    expect(result.records[0].fields.Titre).toBeString()
   })
 })
