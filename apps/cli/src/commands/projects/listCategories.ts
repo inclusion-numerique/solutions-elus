@@ -1,4 +1,3 @@
-import 'tsconfig-paths/register'
 import { Command } from '@commander-js/extra-typings'
 import { prismaClient } from '@sde/web/prismaClient'
 import { output } from '@sde/cli/output'

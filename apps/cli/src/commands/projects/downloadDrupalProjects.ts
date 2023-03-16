@@ -1,4 +1,3 @@
-import 'tsconfig-paths/register'
 import { Command } from '@commander-js/extra-typings'
 import { output } from '@sde/cli/output'
 import { fetchDrupalProjects } from '@sde/cli/drupal/fetchDrupalProjects'

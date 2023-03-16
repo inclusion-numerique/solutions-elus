@@ -1,5 +1,4 @@
 // eslint-disable-next-line unicorn/prevent-abbreviations
-import 'tsconfig-paths/register'
 
 import { getCdkOutput } from '@sde/cdk/getCdkOutput'
 import { Argument, Command } from '@commander-js/extra-typings'
