@@ -15,6 +15,13 @@ export const getProjectsList = () =>
     },
   })
 
+export const getProject = (slug: string) =>
+  prismaClient.project.findUnique({
+    where: {
+      slug
+    }
+  })
+
 export type ProjectListItem = Awaited<
   ReturnType<typeof getProjectsList>
 >[number]
