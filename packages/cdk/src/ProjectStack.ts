@@ -45,6 +45,7 @@ export const projectStackSensitiveVariables = [
   'SMTP_PASSWORD',
   'SMTP_SERVER',
   'SMTP_USERNAME',
+  'GRIST_API_KEY'
 ] as const
 
 /**
