@@ -17,29 +17,29 @@ const gristRecordsResponse = z.object({
 const gristRelationshipValidation = z.tuple([z.string()]).rest(z.number())
 
 const emptyStringToNull = <T>(value: T) => typeof value === 'string' && value.trim() === '' ? null : value
-const gristNullableString = z.preprocess(emptyStringToNull, z.string().nullable())
+const gristNullableString = z.preprocess(emptyStringToNull, z.string().nullable()).optional()
 
 const gristProjectFieldsValidation = z.object({
   drupal_id: gristNullableString,
   drupal_url: gristNullableString,
-  Programme: z.number().int(),
-  Localisation: z.number().int(),
+  Programme: z.number().int().nullable(),
+  Localisation: z.number().int().nullable(),
   Titre: gristNullableString,
   Sous_titre: gristNullableString,
   // TODO Type this
   // e.g. Visuel: [ 'L', 6 ],
-  Visuel: gristRelationshipValidation.nullable(),
+  Visuel: gristRelationshipValidation.nullable().optional(),
   // TODO Type this
   // e.g. [ 'L', 2, 6, 3, 1, 8 ]
-  Thematiques: gristRelationshipValidation.nullable(),
+  Thematiques: gristRelationshipValidation.nullable().optional(),
   Specificites: gristNullableString,
   Objectifs: gristNullableString,
   Texte: gristNullableString,
-  Budget: z.number().int().nullable(),
+  Budget: z.number().int().nullable().optional(),
   // TODO Type this
   // e.g. Acteur_local_1_image: [ 'L', 4 ],
-  Acteur_local_1_image: gristRelationshipValidation.nullable(),
-  Calendrier: z.number().int().nullable(),
+  Acteur_local_1_image: gristRelationshipValidation.nullable().optional(),
+  Calendrier: z.number().int().nullable().optional(),
   Partenaires_et_cofinanceurs: gristNullableString,
   Modifie_par: gristNullableString,
   Presentation_du_territoire: gristNullableString,
@@ -49,31 +49,32 @@ const gristProjectFieldsValidation = z.object({
   Acteur_local_2_nom: gristNullableString,
   // TODO Type this
   // e.g. Acteur_local_1_image: [ 'L', 4 ],
-  Acteur_local_2_image: gristRelationshipValidation.nullable(),
-  Le: z.number().nullable(),
+  Acteur_local_2_image: gristRelationshipValidation.nullable().optional(),
+  Le: z.number().nullable().optional(),
   Cree_le: z.number().nullable(),
   // TODO Type this
   // e.g. Acteur_local_1_image: [ 'L', 4 ],
-  Partenaire_1_image: gristRelationshipValidation.nullable(),
-  Partenaire_1_nom: z.string().nullable(),
-  Partenaire_1_texte: z.string().nullable(),
-  Type_de_collectivite: z.preprocess(emptyStringToNull, z.enum(['commune', 'departement', 'epci', 'region']).nullable()),
+  Partenaire_1_image: gristRelationshipValidation.nullable().optional(),
+  Partenaire_1_nom: gristNullableString,
+  Partenaire_1_texte: gristNullableString,
+  Type_de_collectivite: z.preprocess(emptyStringToNull, z.enum(['commune', 'departement', 'epci', 'region']).nullable()).optional(),
   Departement: gristNullableString,
-  Partenaire_2_nom: z.string().nullable(),
-  Partenaire_2_texte: z.string().nullable(),
+  Partenaire_2_nom: gristNullableString,
+  Partenaire_2_texte: gristNullableString,
   // TODO Type this
   // e.g. Acteur_local_1_image: [ 'L', 4 ],
-  Partenaire_2_image: gristRelationshipValidation.nullable(),
-  Population: z.number().int(),
+  Partenaire_2_image: gristRelationshipValidation.nullable().optional(),
+  Population: z.number().int().optional(),
   Region: gristNullableString,
-  Lattitude: z.number().int().nullable(),
-  Longitude: z.number().int().nullable(),
+  Lattitude: z.number().nullable(),
+  Longitude: z.number().nullable(),
 })
 
 const gristProjectValidation = z.object({
   id: z.number().int(),
   fields: gristProjectFieldsValidation,
 })
+
 export type GristProjectFields = z.infer<typeof gristProjectFieldsValidation>
 
 export type GristProject = z.infer<typeof gristProjectValidation>
