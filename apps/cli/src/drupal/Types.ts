@@ -1,30 +1,3 @@
-export type GristProjectType = {
-  visual?: string
-  title: string
-  subtitle: string | null | undefined
-  localization: string
-  geocoding?: { lat: number; long: number }
-  localizationDescription?: string | null | undefined
-  program?: string | null | undefined
-  themes?: string[]
-  objectives?: string
-  specificities?: string
-  description?: string
-  budget?: number
-  calendar?: string
-  investors?: string
-  localActorQuotes?: Quote[]
-  investorQuotes?: Quote[]
-  createdAt: string
-}
-
-type Quote = {
-  image: string
-  name: string
-  text: string
-}
-
-
 export type DrupalProjectType =  {
   drupal_internal__nid: number;
   drupal_internal__vid: number;
