@@ -9,8 +9,8 @@ export const getProjectsList = () =>
       id: true,
       title: true,
       city: true,
-      imageAlt: true,
-      imagePath: true,
+      coverImage: true,
+      coverImageAlt: true,
       slug: true,
     },
   })
