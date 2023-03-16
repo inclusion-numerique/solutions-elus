@@ -47,12 +47,6 @@ setup your schema
 pnpm prisma:migrate
 ```
 
-seed your database with fixtures
-
-```sh
-pnpm prisma:seed
-```
-
 ### Dev
 
 To run the web app development server:
