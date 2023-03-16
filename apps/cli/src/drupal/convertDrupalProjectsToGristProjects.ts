@@ -17,5 +17,5 @@ export const convertToGristProject = (drupalProject: DrupalProject) : GristProje
   Longitude: drupalProject.attributes.field_geocoding?.lon ?? null,
   Cree_le: new Date(drupalProject.attributes.created).getTime(),
   drupal_id: drupalProject.id,
-  drupal_url: `https://agence-cohesion-territoires.gouv.fr${drupalProject.attributes.path.alias}`,
+  drupal_url: drupalProject.links.self.href,
 })

@@ -29,6 +29,11 @@ it('should convert an array of drupal projects to an array of grist projects', (
 const drupalProjectDumb: DrupalProject = {
   type: 'node--project',
   id: '66ef1294-9bcc-4ba4-9ac8-8b9a649bcf2b',
+  links: {
+    self: {
+      href: 'url de base.fr'
+    }
+  },
   attributes: {
     "drupal_internal__nid": 40,
     "drupal_internal__vid": 40,
@@ -86,7 +91,7 @@ const gristProjectDumb: GristProjectFields = {
   Sous_titre: " Découvez comment le dispositif agit sur ce territoire précurseur labellisé Cité éducative",
   Programme: null,
   drupal_id: '66ef1294-9bcc-4ba4-9ac8-8b9a649bcf2b',
-  drupal_url: 'https://agence-cohesion-territoires.gouv.fr/sur-les-bancs-de-la-cite-educative-de-charleville-mezieres-40',
+  drupal_url: 'url de base.fr',
 }
 const gristProjectArrayDumb: GristProjectFields[] = [gristProjectDumb, gristProjectDumb]
 
