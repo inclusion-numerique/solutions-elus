@@ -19,7 +19,7 @@ describe('convertDrupalProjectsToGristProjects', () => {
   })
 })
 
-it('should convert an array of drupal projects to an array of grist projects', function () {
+it('should convert an array of drupal projects to an array of grist projects', () => {
   expect(convertDrupalProjectsToGristProjects(drupalProjectArrayDumb)).toStrictEqual(gristProjectArrayDumb)
 });
 
@@ -56,8 +56,8 @@ const drupalProjectDumb: DrupalProjectType = {
     "city": "Charleville-Mézières",
     "country": "",
     "additional": "",
-    "lat": 49.768191,
-    "lon": 4.720605,
+    "lat": 49.768_191,
+    "lon": 4.720_605,
     "feature": "{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[4.720605,49.768191]},\"properties\":{\"label\":\"Charleville-Mézières\",\"score\":0.7841351948051947,\"id\":\"08105\",\"type\":\"municipality\",\"name\":\"Charleville-Mézières\",\"postcode\":\"08000\",\"citycode\":\"08105\",\"x\":824027.66,\"y\":6964602.11,\"population\":46682,\"city\":\"Charleville-Mézières\",\"context\":\"08, Ardennes, Grand Est\",\"importance\":0.48263}}"
   },
   "field_label_txt": "Charleville-Mézières (08)",
@@ -77,8 +77,8 @@ const gristProjectDumb: GristProjectType = {
   localizationDescription: "La Cité éducative de Charleville-Mézières : le quartier prioritaire de la Ronde-Couture\r\n7 500 habitants\r\nTaux de pauvreté : 46,9%\r\nRevenu moyen : 550 euros par habitant\r\nPart de la population sans diplôme ou inférieur au Bac : 87,5% (données Insee, 2010)\r\nUne école primaire et deux collège",
   localization: "Charleville-Mézières",
   geocoding: {
-    lat: 49.768191,
-    long: 4.720605
+    lat: 49.768_191,
+    long: 4.720_605
   },
   subtitle: " Découvez comment le dispositif agit sur ce territoire précurseur labellisé Cité éducative",
   program: "Cités éducatives"
@@ -137,8 +137,8 @@ export const drupalProjectsJson = {
           "city": "Charleville-Mézières",
           "country": "",
           "additional": "",
-          "lat": 49.768191,
-          "lon": 4.720605,
+          "lat": 49.768_191,
+          "lon": 4.720_605,
           "feature": "{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[4.720605,49.768191]},\"properties\":{\"label\":\"Charleville-Mézières\",\"score\":0.7841351948051947,\"id\":\"08105\",\"type\":\"municipality\",\"name\":\"Charleville-Mézières\",\"postcode\":\"08000\",\"citycode\":\"08105\",\"x\":824027.66,\"y\":6964602.11,\"population\":46682,\"city\":\"Charleville-Mézières\",\"context\":\"08, Ardennes, Grand Est\",\"importance\":0.48263}}"
         },
         "field_label_txt": "Charleville-Mézières (08)",
@@ -485,8 +485,8 @@ export const drupalProjectsJson = {
           "city": "Saint-Omer",
           "country": "",
           "additional": "",
-          "lat": 50.753363,
-          "lon": 2.266572,
+          "lat": 50.753_363,
+          "lon": 2.266_572,
           "feature": "{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[2.266572,50.753363]},\"properties\":{\"label\":\"Place du 8 Mai 1945 62500 Saint-Omer\",\"score\":0.723512307865921,\"id\":\"62765_1075\",\"type\":\"street\",\"x\":648147.44,\"y\":7073212.56,\"importance\":0.4586353865251314,\"name\":\"Place du 8 Mai 1945\",\"postcode\":\"62500\",\"citycode\":\"62765\",\"city\":\"Saint-Omer\",\"context\":\"62, Pas-de-Calais, Hauts-de-France\"}}"
         },
         "field_label_txt": "Pays de Saint-Omer (62) ",
@@ -830,8 +830,8 @@ export const drupalProjectsJson = {
           "city": "Raismes",
           "country": "",
           "additional": "",
-          "lat": 50.371981,
-          "lon": 3.495915,
+          "lat": 50.371_981,
+          "lon": 3.495_915,
           "feature": "{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[3.495915,50.371981]},\"properties\":{\"label\":\"Rue de Raismes 59410 Anzin\",\"score\":0.6777263636363635,\"id\":\"59014_0885\",\"type\":\"street\",\"x\":735327.79,\"y\":7030589.74,\"importance\":0.45499,\"name\":\"Rue de Raismes\",\"postcode\":\"59410\",\"citycode\":\"59014\",\"city\":\"Anzin\",\"context\":\"59, Nord, Hauts-de-France\"}}"
         },
         "field_label_txt": "Raismes (59)",
