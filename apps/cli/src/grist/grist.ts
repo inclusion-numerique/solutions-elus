@@ -3,7 +3,7 @@ import axios from 'axios'
 import FormData from 'form-data'
 import z from 'zod'
 import { output } from '@sde/cli/output'
-
+import { convertGristProjectToModel } from './convertGristProjectToModel'
 
 const gristRecordsResponse = z.object({
   records: z.array(z.object({
@@ -22,8 +22,8 @@ const gristNullableString = z.preprocess(emptyStringToNull, z.string().nullable(
 const gristProjectFieldsValidation = z.object({
   drupal_id: gristNullableString,
   drupal_url: gristNullableString,
-  Programme: z.number().int().nullable(),
-  Localisation: z.number().int().nullable(),
+  Programme: gristNullableString,
+  Localisation: gristNullableString,
   Titre: gristNullableString,
   Sous_titre: gristNullableString,
   // TODO Type this
@@ -64,7 +64,7 @@ const gristProjectFieldsValidation = z.object({
   // TODO Type this
   // e.g. Acteur_local_1_image: [ 'L', 4 ],
   Partenaire_2_image: gristRelationshipValidation.nullable().optional(),
-  Population: z.number().int().optional(),
+  Population: gristNullableString,
   Region: gristNullableString,
   Lattitude: z.number().nullable(),
   Longitude: z.number().nullable(),
@@ -162,3 +162,23 @@ export const listProjectRecords = async (): Promise<GristProject[]> => {
 
   return projects
 }
+
+export const insertInDataBase = async (projects: GristProject[]) => {
+  if (!prismaClient) {
+    return
+  }
+  const existingIds = projects.map(project => project.id)
+  // For now we delete every existing projects, we'll see later for an update
+  await prismaClient.project.deleteMany({
+    where: {
+      gristId: {
+        in: existingIds
+      }
+    }
+  })
+
+  await prismaClient.project.createMany({
+    data: convertGristProjectToModel(projects),
+    skipDuplicates: true
+  })
+} 
