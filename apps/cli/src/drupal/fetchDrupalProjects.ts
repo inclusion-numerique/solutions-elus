@@ -5,11 +5,6 @@ import { DrupalProjectType } from './Types'
 export type DrupalProject = {
   type: 'node--project',
   id: string,
-  links: {
-    self: {
-      href: string
-    }
-  },
   attributes: DrupalProjectType
 }
 
