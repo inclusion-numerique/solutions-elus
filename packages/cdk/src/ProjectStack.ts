@@ -87,7 +87,7 @@ export class ProjectStack extends TerraformStack {
       subdomain: '',
     })
 
-    const previewDomainZone = new DataScalewayDomainZone(this, 'mainDomainZone', {
+    const previewDomainZone = new DataScalewayDomainZone(this, 'previewDomainZone', {
       domain: previewDomain,
       subdomain: '',
     })
