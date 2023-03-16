@@ -54,3 +54,4 @@ export const fetchDrupalProjects = async () => {
 
   return drupalProjects
 }
+
