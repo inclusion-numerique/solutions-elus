@@ -21,6 +21,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     // We want this on, but a lot of libraries we integrate with need commonJs (eslint, next config ...)
     'unicorn/prefer-module': 'off',
+    'unicorn/no-array-callback-reference': 'off',
     'no-unused-vars': [
       'error',
       {
@@ -70,6 +71,8 @@ module.exports = {
         'no-restricted-syntax': 'off',
         // Module resolve leads to false negatives in monorepo, typescript compiler will handle any error
         'import/no-unresolved': [2, { ignore: ['^@sde/'] }],
+        '@typescript-eslint/unbound-method': 'off',
+        'unicorn/no-array-callback-reference': 'off',
         'import/prefer-default-export': 'off',
         'react/jsx-props-no-spreading': [
           'error',

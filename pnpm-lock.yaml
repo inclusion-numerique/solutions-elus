@@ -40,6 +40,7 @@ importers:
       tsconfig-paths: ^4.1.2
       typescript: ^4.9.5
       undici: ^5.21.0
+      zod: ^3.21.4
     dependencies:
       '@commander-js/extra-typings': 10.0.3_commander@10.0.0
       '@sde/cdk': link:../../packages/cdk
@@ -56,6 +57,7 @@ importers:
       ts-node: 10.9.1_cbfmry4sbbh4vatmdrsmatfg5a
       tsconfig-paths: 4.1.2
       undici: 5.21.0
+      zod: 3.21.4
     devDependencies:
       '@types/lodash': 4.14.191
       '@types/node': 18.15.3
