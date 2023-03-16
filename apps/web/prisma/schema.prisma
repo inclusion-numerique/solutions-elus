@@ -84,36 +84,72 @@ model ShareProjectFormSubmission {
 }
 
 model Community {
-  id       String    @id
-  name     String
-  text     String
-  scale    String
-  zipcodes String[]
+  id                 String                       @id
+  name               String
+  text               String
+  scale              String
+  zipcodes           String[]
   projectSubmissions ShareProjectFormSubmission[]
 }
 
 model Attachment {
-  key       String   @id
-  type      String
-  name      String
-  created   DateTime @default(now())
-  projectSubmissionId String   @db.Uuid
-  projectSubmission   ShareProjectFormSubmission  @relation(fields: [projectSubmissionId], references: [id])
+  key                 String                     @id
+  type                String
+  name                String
+  created             DateTime                   @default(now())
+  projectSubmissionId String                     @db.Uuid
+  projectSubmission   ShareProjectFormSubmission @relation(fields: [projectSubmissionId], references: [id])
 }
 
 model Project {
-  id               String   @id
+  id String @id @default(uuid()) @db.Uuid
+
+  // If imported from grist (maybe we'll have other sources of projects)
+  gristId Int? @unique
+
   // If showcase is set, the project will appear on home page shocases, ordered by showcase integer value
-  showcase         Int?
-  pageIndex        Int
-  itemIndexInPage  Int
-  imagePath        String
-  slug             String   @unique
-  imageAlt         String
-  district         String?
-  city             String?
-  title            String
+  showcase                Int?
+
+  coverImage              String
+  coverImageAlt           String?
+  slug                    String    @unique
+  localActorQuotes        Quote[]   @relation(name: "local_actor_quotes")
+  partnerQuotes           Quote[]   @relation(name: "partner_quotes")
+  district                String?
+  city                    String?
+  title                   String
+  subtitle                String
+  localization            String
+  localizationDescription String?
+  goals                   String[]
+  characteristics         String[]
+  description             String
+  budget                  Float?
+  funding                 String?
+  inaugurationDate        DateTime?
+
+  latitude         Float?
+  longitude        Float?
   program          String?
-  legacyCategories String[]
   categories       String[]
+
+  createdBy String?
+  created   DateTime @default(now())
+  updatedBy String?
+  updated   DateTime @default(now())
+}
+
+model Quote {
+  id String @id @default(uuid()) @db.Uuid
+
+  localQuoteForId String?  @db.Uuid
+  localQuoteFor   Project? @relation(name: "local_actor_quotes", fields: [localQuoteForId], references: [id])
+
+  partnerQuoteForId String?  @db.Uuid
+  partnerQuoteFor   Project? @relation(name: "partner_quotes", fields: [partnerQuoteForId], references: [id])
+
+  order   Int
+  by      String
+  content String
+  image   String
 }

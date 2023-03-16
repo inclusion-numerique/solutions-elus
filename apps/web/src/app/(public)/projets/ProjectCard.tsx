@@ -14,8 +14,8 @@ export const ProjectCard = forwardRef(
         id,
         title,
         city,
-        imageAlt,
-        imagePath,
+        coverImage,
+        coverImageAlt,
         slug,
       },
     }: {
@@ -41,8 +41,8 @@ export const ProjectCard = forwardRef(
           <picture className={styles.picture}>
             <img
               id={`${id}__image`}
-              src={legacyProjectImageUrl(imagePath)}
-              alt={imageAlt}
+              src={legacyProjectImageUrl(coverImage)}
+              alt={coverImageAlt ?? `Photo illustrant le projet "${title}"`}
             />
           </picture>
           <div className={`${styles.content} fr-p-8v`}>

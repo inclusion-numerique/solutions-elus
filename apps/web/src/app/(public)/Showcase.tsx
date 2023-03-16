@@ -38,13 +38,13 @@ export const Showcase = ({ projects }: { projects: ShowcaseProject[] }) => {
             <button
               type='button'
               className='fr-btn fr-btn--secondary fr-icon-arrow-left-line'
-              aria-label="Voir le projet précédent"
+              aria-label='Voir le projet précédent'
               onClick={previous}
             />
             <button
               type='button'
               className='fr-btn fr-btn--secondary fr-icon-arrow-right-line'
-              aria-label="Voir le projet suivant"
+              aria-label='Voir le projet suivant'
               onClick={next}
             />
           </div>
@@ -82,7 +82,12 @@ const ProjectCard = forwardRef<
   { project: ShowcaseProject; style?: CSSProperties | undefined }
 >(
   (
-    { project: { title, slug, city, district, imagePath, imageAlt }, style },
+    {
+      project: {
+        title, slug, city, district, coverImage,
+        coverImageAlt,
+      }, style,
+    },
     ref,
   ) => {
     const href = legacyProjectUrl(slug)
@@ -95,7 +100,10 @@ const ProjectCard = forwardRef<
         className={styles.card}
       >
         <picture>
-          <img src={legacyProjectImageUrl(imagePath)} alt={imageAlt} />
+          <img
+            src={legacyProjectImageUrl(coverImage)}
+            alt={coverImageAlt ?? `Photo illustrant le projet "${title}"`}
+          />
         </picture>
         <div className={`fr-px-5w fr-py-10v ${styles.cardContent}`}>
           <p
