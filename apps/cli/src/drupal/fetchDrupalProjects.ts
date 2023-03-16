@@ -1,10 +1,16 @@
 import { request } from 'undici'
 import { output } from '@sde/cli/output'
+import { DrupalProjectType } from './Types'
 
-
-// TODO Get types from Thibault's work
 export type DrupalProject = {
-  'type': 'node--project',
+  type: 'node--project',
+  id: string,
+  links: {
+    self: {
+      href: string
+    }
+  },
+  attributes: DrupalProjectType
 }
 
 export type DrupalProjectsApiResponse = {

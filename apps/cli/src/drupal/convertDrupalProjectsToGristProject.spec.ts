@@ -1,9 +1,11 @@
-import {DrupalProjectType, GristProjectType} from "./Types";
+import {DrupalProjectType} from "./Types";
 import {
   convertDrupalProjectsToGristProjects,
   convertJSONToDrupalProjects,
   convertToGristProject
 } from "./convertDrupalProjectsToGristProjects";
+import { GristProjectFields } from "../grist/grist";
+import { DrupalProject } from "./fetchDrupalProjects";
 
 describe('convertDrupalProjectsToGristProjects', () => {
 
@@ -14,7 +16,7 @@ describe('convertDrupalProjectsToGristProjects', () => {
   })
 
   it('should convert a project from drupal to a grist project', () => {
-    const gristProject : GristProjectType =  convertToGristProject(drupalProjectDumb)
+    const gristProject : GristProjectFields =  convertToGristProject(drupalProjectDumb)
     expect(gristProject).toStrictEqual(gristProjectDumb)
   })
 })
@@ -24,66 +26,74 @@ it('should convert an array of drupal projects to an array of grist projects', (
 });
 
 
-const drupalProjectDumb: DrupalProjectType = {
-  "drupal_internal__nid": 40,
-  "drupal_internal__vid": 40,
-  "langcode": "fr",
-  "revision_timestamp": "2020-04-28T21:34:12+00:00",
-  "revision_log": null,
-  "status": true,
-  "title": "Sur les bancs de la Cité éducative de Charleville-Mézières",
-  "created": "2020-04-28T21:31:04+00:00",
-  "changed": "2022-11-18T16:16:20+00:00",
-  "promote": false,
-  "sticky": false,
-  "default_langcode": true,
-  "revision_translation_affected": true,
-  "metatag": null,
-  "path": {
-    "alias": "/sur-les-bancs-de-la-cite-educative-de-charleville-mezieres-40",
-    "pid": 248,
-    "langcode": "fr"
+const drupalProjectDumb: DrupalProject = {
+  type: 'node--project',
+  id: '66ef1294-9bcc-4ba4-9ac8-8b9a649bcf2b',
+  links: {
+    self: {
+      href: 'url de base.fr'
+    }
   },
-  "field_agenda_txtfs": null,
-  "field_department_city_txtps": "Charleville-Mézières (Ardennes)",
-  "field_description_txtps": "La Cité éducative de Charleville-Mézières : le quartier prioritaire de la Ronde-Couture\r\n7 500 habitants\r\nTaux de pauvreté : 46,9%\r\nRevenu moyen : 550 euros par habitant\r\nPart de la population sans diplôme ou inférieur au Bac : 87,5% (données Insee, 2010)\r\nUne école primaire et deux collège",
-  "field_display_update_date": false,
-  "field_funding_txtpl": null,
-  "field_geocoding": {
-    "address_name": "",
-    "street": "",
-    "zipcode": "",
-    "city": "Charleville-Mézières",
-    "country": "",
-    "additional": "",
-    "lat": 49.768_191,
-    "lon": 4.720_605,
-    "feature": "{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[4.720605,49.768191]},\"properties\":{\"label\":\"Charleville-Mézières\",\"score\":0.7841351948051947,\"id\":\"08105\",\"type\":\"municipality\",\"name\":\"Charleville-Mézières\",\"postcode\":\"08000\",\"citycode\":\"08105\",\"x\":824027.66,\"y\":6964602.11,\"population\":46682,\"city\":\"Charleville-Mézières\",\"context\":\"08, Ardennes, Grand Est\",\"importance\":0.48263}}"
-  },
-  "field_label_txt": "Charleville-Mézières (08)",
-  "field_localization_txtps": "Charleville-Mézières (08)",
-  "field_metatags": null,
-  "field_program_title_txtps": "Programme",
-  "field_program_txtps": "Cités éducatives",
-  "field_teaser_txtps": " Découvez comment le dispositif agit sur ce territoire précurseur labellisé Cité éducative"
+  attributes: {
+    "drupal_internal__nid": 40,
+    "drupal_internal__vid": 40,
+    "langcode": "fr",
+    "revision_timestamp": "2020-04-28T21:34:12+00:00",
+    "revision_log": null,
+    "status": true,
+    "title": "Sur les bancs de la Cité éducative de Charleville-Mézières",
+    "created": "2020-04-28T21:31:04+00:00",
+    "changed": "2022-11-18T16:16:20+00:00",
+    "promote": false,
+    "sticky": false,
+    "default_langcode": true,
+    "revision_translation_affected": true,
+    "metatag": null,
+    "path": {
+      "alias": "/sur-les-bancs-de-la-cite-educative-de-charleville-mezieres-40",
+      "pid": 248,
+      "langcode": "fr"
+    },
+    "field_agenda_txtfs": null,
+    "field_department_city_txtps": "Charleville-Mézières (Ardennes)",
+    "field_description_txtps": "La Cité éducative de Charleville-Mézières : le quartier prioritaire de la Ronde-Couture\r\n7 500 habitants\r\nTaux de pauvreté : 46,9%\r\nRevenu moyen : 550 euros par habitant\r\nPart de la population sans diplôme ou inférieur au Bac : 87,5% (données Insee, 2010)\r\nUne école primaire et deux collège",
+    "field_display_update_date": false,
+    "field_funding_txtpl": null,
+    "field_geocoding": {
+      "address_name": "",
+      "street": "",
+      "zipcode": "",
+      "city": "Charleville-Mézières",
+      "country": "",
+      "additional": "",
+      "lat": 49.768_191,
+      "lon": 4.720_605,
+      "feature": "{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[4.720605,49.768191]},\"properties\":{\"label\":\"Charleville-Mézières\",\"score\":0.7841351948051947,\"id\":\"08105\",\"type\":\"municipality\",\"name\":\"Charleville-Mézières\",\"postcode\":\"08000\",\"citycode\":\"08105\",\"x\":824027.66,\"y\":6964602.11,\"population\":46682,\"city\":\"Charleville-Mézières\",\"context\":\"08, Ardennes, Grand Est\",\"importance\":0.48263}}"
+    },
+    "field_label_txt": "Charleville-Mézières (08)",
+    "field_localization_txtps": "Charleville-Mézières (08)",
+    "field_metatags": null,
+    "field_program_title_txtps": "Programme",
+    "field_program_txtps": "Cités éducatives",
+    "field_teaser_txtps": " Découvez comment le dispositif agit sur ce territoire précurseur labellisé Cité éducative"
+  }
 }
-const drupalProjectArrayDumb: DrupalProjectType[] = [drupalProjectDumb, drupalProjectDumb]
+const drupalProjectArrayDumb: DrupalProject[] = [drupalProjectDumb, drupalProjectDumb]
 
 
-const gristProjectDumb: GristProjectType = {
-
-  title: "Sur les bancs de la Cité éducative de Charleville-Mézières",
-  createdAt: "2020-04-28T21:31:04+00:00",
-  localizationDescription: "La Cité éducative de Charleville-Mézières : le quartier prioritaire de la Ronde-Couture\r\n7 500 habitants\r\nTaux de pauvreté : 46,9%\r\nRevenu moyen : 550 euros par habitant\r\nPart de la population sans diplôme ou inférieur au Bac : 87,5% (données Insee, 2010)\r\nUne école primaire et deux collège",
-  localization: "Charleville-Mézières",
-  geocoding: {
-    lat: 49.768_191,
-    long: 4.720_605
-  },
-  subtitle: " Découvez comment le dispositif agit sur ce territoire précurseur labellisé Cité éducative",
-  program: "Cités éducatives"
+const gristProjectDumb: GristProjectFields = {
+  Titre: "Sur les bancs de la Cité éducative de Charleville-Mézières",
+  Cree_le: new Date("2020-04-28T21:31:04+00:00").getTime(),
+  Presentation_du_territoire: "La Cité éducative de Charleville-Mézières : le quartier prioritaire de la Ronde-Couture\r\n7 500 habitants\r\nTaux de pauvreté : 46,9%\r\nRevenu moyen : 550 euros par habitant\r\nPart de la population sans diplôme ou inférieur au Bac : 87,5% (données Insee, 2010)\r\nUne école primaire et deux collège",
+  Localisation: null,
+  Lattitude: 49.768_191,
+  Longitude: 4.720_605,
+  Sous_titre: " Découvez comment le dispositif agit sur ce territoire précurseur labellisé Cité éducative",
+  Programme: null,
+  drupal_id: '66ef1294-9bcc-4ba4-9ac8-8b9a649bcf2b',
+  drupal_url: 'url de base.fr',
 }
-const gristProjectArrayDumb: GristProjectType[] = [gristProjectDumb, gristProjectDumb]
+const gristProjectArrayDumb: GristProjectFields[] = [gristProjectDumb, gristProjectDumb]
 
 export const drupalProjectsJson = {
   "jsonapi": {

@@ -10,6 +10,7 @@ import { setupDatabaseSecret } from '@sde/cli/commands/secrets/setupDatabaseSecr
 import { createTfVarsFileFromEnvironment } from '@sde/cli/commands/infrastructure/createTfVarsFileFromEnvironment'
 import { listProjectCategories } from '@sde/cli/commands/projects/listCategories'
 import { downloadDrupalProjects } from '@sde/cli/commands/projects/downloadDrupalProjects'
+import { convertDrupalProjectsToGristProjectFields } from '@sde/cli/commands/projects/convertDrupalProjectsToGristProjectFields'
 import { updateShowcases } from '@sde/cli/commands/projects/updateShowcases'
 
 const program = new Command()
@@ -25,6 +26,7 @@ program.addCommand(deactivateGithubDeployment)
 program.addCommand(createTfVarsFileFromEnvironment)
 program.addCommand(listProjectCategories)
 program.addCommand(downloadDrupalProjects)
+program.addCommand(convertDrupalProjectsToGristProjectFields)
 program.addCommand(updateShowcases)
 
 program.parse()
