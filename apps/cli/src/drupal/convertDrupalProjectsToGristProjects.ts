@@ -1,5 +1,6 @@
 import {DrupalProjectType, GristProjectType} from "./Types";
 import {drupalProjectsJson} from "./convertDrupalProjectsToGristProject.spec";
+import { GristProjectFields } from '@sde/cli/grist/grist'
 
 export const convertDrupalProjectsToGristProjects = (drupalProjectArray: DrupalProjectType[]) : GristProjectType[] => {
     return drupalProjectArray.map(convertToGristProject)
@@ -11,7 +12,7 @@ export const convertJSONToDrupalProjects = (json: typeof drupalProjectsJson) : D
     })
 }
 
-export const convertToGristProject = (drupalProject: DrupalProjectType) : GristProjectType => {
+export const convertToGristProject = (drupalProject: DrupalProjectType) : GristProjectFields => {
     return {
         title: drupalProject.title,
         createdAt: drupalProject.created,

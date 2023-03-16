@@ -20,6 +20,8 @@ const emptyStringToNull = <T>(value: T) => typeof value === 'string' && value.tr
 const gristNullableString = z.preprocess(emptyStringToNull, z.string().nullable())
 
 const gristProjectFieldsValidation = z.object({
+  drupal_id: gristNullableString,
+  drupal_url: gristNullableString,
   Programme: z.number().int(),
   Localisation: z.number().int(),
   Titre: gristNullableString,
@@ -48,7 +50,8 @@ const gristProjectFieldsValidation = z.object({
   // TODO Type this
   // e.g. Acteur_local_1_image: [ 'L', 4 ],
   Acteur_local_2_image: gristRelationshipValidation.nullable(),
-  Le: z.number(),
+  Le: z.number().nullable(),
+  Cree_le: z.number().nullable(),
   // TODO Type this
   // e.g. Acteur_local_1_image: [ 'L', 4 ],
   Partenaire_1_image: gristRelationshipValidation.nullable(),
@@ -142,7 +145,6 @@ export const listProjectRecords = async (): Promise<GristProject[]> => {
    * To be type safe and resistant to Grist changes in table structures, we parse input
    */
   const { records } = gristRecordsResponse.parse(response.data)
-
 
   const projects = records.map((record, index) => {
     const parsed = gristProjectValidation.safeParse(record)
