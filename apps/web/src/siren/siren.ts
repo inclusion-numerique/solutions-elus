@@ -17,18 +17,19 @@ export type Etablissement = {
 
 export const searchCommunity = async (
   searchQuery: string,
-) => {
+): Promise<SirenCommunitySearchResponse> => {
   const basequery = `https://aides-territoires.beta.gouv.fr/api/perimeters/?q=${encodeURIComponent(
     `"${searchQuery.trim()}"`,
   )}&is_visible_to_users=true&is_non_obsolete=true`
 
-  const result = await axios.get<SirenCommunitySearchResponse>(basequery, {
+  const result = await axios.get(basequery, {
     headers: {
       Accept: 'application/json',
     },
   })
 
   if (result.status !== 200) {
+    console.error(result.statusText)
     // TODO Sentry
     throw new Error(
       `Impossible de se connecter au registre SIRENE. Merci de réessayer ultérieurement.`,

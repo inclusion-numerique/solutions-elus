@@ -1,5 +1,11 @@
 const { withSentryConfig } = require('@sentry/nextjs')
 const packageJson = require('./package.json')
+const bundleAnalyzer = require('@next/bundle-analyzer')
+
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: false,
+  openAnalyzer: false,
+})
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -107,4 +113,6 @@ const sentryWebpackPluginOptions = {
   silent: isDev, // Suppresses all logs
 }
 
-module.exports = withSentryConfig(nextConfig, sentryWebpackPluginOptions)
+module.exports = withBundleAnalyzer(
+  withSentryConfig(nextConfig, sentryWebpackPluginOptions),
+)

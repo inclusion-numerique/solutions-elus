@@ -44,7 +44,7 @@ export const ProjectCard = forwardRef(
           </picture>
           <div className={`${styles.content} fr-p-8v`}>
             <p
-              className="fr-hint-text fr-mb-0"
+              className='fr-hint-text fr-mb-0'
               style={{ color: 'var(--text-mention-grey' }}
             >
               <span className="fr-mr-1w fr-icon--sm fr-icon-map-pin-2-line" />
@@ -56,12 +56,12 @@ export const ProjectCard = forwardRef(
               {title}
             </h6>
             <ul
-              className="fr-tags-group fr-mt-4v fr-mb-0"
+              className='fr-tags-group fr-mt-4v fr-mb-0'
               style={{ flexGrow: 1 }}
             >
               {tags.map((tag) => (
                 <li key={tag} style={{ lineHeight: '32px' }}>
-                  <p className="fr-tag fr-tag--sm">{tag}</p>
+                  <p className='fr-tag fr-tag--sm'>{tag}</p>
                 </li>
               ))}
             </ul>

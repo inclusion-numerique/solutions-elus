@@ -1,17 +1,13 @@
 import Link from 'next/link'
-import styles from './PublicLayout.module.css'
+import styles from './styles.module.css'
 import { categories, categoryProjectsLink } from '@sde/web/anctProjects'
 import { Showcase } from '@sde/web/app/(public)/Showcase'
 import { getShowcaseProjects } from '@sde/web/legacyProject/showcaseProjects'
-import { headers } from 'next/headers'
 
 // Revalidate this page every day
 export const revalidate = 86_400
 
 export default async function HomePage() {
-  // Disable static generation
-  headers()
-
   const projects = await getShowcaseProjects()
   return (
     <>
@@ -49,7 +45,7 @@ export default async function HomePage() {
             <div className="fr-hidden fr-unhidden-md fr-pl-4w">
               <div
                 title="Photographie d'un village français"
-                className={`${styles['aside-cover']}`}
+                className={`${styles.asideCover}`}
               />
             </div>
           </div>

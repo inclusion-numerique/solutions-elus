@@ -1,4 +1,3 @@
-/* eslint react/jsx-props-no-spreading: 0 */
 import { FieldErrorsImpl, FieldValues, UseFormRegister } from 'react-hook-form'
 import { FieldPath } from 'react-hook-form/dist/types/path'
 import { addAsterisk } from '@sde/web/form/addAsterisk'

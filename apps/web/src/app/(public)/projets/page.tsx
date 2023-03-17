@@ -1,4 +1,4 @@
-import styles from '@sde/web/app/(public)/PublicLayout.module.css'
+import styles from '@sde/web/app/(public)/styles.module.css'
 import { ProjectsListContainer } from '@sde/web/app/(public)/projets/ProjectsListContainer'
 import { getProjectsList } from '@sde/web/legacyProject/projectsList'
 import { Category } from '@sde/web/anctProjects'
@@ -22,7 +22,7 @@ const ProjectsPage = async ({
 
   return (
     <>
-      <div className={`${styles['with-image-background']} fr-pb-20v`}>
+      <div className={`${styles.withImageBackground} fr-pb-20v`}>
         <div
           className="fr-container fr-py-20v"
           style={{ position: 'relative' }}
@@ -30,7 +30,7 @@ const ProjectsPage = async ({
           <div className="fr-grid-row fr-grid-row--center">
             <div className="fr-col-12 fr-col-md-10 fr-col-lg-8">
               <h1
-                className={`fr-display--xs  fr-mb-0 ${styles['title-on-background']}`}
+                className={`fr-display--xs  fr-mb-0 ${styles.titleOnBackground}`}
               >
                 Retrouvez ici les projets et réalisations des collectivités
               </h1>
