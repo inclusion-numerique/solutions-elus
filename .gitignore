@@ -54,3 +54,5 @@ storybook-static
 
 # Temporary only
 /mssweb
+
+apps/web/public/images/grist-attachments/
