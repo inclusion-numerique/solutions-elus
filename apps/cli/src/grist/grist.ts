@@ -1,11 +1,26 @@
 import { ServerWebAppConfig } from '@sde/web/webAppConfig'
-import {ZodObject} from 'zod'
+import z, { ZodType } from 'zod'
 import axios from 'axios'
 import FormData from 'form-data'
 import { output } from '@sde/cli/output'
-import { convertGristProjectToModel, convertGristProgramToModel, convertGristLocalisationToModel } from './convertGristProjectToModel'
-import { grisLocalisationValidation, grisProgramValidation, grisThematiqueValidation, GristLocalisation, GristProgram, GristProject, GristProjectFields, gristProjectFieldsValidation, gristProjectValidation, gristRecordsResponse, GristThematique } from './grist.type'
-
+import {
+  convertGristLocalisationToModel,
+  convertGristProgramToModel,
+  convertGristProjectToModel,
+} from './convertGristProjectToModel'
+import {
+  grisLocalisationValidation,
+  grisProgramValidation,
+  grisThematiqueValidation,
+  GristLocalisation,
+  GristProgram,
+  GristProject,
+  GristProjectFields,
+  gristProjectFieldsValidation,
+  gristProjectValidation,
+  gristRecordsResponse,
+  GristThematique,
+} from './grist.type'
 
 export const uploadAttachments = async (upload: FormData): Promise<number[]> =>
   new Promise<number[]>((resolve, reject) => {
@@ -43,13 +58,16 @@ export const uploadAttachments = async (upload: FormData): Promise<number[]> =>
     )
   })
 
-export const createProjectRecords = async (data: GristProjectFields[]): Promise<void> => {
-
-  const parsedData = data.map((item) => gristProjectFieldsValidation.parse(item))
+export const createProjectRecords = async (
+  data: GristProjectFields[],
+): Promise<void> => {
+  const parsedData = data.map((item) =>
+    gristProjectFieldsValidation.parse(item),
+  )
 
   const url = `https://grist.incubateur.anct.gouv.fr/api/docs/${ServerWebAppConfig.Grist.documentId}/tables/${ServerWebAppConfig.Grist.tableId}/records`
 
-  const payload = { records: parsedData.map(fields => ({ fields })) }
+  const payload = { records: parsedData.map((fields) => ({ fields })) }
 
   await axios.post(url, payload, {
     headers: {
@@ -58,7 +76,10 @@ export const createProjectRecords = async (data: GristProjectFields[]): Promise<
   })
 }
 
-const listRecords = async <T>(table: string, validation: ZodObject<any>): Promise<T[]> => {
+const listRecords = async <T extends ZodType>(
+  table: string,
+  validation: T,
+): Promise<z.infer<T>[]> => {
   const url = `https://grist.incubateur.anct.gouv.fr/api/docs/${ServerWebAppConfig.Grist.documentId}/tables/${table}/records`
 
   const response = await axios.get<{ records: unknown[] }>(url, {
@@ -88,20 +109,30 @@ const listRecords = async <T>(table: string, validation: ZodObject<any>): Promis
   return projects
 }
 
-export const listThematiques = async (): Promise<GristThematique[]> => listRecords(ServerWebAppConfig.Grist.thematiqueTableId, grisThematiqueValidation)
+export const listThematiques = (): Promise<GristThematique[]> =>
+  listRecords(
+    ServerWebAppConfig.Grist.thematiqueTableId,
+    grisThematiqueValidation,
+  )
 
-export const listPrograms = async (): Promise<GristProgram[]> => listRecords(ServerWebAppConfig.Grist.programTableId, grisProgramValidation)
+export const listPrograms = (): Promise<GristProgram[]> =>
+  listRecords(ServerWebAppConfig.Grist.programTableId, grisProgramValidation)
 
-export const listLocalisations = async (): Promise<GristLocalisation[]> => listRecords(ServerWebAppConfig.Grist.localisationTableId, grisLocalisationValidation)
+export const listLocalisations = (): Promise<GristLocalisation[]> =>
+  listRecords(
+    ServerWebAppConfig.Grist.localisationTableId,
+    grisLocalisationValidation,
+  )
 
-export const listProjectRecords = async (): Promise<GristProject[]> => listRecords(ServerWebAppConfig.Grist.tableId, gristProjectValidation)
+export const listProjectRecords = (): Promise<GristProject[]> =>
+  listRecords(ServerWebAppConfig.Grist.tableId, gristProjectValidation)
 
 export const insertInDataBase = async (
-    projects: GristProject[],
-    localisations: GristLocalisation[],
-    programs: GristProgram[],
-    thematiques: GristThematique[]
-  ) => {
+  projects: GristProject[],
+  localisations: GristLocalisation[],
+  programs: GristProgram[],
+  thematiques: GristThematique[],
+) => {
   if (!prismaClient) {
     return
   }
@@ -113,15 +144,15 @@ export const insertInDataBase = async (
     prismaClient.program.deleteMany(),
     prismaClient.localization.createMany({
       data: convertGristLocalisationToModel(localisations),
-      skipDuplicates: true
+      skipDuplicates: true,
     }),
     prismaClient.program.createMany({
       data: convertGristProgramToModel(programs),
-      skipDuplicates: true
+      skipDuplicates: true,
     }),
     prismaClient.project.createMany({
       data: convertGristProjectToModel(projects, thematiques),
-      skipDuplicates: true
-    })
+      skipDuplicates: true,
+    }),
   ])
-} 
+}
