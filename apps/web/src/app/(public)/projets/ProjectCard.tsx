@@ -1,7 +1,3 @@
-import {
-  legacyProjectImageUrl,
-  legacyProjectUrl,
-} from '@sde/web/projethoteque/legacyProjects'
 import styles from './ProjectCard.module.css'
 import { CSSProperties, ForwardedRef, forwardRef } from 'react'
 import { ProjectListItem } from '@sde/web/legacyProject/projectsList'
@@ -17,7 +13,7 @@ export const ProjectCard = forwardRef(
         district,
         id,
         title,
-        city,
+        localization,
         coverImage,
         coverImageAlt,
         slug,
@@ -28,7 +24,7 @@ export const ProjectCard = forwardRef(
     },
     ref: ForwardedRef<HTMLLIElement>,
   ) => {
-    const tags = [district, program, ...categories].filter(
+    const tags = [district, program?.name, ...categories].filter(
       (tag): tag is string => !!tag,
     )
 
@@ -42,7 +38,7 @@ export const ProjectCard = forwardRef(
           <picture className={styles.picture}>
             <img
               id={`${id}__image`}
-              src={legacyProjectImageUrl(coverImage)}
+              src={`/images/grist-attachments/${coverImage}`}
               alt={coverImageAlt ?? `Photo illustrant le projet "${title}"`}
             />
           </picture>
@@ -52,7 +48,9 @@ export const ProjectCard = forwardRef(
               style={{ color: 'var(--text-mention-grey' }}
             >
               <span className="fr-mr-1w fr-icon--sm fr-icon-map-pin-2-line" />
-              {city}
+              {`${localization.label}${
+                localization.department ? ` (${localization.department})` : ''
+              }`}
             </p>
             <h6 className={`fr-mt-4v fr-mb-0 fr-text--lg ${styles.title}`}>
               {title}
@@ -67,7 +65,7 @@ export const ProjectCard = forwardRef(
                 </li>
               ))}
             </ul>
-            <p className="fr-link fr-link--icon-right fr-icon-external-link-line fr-mt-4v">
+            <p className="fr-link fr-link--icon-right fr-mt-4v">
               Voir le projet
             </p>
           </div>

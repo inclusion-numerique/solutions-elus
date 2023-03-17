@@ -109,7 +109,7 @@ const ProjectCard = forwardRef<
         <div className={`fr-px-5w fr-py-10v ${styles['card-content']}`}>
           <p
             className="fr-hint-text"
-            style={{ color: 'var(--text-mention-grey' }}
+            style={{ color: 'var(--text-mention-grey)' }}
           >
             <span className="fr-mr-1w fr-icon--sm fr-icon-map-pin-2-line" />
             {city}

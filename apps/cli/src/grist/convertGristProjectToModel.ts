@@ -40,9 +40,6 @@ export const convertGristProjectToModel = (
     .map(thematique => thematique?.fields.nom)
     .filter(x => x !== undefined) as string[] || [] ,
   description: project.fields.Texte || "",
-  goals: project.fields.Objectifs || "",
-  characteristics: project.fields.Specificites || "",
-  funding: project.fields.Partenaires_et_cofinanceurs,
   budget: project.fields.Budget,
   inaugurationDate:project.fields.Calendrier ? new Date(project.fields.Calendrier * 1000) : new Date(),
   localActor1Name : project.fields.Acteur_local_1_nom,
