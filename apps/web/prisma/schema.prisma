@@ -109,18 +109,17 @@ model Project {
   gristId Int? @unique
 
   // If showcase is set, the project will appear on home page shocases, ordered by showcase integer value
-  showcase                Int?
+  showcase Int?
 
   coverImage              String
   coverImageAlt           String?
-  slug                    String    @unique
-  localActorQuotes        Quote[]   @relation(name: "local_actor_quotes")
-  partnerQuotes           Quote[]   @relation(name: "partner_quotes")
+  slug                    String       @unique
   district                String?
   city                    String?
   title                   String
   subtitle                String
-  localization            String
+  localizationId          Int
+  localization            Localization @relation(fields: [localizationId], references: [gristId])
   localizationDescription String?
   goals                   String[]
   characteristics         String[]
@@ -129,10 +128,24 @@ model Project {
   funding                 String?
   inaugurationDate        DateTime?
 
-  latitude         Float?
-  longitude        Float?
-  program          String?
-  categories       String[]
+  latitude   Float?
+  longitude  Float?
+  programId  Int
+  program    Program  @relation(fields: [programId], references: [gristId])
+  categories String[]
+
+  localActor1Name  String?
+  localActor1Text  String?
+  localActor1Image String?
+  localActor2Name  String?
+  localActor2Text  String?
+  localActor2Image String?
+  partner1Name     String?
+  partner1Text     String?
+  partner1Image    String?
+  partner2Name     String?
+  partner2Text     String?
+  partner2Image    String?
 
   createdBy String?
   created   DateTime @default(now())
@@ -140,17 +153,32 @@ model Project {
   updated   DateTime @default(now())
 }
 
-model Quote {
+model Localization {
   id String @id @default(uuid()) @db.Uuid
 
-  localQuoteForId String?  @db.Uuid
-  localQuoteFor   Project? @relation(name: "local_actor_quotes", fields: [localQuoteForId], references: [id])
+  // If imported from grist (maybe we'll have other sources of projects)
+  gristId Int @unique
 
-  partnerQuoteForId String?  @db.Uuid
-  partnerQuoteFor   Project? @relation(name: "partner_quotes", fields: [partnerQuoteForId], references: [id])
+  label      String
+  insee      String?
+  echelon    String
+  department String?
+  region     String?
+  population Int?
+  siren      String
+  nature     String
+  ncc        String
+  Project    Project[]
+}
 
-  order   Int
-  by      String
-  content String
-  image   String
+model Program {
+  id String @id @default(uuid()) @db.Uuid
+
+  // If imported from grist (maybe we'll have other sources of projects)
+  gristId Int @unique
+
+  politique  String
+  name       String?
+  territoire String[]
+  Project    Project[]
 }

@@ -2,7 +2,7 @@ import fs from "node:fs"
 import { Command } from '@commander-js/extra-typings'
 import { output } from '@sde/cli/output'
 import { gristOutputFile } from "./convertDrupalProjectsToGristProjectFields"
-import { insertInDataBase, listProjectRecords } from "@sde/cli/grist/grist"
+import { insertInDataBase, listLocalisations, listPrograms, listProjectRecords } from "@sde/cli/grist/grist"
 
 export const downloadGristProjectFields = new Command()
   .command('projects:grist:download')
@@ -13,8 +13,10 @@ export const downloadGristProjectFields = new Command()
       return
     }
     
-    const gristProjects = await listProjectRecords()
+    const [gristProjects, localisations, programs] = await Promise.all(
+      [listProjectRecords(), listLocalisations(), listPrograms()]
+    )
 
-    await insertInDataBase(gristProjects)
+    insertInDataBase(gristProjects, localisations, programs)
     output(`${gristProjects.length} projects downloaded from grist`)
   })

@@ -2,7 +2,8 @@ import fs from "node:fs"
 import { Command } from '@commander-js/extra-typings'
 import { output } from '@sde/cli/output'
 import { gristOutputFile } from "./convertDrupalProjectsToGristProjectFields"
-import { createProjectRecords, GristProjectFields, listProjectRecords } from "@sde/cli/grist/grist"
+import { createProjectRecords, listProjectRecords } from "@sde/cli/grist/grist"
+import { GristProjectFields } from "@sde/cli/grist/grist.type"
 
 export const uploadGristProjectFields = new Command()
   .command('projects:grist:upload')

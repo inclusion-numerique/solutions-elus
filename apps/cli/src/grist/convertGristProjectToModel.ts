@@ -1,4 +1,24 @@
-import { GristProject } from "./grist";
+import { GristLocalisation, GristProgram, GristProject } from "./grist.type";
+
+export const convertGristLocalisationToModel = (localisations: GristLocalisation[]) => localisations.map(localisation => ({
+  gristId: localisation.id,
+  label: localisation.fields.lib_groupement,
+  insee: localisation.fields.insee_geo,
+  echelon: localisation.fields.echelon_geo,
+  department: localisation.fields.insee_dep,
+  region: localisation.fields.insee_reg,
+  population: localisation.fields.population,
+  siren: localisation.fields.siren_groupement.toString(),
+  nature: localisation.fields.nature_juridique,
+  ncc: localisation.fields.NCC,
+}))
+
+export const convertGristProgramToModel = (programs: GristProgram[]) => programs.map(program => ({
+  gristId: program.id,
+  politique: program.fields.politique_publique,
+  name: program.fields.nom_programme,
+  territoire: program.fields.territoire,
+}))
 
 export const convertGristProjectToModel = (projects: GristProject[]) => projects.map(project => ({
   gristId: project.id,
@@ -6,8 +26,8 @@ export const convertGristProjectToModel = (projects: GristProject[]) => projects
   coverImage: "",
   title: project.fields.Titre || "",
   subtitle: project.fields.Sous_titre || "",
-  program: project.fields.Programme,
-  localization: project.fields.Localisation || "",
+  programId: project.fields.Programme,
+  localizationId: project.fields.Localisation || "",
   latitude: project.fields.Lattitude,
   longitude: project.fields.Longitude,
   localizationDescription: project.fields.Presentation_du_territoire,
