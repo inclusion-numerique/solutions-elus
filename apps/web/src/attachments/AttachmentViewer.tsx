@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react'
-import 'react-inner-image-zoom/lib/InnerImageZoom/styles.min.css'
 import { Spinner } from '@sde/web/ui/Spinner'
 import axios from 'axios'
 import { AttachmentUploadApiResponse } from '@sde/web/pages/api/file/upload'
+import * as Sentry from '@sentry/nextjs'
 
 export const AttachmentViewer = ({
   key,
-  type,
   name,
 }: {
   key: string
@@ -22,6 +21,11 @@ export const AttachmentViewer = ({
       })
       .then((response) => response.data.url)
       .then(setAssetUrl)
+      .catch((error) => {
+        Sentry.captureException(error, {
+          extra: { feature: 'AttachmentViewer' },
+        })
+      })
   }, [key])
 
   if (!assetUrl) {

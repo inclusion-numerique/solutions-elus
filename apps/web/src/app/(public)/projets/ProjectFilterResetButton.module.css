@@ -1,4 +1,4 @@
-.projectFilterResetButton {
+.button {
   &:hover {
     text-decoration: underline;
   }

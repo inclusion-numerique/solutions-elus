@@ -115,7 +115,7 @@ importers:
       js-cookie: ^3.0.1
       js-file-downloader: ^1.1.24
       modclean: ^3.0.0-beta.1
-      nanoid: ^4.0.1
+      nanoid: ^3.3.4
       next: ^13.2.4
       next-auth: ^4.20.1
       node-html-parser: ^6.1.5
@@ -182,7 +182,7 @@ importers:
       form-data: 4.0.0
       js-cookie: 3.0.1
       js-file-downloader: 1.1.24
-      nanoid: 4.0.1
+      nanoid: 3.3.4
       next: 13.2.4_biqbaboplfbrettd7655fr4n2y
       next-auth: 4.20.1_3tbpwx46tlrk4rci3doelizria
       node-html-parser: 6.1.5
@@ -5907,7 +5907,7 @@ packages:
       '@storybook/csf-plugin': 7.0.0-rc.3
       '@storybook/csf-tools': 7.0.0-rc.3
       '@storybook/global': 5.0.0
-      '@storybook/mdx2-csf': 1.0.0-next.5
+      '@storybook/mdx2-csf': 1.0.0-next.6
       '@storybook/node-logger': 7.0.0-rc.3
       '@storybook/postinstall': 7.0.0-rc.3
       '@storybook/preview-api': 7.0.0-rc.3
@@ -6576,8 +6576,8 @@ packages:
     resolution: {integrity: sha512-8Q/vpHkvWQ/fZHRPFOgGC4Qhgpmafe9GV2QKk3yRA/p9zcW4UzP9fbL4qw6tq+5GLM/kFKArBu28ZA7L7sKB9A==}
     dev: false
 
-  /@storybook/mdx2-csf/1.0.0-next.5:
-    resolution: {integrity: sha512-02w0sgGZaK1agT050yCVhJ+o4rLHANWvLKWjQjeAsYbjneLC5ITt+3GDB4jRiWwJboZ8dHW1fGSK1Vg5fA34aQ==}
+  /@storybook/mdx2-csf/1.0.0-next.6:
+    resolution: {integrity: sha512-m6plojocU/rmrqWd26yvm8D+oHZPZ6PtSSFmZIgpNDEPVmc8s4fBD6LXOAB5MiPI5f8KLUr2HVhOMZ97o5pDTw==}
     dev: false
 
   /@storybook/nextjs/7.0.0-rc.3_ygqkwb4gg3aean7xjfdauovyqq:
@@ -15143,12 +15143,6 @@ packages:
     resolution: {integrity: sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
-
-  /nanoid/4.0.1:
-    resolution: {integrity: sha512-udKGtCCUafD3nQtJg9wBhRP3KMbPglUsgV5JVsXhvyBs/oefqb4sqMEhKBBgqZncYowu58p1prsZQBYvAj/Gww==}
-    engines: {node: ^14 || ^16 || >=18}
-    hasBin: true
-    dev: false
 
   /napi-build-utils/1.0.2:
     resolution: {integrity: sha512-ONmRUqK7zj7DWX0D9ADe03wbwOBZxNAfF20PlGfCWQcD3+/MakShIHrMqx9YwPTfxDdF1zLeL+RGZiR9kGMLdg==}
