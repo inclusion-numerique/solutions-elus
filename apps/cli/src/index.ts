@@ -12,6 +12,7 @@ import { listProjectCategories } from '@sde/cli/commands/projects/listCategories
 import { downloadDrupalProjects } from '@sde/cli/commands/projects/downloadDrupalProjects'
 import { convertDrupalProjectsToGristProjectFields } from '@sde/cli/commands/projects/convertDrupalProjectsToGristProjectFields'
 import { uploadGristProjectFields } from '@sde/cli/commands/projects/uploadGristProjectFields'
+import { downloadGristProjectFields } from '@sde/cli/commands/projects/downloadGristProjectFields'
 import { updateShowcases } from '@sde/cli/commands/projects/updateShowcases'
 
 const program = new Command()
@@ -29,6 +30,7 @@ program.addCommand(listProjectCategories)
 program.addCommand(downloadDrupalProjects)
 program.addCommand(convertDrupalProjectsToGristProjectFields)
 program.addCommand(uploadGristProjectFields)
+program.addCommand(downloadGristProjectFields)
 program.addCommand(updateShowcases)
 
 program.parse()
