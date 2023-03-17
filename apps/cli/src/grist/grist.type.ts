@@ -17,8 +17,8 @@ const gristNullableString = z.preprocess(emptyStringToNull, z.string().nullable(
 export const gristProjectFieldsValidation = z.object({
   drupal_id: gristNullableString,
   drupal_url: gristNullableString,
-  Programme: gristNullableString,
-  Localisation: gristNullableString,
+  Programme: z.number(),
+  Localisation: z.number(),
   Titre: gristNullableString,
   Sous_titre: gristNullableString,
   // TODO Type this
@@ -59,7 +59,7 @@ export const gristProjectFieldsValidation = z.object({
   // TODO Type this
   // e.g. Acteur_local_1_image: [ 'L', 4 ],
   Partenaire_2_image: gristRelationshipValidation.nullable().optional(),
-  Population: gristNullableString,
+  Population: z.number().nullable(),
   Region: gristNullableString,
   Lattitude: z.number().nullable(),
   Longitude: z.number().nullable(),
@@ -98,6 +98,13 @@ export const grisProgramValidation = z.object({
   fields: gristProgramFieldsValidation,
 })
 
+export const grisThematiqueValidation = z.object({
+  id: z.number().int(),
+  fields: z.object({
+    nom: z.string()
+  }),
+})
+
 export type GristProjectFields = z.infer<typeof gristProjectFieldsValidation>
 
 export type GristProject = z.infer<typeof gristProjectValidation>
@@ -105,3 +112,5 @@ export type GristProject = z.infer<typeof gristProjectValidation>
 export type GristLocalisation = z.infer<typeof grisLocalisationValidation>
 
 export type GristProgram = z.infer<typeof grisProgramValidation>
+
+export type GristThematique = z.infer<typeof grisThematiqueValidation>

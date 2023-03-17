@@ -130,8 +130,8 @@ model Project {
 
   latitude   Float?
   longitude  Float?
-  programId  Int
-  program    Program  @relation(fields: [programId], references: [gristId])
+  programId  Int?
+  program    Program? @relation(fields: [programId], references: [gristId])
   categories String[]
 
   localActor1Name  String?

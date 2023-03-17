@@ -1,4 +1,4 @@
-import { GristLocalisation, GristProgram, GristProject } from "./grist.type";
+import { GristLocalisation, GristProgram, GristProject, GristThematique } from "./grist.type";
 
 export const convertGristLocalisationToModel = (localisations: GristLocalisation[]) => localisations.map(localisation => ({
   gristId: localisation.id,
@@ -20,18 +20,21 @@ export const convertGristProgramToModel = (programs: GristProgram[]) => programs
   territoire: program.fields.territoire,
 }))
 
-export const convertGristProjectToModel = (projects: GristProject[]) => projects.map(project => ({
+export const convertGristProjectToModel = (projects: GristProject[], thematiques: GristThematique[]) => projects.map(project => ({
   gristId: project.id,
   slug: project.fields.drupal_url ? project.fields.drupal_url.replace('https://agence-cohesion-territoires.gouv.fr/', '') : "",
   coverImage: "",
   title: project.fields.Titre || "",
   subtitle: project.fields.Sous_titre || "",
-  programId: project.fields.Programme,
-  localizationId: project.fields.Localisation || "",
+  programId: project.fields.Programme || null,
+  localizationId: project.fields.Localisation,
   latitude: project.fields.Lattitude,
   longitude: project.fields.Longitude,
   localizationDescription: project.fields.Presentation_du_territoire,
-  categories: [],
+  categories: project.fields.Thematiques?.filter((thematique, index) => index !== 0)
+    .map(thematique => thematiques.find(x => x.id === thematique))
+    .map(thematique => thematique?.fields.nom)
+    .filter(x => x !== undefined) as string[] || [] ,
   description: project.fields.Texte || "",
   goals: project.fields.Objectifs || "",
   characteristics: project.fields.Specificites || "",
