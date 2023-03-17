@@ -1,13 +1,13 @@
-import styles from '@sde/web/app/(public)/styles.module.css'
+import styles from '@sde/web/app/(public)/PublicLayout.module.css'
 import ShareProjectForm from '@sde/web/app/(public)/ShareProjectForm'
 
 export default function ProjectPage() {
   return (
-    <div className={`${styles.withImageBackground}`}>
+    <div className={`${styles['with-image-background']}`}>
       <div className="fr-container fr-py-20v" style={{ position: 'relative' }}>
         <div className="fr-grid-row fr-grid-row--center">
           <div className="fr-col-12 fr-col-md-10 fr-col-lg-8">
-            <h1 className={`fr-display--xs ${styles.titleOnBackground}`}>
+            <h1 className={`fr-display--xs ${styles['title-on-background']}`}>
               Ensemble, partageons les solutions des territoires
             </h1>
             <ShareProjectForm />

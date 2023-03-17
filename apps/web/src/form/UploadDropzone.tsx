@@ -1,5 +1,7 @@
 'use client'
 
+/* eslint react/jsx-props-no-spreading: 0 */
+
 import { Control, Controller, FieldValues } from 'react-hook-form'
 import { FieldPath } from 'react-hook-form/dist/types/path'
 import { ChangeEventHandler, HTMLInputTypeAttribute } from 'react'

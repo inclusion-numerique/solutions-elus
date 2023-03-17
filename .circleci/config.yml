@@ -19,7 +19,7 @@ executors:
 parameters:
   cache_version:
     type: string
-    default: '2023-03-11-02'
+    default: '2023-03-16-01'
   virtual_store_dir:
     type: string
     default: './.pnpm'
@@ -379,10 +379,6 @@ jobs:
           name: Set deployment status to fixtures load
           command: pnpm --silent cli github:deployment:update $DEPLOYMENT_ID in_progress -d 'Loading fixtures' -l https://app.circleci.com/pipelines/workflows/$CIRCLE_WORKFLOW_ID
       - run:
-          name: 'Load fixtures'
-          command: |
-            pnpm --silent cli fixtures:load
-      - run:
           name: Set deployment status to success
           command: pnpm --silent cli github:deployment:update $DEPLOYMENT_ID success -d 'Deploy successful' -u https://$WEB_BASE_URL -l https://app.circleci.com/pipelines/workflows/$CIRCLE_WORKFLOW_ID
       - run:
@@ -493,9 +489,13 @@ commands:
   add_secrets_to_dotenv_file:
     steps:
       - run:
+          name: "Add ci secrets to .env"
+          command: |
+            SCW_ACCESS_KEY=$CI_SCW_ACCESS_KEY SCW_SECRET_KEY=$CI_SCW_SECRET_KEY pnpm --silent cli dotenv:from-secrets ci
+      - run:
           name: "Add project secrets to .env"
           command: |
-            SCW_ACCESS_KEY=$CI_SCW_ACCESS_KEY SCW_SECRET_KEY=$CI_SCW_SECRET_KEY pnpm --silent cli dotenv:from-secrets project
+            pnpm --silent cli dotenv:from-secrets project
       - run:
           name: "Add web secrets to .env"
           command: |
