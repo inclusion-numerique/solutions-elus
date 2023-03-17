@@ -11,7 +11,7 @@ export const ProjectFilterResetButton = ({
 }) => (
   <button
     type="button"
-    className={`fr-link fr-link--sm fr-mt-8v ${styles.projectFilterResetButton}`}
+    className={`fr-link fr-link--sm fr-mt-8v ${styles.button}`}
     onClick={onClick}
     style={{
       cursor: 'pointer',
