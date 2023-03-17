@@ -55,5 +55,9 @@ const temporarilyDisabledRules = [
 // eslint-disable-next-line unicorn/prefer-module
 module.exports = {
   extends: ['next/core-web-vitals'],
-  rules: { ...Object.fromEntries(temporarilyDisabledRules) },
+  rules: {
+    ...Object.fromEntries(temporarilyDisabledRules),
+    // __dirname is fine for now
+    'unicorn/prefer-module': 'off',
+  },
 }

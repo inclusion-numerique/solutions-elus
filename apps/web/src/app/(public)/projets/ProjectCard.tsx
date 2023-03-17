@@ -2,7 +2,7 @@ import {
   legacyProjectImageUrl,
   legacyProjectUrl,
 } from '@sde/web/projethoteque/legacyProjects'
-import styles from './styles.module.css'
+import styles from './ProjectCard.module.css'
 import { CSSProperties, ForwardedRef, forwardRef } from 'react'
 import { ProjectListItem } from '@sde/web/legacyProject/projectsList'
 import Link from 'next/link'

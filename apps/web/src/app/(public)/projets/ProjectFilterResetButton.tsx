@@ -9,8 +9,9 @@ export const ProjectFilterResetButton = ({
   hidden: boolean
   onClick: () => void
 }) => (
-  <p
-    className={`fr-link fr-link--sm fr-mt-8v ${styles.projectFilterResetButton}`}
+  <button
+    type="button"
+    className={`fr-link fr-link--sm fr-mt-8v ${styles.button}`}
     onClick={onClick}
     style={{
       cursor: 'pointer',
@@ -19,5 +20,5 @@ export const ProjectFilterResetButton = ({
     }}
   >
     {label}
-  </p>
+  </button>
 )
