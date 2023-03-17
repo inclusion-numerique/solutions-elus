@@ -6,13 +6,13 @@ import { createOutput } from '@sde/cdk/output'
 import { ScalewayProvider } from '@sde/scaleway/provider'
 import { RdbInstance } from '@sde/scaleway/rdb-instance'
 import { ContainerNamespace } from '@sde/scaleway/container-namespace'
-import { TemDomain } from '@sde/scaleway/tem-domain'
 import {
   chromaticAppId,
   containerNamespaceName,
   databaseInstanceName,
   mainDomain,
-  nextTelemetryDisabled, previewDomain,
+  nextTelemetryDisabled,
+  previewDomain,
   publicContactEmail,
   publicSentryDsn,
   region,
@@ -27,6 +27,7 @@ import { ObjectBucket } from '@sde/scaleway/object-bucket'
 import { RegistryNamespace } from '@sde/scaleway/registry-namespace'
 import { Cockpit } from '@sde/scaleway/cockpit'
 import { DataScalewayDomainZone } from '@sde/scaleway/data-scaleway-domain-zone'
+import { DataScalewayTemDomain } from '@sde/scaleway/data-scaleway-tem-domain'
 
 export const projectStackVariables = [
   'SCW_DEFAULT_ORGANIZATION_ID',
@@ -45,7 +46,7 @@ export const projectStackSensitiveVariables = [
   'SMTP_PASSWORD',
   'SMTP_SERVER',
   'SMTP_USERNAME',
-  'GRIST_API_KEY'
+  'GRIST_API_KEY',
 ] as const
 
 /**
@@ -95,7 +96,7 @@ export class ProjectStack extends TerraformStack {
     // If preview domain or email from domain differ, create different zones for those
     const emailDomainZone = mainDomainZone
 
-    const transactionalEmailDomain = new TemDomain(
+    const transactionalEmailDomain = new DataScalewayTemDomain(
       this,
       'transactionalEmailDomain',
       {
@@ -153,9 +154,9 @@ export class ProjectStack extends TerraformStack {
         SCW_SECRET_KEY: sensitiveEnvironmentVariables.SCW_SECRET_KEY.value,
         AWS_ACCESS_KEY_ID: sensitiveEnvironmentVariables.SCW_ACCESS_KEY.value,
         AWS_SECRET_ACCESS_KEY:
-          sensitiveEnvironmentVariables.SCW_SECRET_KEY.value,
+        sensitiveEnvironmentVariables.SCW_SECRET_KEY.value,
         SENTRY_AUTH_TOKEN:
-          sensitiveEnvironmentVariables.SENTRY_AUTH_TOKEN.value,
+        sensitiveEnvironmentVariables.SENTRY_AUTH_TOKEN.value,
         SMTP_PASSWORD: sensitiveEnvironmentVariables.SMTP_PASSWORD.value,
         SMTP_SERVER: sensitiveEnvironmentVariables.SMTP_SERVER.value,
         SMTP_USERNAME: sensitiveEnvironmentVariables.SMTP_USERNAME.value,
