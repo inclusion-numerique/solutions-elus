@@ -60,9 +60,9 @@ export const Showcase = ({ projects }: { projects: ShowcaseProject[] }) => {
           Voir tous les projets
         </Link>
       </div>
-      <div className={`fr-pt-12v fr-pb-20v ${styles['showcase-container']}`}>
+      <div className={`fr-pt-12v fr-pb-20v ${styles.showcaseContainer}`}>
         <div
-          className={styles['cards-wrapper']}
+          className={styles.cardsWrapper}
           style={{
             transform: `translateX(${offsetString})`,
           }}
@@ -106,7 +106,7 @@ const ProjectCard = forwardRef<
             alt={coverImageAlt ?? `Photo illustrant le projet "${title}"`}
           />
         </picture>
-        <div className={`fr-px-5w fr-py-10v ${styles['card-content']}`}>
+        <div className={`fr-px-5w fr-py-10v ${styles.cardContent}`}>
           <p
             className="fr-hint-text"
             style={{ color: 'var(--text-mention-grey' }}

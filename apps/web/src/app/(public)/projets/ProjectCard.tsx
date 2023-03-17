@@ -36,7 +36,7 @@ export const ProjectCard = forwardRef(
     return (
       <li style={style} ref={ref}>
         <a
-          className={`fr-mb-4v ${styles['project-card']}`}
+          className={`fr-mb-4v ${styles.projectCard}`}
           href={href}
           title={`Voir le projet "${title}"`}
           target="_blank"

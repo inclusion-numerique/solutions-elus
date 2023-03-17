@@ -24,7 +24,7 @@
   background-image: linear-gradient(rgb(0 0 0 / 30%), rgb(0 0 0 / 30%)),url('/images/village.webp') ;
 }
 
-.with-image-background {
+.withImageBackground {
   position: relative;
   background: var(--background-alt-grey);
 
@@ -41,7 +41,7 @@
   }
 }
 
-.title-on-background {
+.titleOnBackground {
   font-size: 48px;
   line-height: 56px;
   color: white;
@@ -57,7 +57,7 @@
   line-height: 28px;
 }
 
-.aside-cover {
+.asideCover {
   position: absolute;
   top: 0;
   left: 57%;

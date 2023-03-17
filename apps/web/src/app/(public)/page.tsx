@@ -49,7 +49,7 @@ export default async function HomePage() {
             <div className="fr-hidden fr-unhidden-md fr-pl-4w">
               <div
                 title="Photographie d'un village français"
-                className={`${styles['aside-cover']}`}
+                className={`${styles.asideCover}`}
               />
             </div>
           </div>
