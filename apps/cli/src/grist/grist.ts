@@ -83,13 +83,20 @@ export const createProjectRecords = async (
   })
 }
 
+export type ListRecordsOptions = {
+  filter?: Record<string, (string | number | null | boolean)[]>
+}
 const listRecords = async <T extends ZodType>(
   table: string,
   validation: T,
+  options?: ListRecordsOptions,
 ): Promise<z.infer<T>[]> => {
   const url = `https://grist.incubateur.anct.gouv.fr/api/docs/${ServerWebAppConfig.Grist.documentId}/tables/${table}/records`
 
   const response = await axios.get<{ records: unknown[] }>(url, {
+    params: {
+      filter: options?.filter ? JSON.stringify(options.filter) : undefined,
+    },
     headers: {
       Authorization: `Bearer ${ServerWebAppConfig.Grist.apiKey}`,
     },
@@ -125,10 +132,11 @@ export const listThematiques = () =>
 export const listPrograms = () =>
   listRecords(ServerWebAppConfig.Grist.programTableId, grisProgramValidation)
 
-export const listLocalisations = () =>
+export const listLocalisations = (options: ListRecordsOptions) =>
   listRecords(
     ServerWebAppConfig.Grist.localisationTableId,
     grisLocalisationValidation,
+    options,
   )
 
 export const listProjectRecords = () =>
