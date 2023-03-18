@@ -100,7 +100,7 @@ const PublicHeader = () => (
               </Link>
             </li>
             <li>
-              <Link className="fr-btn" href="/projet">
+              <Link className="fr-btn" href="/partager">
                 Partager
               </Link>
             </li>
