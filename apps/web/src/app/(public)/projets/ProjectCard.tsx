@@ -2,9 +2,9 @@ import {
   legacyProjectImageUrl,
   legacyProjectUrl,
 } from '@sde/web/projethoteque/legacyProjects'
-import styles from './ProjectCard.module.css'
 import { CSSProperties, ForwardedRef, forwardRef } from 'react'
 import { ProjectListItem } from '@sde/web/legacyProject/projectsList'
+import styles from './ProjectCard.module.css'
 
 export const ProjectCard = forwardRef(
   (

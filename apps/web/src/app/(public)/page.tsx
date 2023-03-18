@@ -1,9 +1,9 @@
 import Link from 'next/link'
-import styles from './PublicLayout.module.css'
 import { categories, categoryProjectsLink } from '@sde/web/anctProjects'
 import { Showcase } from '@sde/web/app/(public)/Showcase'
 import { getShowcaseProjects } from '@sde/web/legacyProject/showcaseProjects'
 import { headers } from 'next/headers'
+import styles from './PublicLayout.module.css'
 
 // Revalidate this page every day
 export const revalidate = 86_400

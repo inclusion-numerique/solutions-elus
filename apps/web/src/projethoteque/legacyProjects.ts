@@ -45,10 +45,10 @@ export const legacyCategoryToCategory = (
     return 'Développement économique'
   }
 
-  if (legacyCategory == 'Inclusion sociale') {
+  if (legacyCategory === 'Inclusion sociale') {
     return 'Solidarité'
   }
-  if (legacyCategory == 'Ingénierie sur mesure') {
+  if (legacyCategory === 'Ingénierie sur mesure') {
     return 'Infrastructures locales'
   }
 
