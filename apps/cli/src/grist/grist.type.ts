@@ -1,18 +1,23 @@
 import z from 'zod'
 
 export const gristRecordsResponse = z.object({
-  records: z.array(z.object({
-    id: z.number(),
-    fields: z.object({}).passthrough(),
-  })),
+  records: z.array(
+    z.object({
+      id: z.number(),
+      fields: z.object({}).passthrough(),
+    }),
+  ),
 })
 
 // TODO Type this
 // e.g. Visuel: [ 'L', 6 ],
 const gristRelationshipValidation = z.tuple([z.string()]).rest(z.number())
 
-const emptyStringToNull = <T>(value: T) => typeof value === 'string' && value.trim() === '' ? null : value
-const gristNullableString = z.preprocess(emptyStringToNull, z.string().nullable()).optional()
+const emptyStringToNull = <T>(value: T) =>
+  typeof value === 'string' && value.trim() === '' ? null : value
+const gristNullableString = z
+  .preprocess(emptyStringToNull, z.string().nullable())
+  .optional()
 
 export const gristProjectFieldsValidation = z.object({
   drupal_id: gristNullableString,
@@ -52,7 +57,12 @@ export const gristProjectFieldsValidation = z.object({
   Partenaire_1_image: gristRelationshipValidation.nullable().optional(),
   Partenaire_1_nom: gristNullableString,
   Partenaire_1_texte: gristNullableString,
-  Type_de_collectivite: z.preprocess(emptyStringToNull, z.enum(['commune', 'departement', 'epci', 'region']).nullable()).optional(),
+  Type_de_collectivite: z
+    .preprocess(
+      emptyStringToNull,
+      z.enum(['commune', 'departement', 'epci', 'region']).nullable(),
+    )
+    .optional(),
   Departement: gristNullableString,
   Partenaire_2_nom: gristNullableString,
   Partenaire_2_texte: gristNullableString,
@@ -101,7 +111,7 @@ export const grisProgramValidation = z.object({
 export const grisThematiqueValidation = z.object({
   id: z.number().int(),
   fields: z.object({
-    nom: z.string()
+    nom: z.string(),
   }),
 })
 

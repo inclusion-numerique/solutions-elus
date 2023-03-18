@@ -15,9 +15,7 @@ export type Etablissement = {
   zipcodes: string[]
 }
 
-export const searchCommunity = async (
-  searchQuery: string,
-) => {
+export const searchCommunity = async (searchQuery: string) => {
   const basequery = `https://aides-territoires.beta.gouv.fr/api/perimeters/?q=${encodeURIComponent(
     `"${searchQuery.trim()}"`,
   )}&is_visible_to_users=true&is_non_obsolete=true`

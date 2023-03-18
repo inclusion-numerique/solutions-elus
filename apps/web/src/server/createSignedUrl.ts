@@ -4,9 +4,9 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import { GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3'
 
 export const createSignedGetUrl = async ({
-                                           key,
-                                           bucket,
-                                         }: {
+  key,
+  bucket,
+}: {
   key: string
   bucket: string
 }): Promise<{ url: string }> => {
@@ -25,11 +25,11 @@ export const createSignedGetUrl = async ({
 }
 
 export const createSignedUploadUrl = async ({
-                                              directory,
-                                              name,
-                                              type,
-                                              bucket,
-                                            }: {
+  directory,
+  name,
+  type,
+  bucket,
+}: {
   name: string
   type: string
   directory: string

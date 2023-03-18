@@ -7,7 +7,6 @@ const middleware: NextMiddleware = (request) => {
   response.headers.append('X-XSS-Protection', '1; mode=block')
   response.headers.delete('X-Powered-By')
 
-
   return response
 }
 

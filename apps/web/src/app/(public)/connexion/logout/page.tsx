@@ -7,11 +7,13 @@ import * as Sentry from '@sentry/nextjs'
 const SignoutPage = () => {
   const router = useRouter()
   const onConfirm = () => {
-    signOut().then(() => router.replace('/')).catch((error) => {
-      Sentry.captureException(error, {
-        extra: { feature: 'Signout' },
+    signOut()
+      .then(() => router.replace('/'))
+      .catch((error) => {
+        Sentry.captureException(error, {
+          extra: { feature: 'Signout' },
+        })
       })
-    })
   }
 
   return (

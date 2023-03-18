@@ -14,13 +14,13 @@ describe.skip('createSignedUrl', () => {
 
       const { url } = await createSignedGetUrl({
         key,
-        bucket: ServerWebAppConfig.S3.documentsBucket
+        bucket: ServerWebAppConfig.S3.documentsBucket,
       })
 
       expect(url).toBeString()
       expect(url).toStartWith('https://')
       expect(url).toInclude('test/small-test-image.png')
-      expect(url).toInclude( ServerWebAppConfig.S3.documentsBucket)
+      expect(url).toInclude(ServerWebAppConfig.S3.documentsBucket)
       expect(url).toInclude(key)
 
       // Try with system lib, should always work if url is correct

@@ -23,7 +23,7 @@ const legacyCategories = [
   'Transport et mobilités',
 ] as const
 
-export type LegacyCategory = typeof legacyCategories[number]
+export type LegacyCategory = (typeof legacyCategories)[number]
 
 export const legacyCategoryToCategory = (
   legacyCategory: LegacyCategory,
@@ -86,4 +86,4 @@ export const districts = [
   'La Réunion',
 ] as const
 
-export type District = typeof districts[number]
+export type District = (typeof districts)[number]

@@ -62,7 +62,7 @@ const ShareProjectSubmissionsPage = async () => {
                   <th>Qualité</th>
                   <th>Email</th>
                   {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-                  <th/>
+                  <th />
                 </tr>
               </thead>
               <tbody className="fr-table">

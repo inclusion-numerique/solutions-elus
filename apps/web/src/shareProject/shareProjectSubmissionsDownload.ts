@@ -25,7 +25,9 @@ const csvHeaders = [
   'Lien',
 ]
 
-export const generateShareProjectSubmissionsData = async (): Promise<string[][]> => {
+export const generateShareProjectSubmissionsData = async (): Promise<
+  string[][]
+> => {
   const rows = await prismaClient.shareProjectFormSubmission.findMany({
     include: { attachments: true, community: true },
   })
