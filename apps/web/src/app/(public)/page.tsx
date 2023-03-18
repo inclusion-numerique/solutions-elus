@@ -4,12 +4,6 @@ import { Showcase } from '@sde/web/app/(public)/Showcase'
 import { getShowcaseProjects } from '@sde/web/legacyProject/showcaseProjects'
 import styles from './PublicLayout.module.css'
 
-export const dynamic = 'force-dynamic'
-// Revalidate this page every day
-
-// TODO force-dynamic re-renders page every time. How to use caching ?
-export const revalidate = 86_400
-
 export default async function HomePage() {
   const revalidationNonce = Math.floor(Math.random() * 10_000).toString()
 

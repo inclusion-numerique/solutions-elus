@@ -272,7 +272,7 @@ jobs:
             DATABASE_URL=$CI_DATABASE_URL pnpm --silent cli projects:update-showcases
       - run:
           name: 'Build next app'
-          command: pnpm --silent -F @sde/web build
+          command: DATABASE_URL=$CI_DATABASE_URL pnpm --silent -F @sde/web build
       - run:
           name: 'Clear dependencies to install only prod dependencies'
           command: |

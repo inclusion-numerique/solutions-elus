@@ -104,7 +104,7 @@ const nextConfig = {
 // For all available options, see:
 // https://github.com/getsentry/sentry-webpack-plugin#options.
 const sentryWebpackPluginOptions = {
-  silent: isDev, // Suppresses all logs
+  silent: true, // Suppresses all logs
 }
 
 module.exports = withSentryConfig(nextConfig, sentryWebpackPluginOptions)
