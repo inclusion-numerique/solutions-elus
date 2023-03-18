@@ -58,7 +58,7 @@ export const drupalProjectArrayDumb: DrupalProject[] = [
 
 export const gristProjectDumb: GristProjectFields = {
   Titre: 'Sur les bancs de la Cité éducative de Charleville-Mézières',
-  Cree_le: new Date('2020-04-28T21:31:04+00:00').getTime(),
+  Cree_le: new Date('2020-04-28T21:31:04+00:00').getTime() / 1000,
   Presentation_du_territoire:
     'La Cité éducative de Charleville-Mézières : le quartier prioritaire de la Ronde-Couture\r\n7 500 habitants\r\nTaux de pauvreté : 46,9%\r\nRevenu moyen : 550 euros par habitant\r\nPart de la population sans diplôme ou inférieur au Bac : 87,5% (données Insee, 2010)\r\nUne école primaire et deux collège',
   Localisation: 0,
@@ -67,7 +67,7 @@ export const gristProjectDumb: GristProjectFields = {
   Sous_titre:
     ' Découvez comment le dispositif agit sur ce territoire précurseur labellisé Cité éducative',
   Programme: 0,
-  Population: 4,
+  Population: 0,
   drupal_id: '66ef1294-9bcc-4ba4-9ac8-8b9a649bcf2b',
   drupal_url:
     'https://agence-cohesion-territoires.gouv.fr/sur-les-bancs-de-la-cite-educative-de-charleville-mezieres-40',

@@ -4,12 +4,10 @@ import { CSSProperties, forwardRef } from 'react'
 import styles from '@sde/web/app/(public)/Showcase.module.css'
 import { useShowcase } from '@sde/web/app/(public)/useShowcase'
 import Link from 'next/link'
-import {
-  legacyProjectImageUrl,
-  legacyProjectUrl,
-} from '@sde/web/projethoteque/legacyProjects'
 import { useSwipeable } from 'react-swipeable'
 import { ShowcaseProject } from '@sde/web/legacyProject/showcaseProjects'
+import { getProjectPath } from '@sde/web/project/getProjectPath'
+import { getProjectFilePath } from '@sde/web/project/getProjectFilePath'
 
 export const Showcase = ({ projects }: { projects: ShowcaseProject[] }) => {
   const { containerRef, firstCardRef, offsetString, next, previous } =
@@ -86,41 +84,38 @@ const ProjectCard = forwardRef<
 >(
   (
     {
-      project: { title, slug, city, district, coverImage, coverImageAlt },
+      project: { title, slug, localization, coverImage, coverImageAlt },
       style,
     },
     ref,
-  ) => {
-    const href = legacyProjectUrl(slug)
-    return (
-      <a
-        ref={ref}
-        href={href}
-        title={`Voir le projet "${title}"`}
-        target="_blank"
-        className={styles.card}
-      >
-        <picture>
-          <img
-            src={legacyProjectImageUrl(coverImage)}
-            alt={coverImageAlt ?? `Photo illustrant le projet "${title}"`}
-          />
-        </picture>
-        <div className={`fr-px-5w fr-py-10v ${styles.cardContent}`}>
-          <p
-            className="fr-hint-text"
-            style={{ color: 'var(--text-mention-grey' }}
-          >
-            <span className="fr-mr-1w fr-icon--sm fr-icon-map-pin-2-line" />
-            {city}
-          </p>
-          <h6 style={{ flexGrow: 1 }}>{title}</h6>
-          <p className="fr-link fr-link--icon-right fr-icon-external-link-line fr-mt-4v">
-            Voir le projet
-          </p>
-        </div>
-      </a>
-    )
-  },
+  ) => (
+    <a
+      ref={ref}
+      href={getProjectPath({ slug })}
+      title={`Voir le projet "${title}"`}
+      target="_blank"
+      className={styles.card}
+    >
+      <picture>
+        <img
+          src={getProjectFilePath(coverImage)}
+          alt={coverImageAlt ?? `Photographie illustrant le projet "${title}"`}
+        />
+      </picture>
+      <div className={`fr-px-5w fr-py-10v ${styles.cardContent}`}>
+        <p
+          className="fr-hint-text"
+          style={{ color: 'var(--text-mention-grey' }}
+        >
+          <span className="fr-mr-1w fr-icon--sm fr-icon-map-pin-2-line" />
+          {localization.label} ({localization.department})
+        </p>
+        <h6 style={{ flexGrow: 1 }}>{title}</h6>
+        <p className="fr-link fr-link--icon-right fr-icon-external-link-line fr-mt-4v">
+          Voir le projet
+        </p>
+      </div>
+    </a>
+  ),
 )
 ProjectCard.displayName = 'ProjectCard'

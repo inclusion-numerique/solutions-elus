@@ -1,4 +1,3 @@
-import { projethotequeUrl } from '@sde/web/projethoteque/projethoteque'
 import { Category } from '@sde/web/anctProjects'
 
 export const categoryToLegacyCategory = (category: string): string => category
@@ -58,12 +57,6 @@ export const legacyCategoryToCategory = (
 
   return legacyCategory
 }
-
-export const legacyProjectUrl = (slug: string): string =>
-  `${projethotequeUrl}/${slug}`
-
-export const legacyProjectImageUrl = (imagePath: string): string =>
-  `${projethotequeUrl}${imagePath}`
 
 export const districts = [
   'Auvergne-Rhône-Alpes',
