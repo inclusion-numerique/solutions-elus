@@ -2,8 +2,8 @@ import { CSSProperties, ForwardedRef, forwardRef } from 'react'
 import { ProjectListItem } from '@sde/web/legacyProject/projectsList'
 import { getProjectPath } from '@sde/web/project/getProjectPath'
 import { getProjectFilePath } from '@sde/web/project/getProjectFilePath'
-import styles from './ProjectCard.module.css'
 import Link from 'next/link'
+import styles from './ProjectCard.module.css'
 
 export const ProjectCard = forwardRef(
   (
