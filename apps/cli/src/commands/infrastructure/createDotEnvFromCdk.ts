@@ -1,5 +1,4 @@
 // eslint-disable-next-line unicorn/prevent-abbreviations
-
 import { getCdkOutput } from '@sde/cdk/getCdkOutput'
 import { Argument, Command } from '@commander-js/extra-typings'
 import { appendEnvVariablesToDotEnvFile } from '@sde/cli/dotEnvFile'

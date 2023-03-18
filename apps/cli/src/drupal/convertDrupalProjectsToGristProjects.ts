@@ -1,11 +1,7 @@
-import { DrupalProjectType } from './Types'
-import { drupalProjectsJson } from './convertDrupalProjectsToGristProject.spec'
 import { GristProjectFields } from '@sde/cli/grist/grist.type'
+import { drupalProjectsJson } from '@sde/cli/drupal/convertDrupalProjectsToGristProject.dumb'
+import { DrupalProjectType } from './Types'
 import { DrupalProject } from './fetchDrupalProjects'
-
-export const convertDrupalProjectsToGristProjects = (
-  drupalProjectArray: DrupalProject[],
-): GristProjectFields[] => drupalProjectArray.map(convertToGristProject)
 
 export const convertJSONToDrupalProjects = (
   json: typeof drupalProjectsJson,
@@ -27,3 +23,7 @@ export const convertToGristProject = (
   Localisation: 0,
   Population: 0,
 })
+
+export const convertDrupalProjectsToGristProjects = (
+  drupalProjectArray: DrupalProject[],
+): GristProjectFields[] => drupalProjectArray.map(convertToGristProject)

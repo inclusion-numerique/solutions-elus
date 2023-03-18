@@ -1,19 +1,18 @@
-/// <reference types="jest" />
 import { createReadStream } from 'node:fs'
 import { resolve } from 'node:path'
 import FormData from 'form-data'
 import { listProjectRecords } from '@sde/cli/grist/grist'
 
-const publicDirFile = (path: string) =>
+const generatePublicFilePath = (path: string) =>
   resolve(__dirname, '../../../web/public', path)
 
 describe('Grist', () => {
   // ⚠️ No test grist for now, this impacts production
-  it.skip('Uploads attachements', async () => {
+  it.skip('Uploads attachements', () => {
     const formData = new FormData()
     formData.append(
       'upload',
-      createReadStream(publicDirFile('images/anct.svg')),
+      createReadStream(generatePublicFilePath('images/anct.svg')),
     )
 
     // FIXME typescript types missing for joi matchers

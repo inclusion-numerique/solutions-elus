@@ -1,14 +1,14 @@
 import fs from 'node:fs'
 import { resolve } from 'node:path'
-import { ZodObject } from 'zod'
+import z, { ZodType } from 'zod'
 import axios from 'axios'
 import FormData from 'form-data'
 import { output } from '@sde/cli/output'
 import { ServerWebAppConfig } from '@sde/web/webAppConfig'
 import {
-  convertGristProjectToModel,
-  convertGristProgramToModel,
   convertGristLocalisationToModel,
+  convertGristProgramToModel,
+  convertGristProjectToModel,
 } from './convertGristProjectToModel'
 import {
   grisLocalisationValidation,
@@ -25,6 +25,7 @@ import {
 } from './grist.type'
 
 export const uploadAttachments = async (upload: FormData): Promise<number[]> =>
+  // eslint-disable-next-line @typescript-eslint/no-shadow
   new Promise<number[]>((resolve, reject) => {
     upload.submit(
       {
@@ -36,17 +37,21 @@ export const uploadAttachments = async (upload: FormData): Promise<number[]> =>
           Authorization: `Bearer ${ServerWebAppConfig.Grist.apiKey}`,
         }),
       },
-      async (error, response) => {
+      (error, response) => {
         if (error) {
-          return reject(error)
+          reject(error)
+          return
         }
 
         if (response.statusCode !== 200) {
-          return reject(
+          reject(
             new Error(
-              `Error ${response.statusCode}: ${response.statusMessage}`,
+              `Error ${response.statusCode?.toString() ?? ''}: ${
+                response.statusMessage ?? ''
+              }`,
             ),
           )
+          return
         }
 
         let body = ''
@@ -54,7 +59,7 @@ export const uploadAttachments = async (upload: FormData): Promise<number[]> =>
           body += chunk
         })
         response.on('end', () => {
-          resolve(JSON.parse(body))
+          resolve(JSON.parse(body) as number[])
         })
       },
     )
@@ -78,10 +83,10 @@ export const createProjectRecords = async (
   })
 }
 
-const listRecords = async <T>(
+const listRecords = async <T extends ZodType>(
   table: string,
-  validation: ZodObject<any>,
-): Promise<T[]> => {
+  validation: T,
+): Promise<z.infer<T>[]> => {
   const url = `https://grist.incubateur.anct.gouv.fr/api/docs/${ServerWebAppConfig.Grist.documentId}/tables/${table}/records`
 
   const response = await axios.get<{ records: unknown[] }>(url, {
@@ -111,22 +116,22 @@ const listRecords = async <T>(
   return projects
 }
 
-export const listThematiques = async (): Promise<GristThematique[]> =>
+export const listThematiques = () =>
   listRecords(
     ServerWebAppConfig.Grist.thematiqueTableId,
     grisThematiqueValidation,
   )
 
-export const listPrograms = async (): Promise<GristProgram[]> =>
+export const listPrograms = () =>
   listRecords(ServerWebAppConfig.Grist.programTableId, grisProgramValidation)
 
-export const listLocalisations = async (): Promise<GristLocalisation[]> =>
+export const listLocalisations = () =>
   listRecords(
     ServerWebAppConfig.Grist.localisationTableId,
     grisLocalisationValidation,
   )
 
-export const listProjectRecords = async (): Promise<GristProject[]> =>
+export const listProjectRecords = () =>
   listRecords(ServerWebAppConfig.Grist.tableId, gristProjectValidation)
 
 const attachmentsPath = resolve(
@@ -139,7 +144,7 @@ const attachmentsPath = resolve(
 export const downloadAttachement = async (id: number) => {
   const url = `https://grist.incubateur.anct.gouv.fr/api/docs/${ServerWebAppConfig.Grist.documentId}/attachments/${id}/download`
 
-  const response = await axios.get(url, {
+  const response = await axios.get<NodeJS.ReadableStream>(url, {
     headers: {
       Authorization: `Bearer ${ServerWebAppConfig.Grist.apiKey}`,
     },
@@ -160,6 +165,7 @@ export const downloadAttachement = async (id: number) => {
   }
 
   response.data.pipe(fs.createWriteStream(resolve(attachmentsPath, fileName)))
+
   return fileName
 }
 
