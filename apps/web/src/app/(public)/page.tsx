@@ -2,20 +2,22 @@ import Link from 'next/link'
 import { categories, categoryProjectsLink } from '@sde/web/anctProjects'
 import { Showcase } from '@sde/web/app/(public)/Showcase'
 import { getShowcaseProjects } from '@sde/web/legacyProject/showcaseProjects'
-import { headers } from 'next/headers'
 import styles from './PublicLayout.module.css'
 
+export const dynamic = 'force-dynamic'
 // Revalidate this page every day
+
+// TODO force-dynamic re-renders page every time. How to use caching ?
 export const revalidate = 86_400
 
 export default async function HomePage() {
-  // Disable static generation
-  headers()
+  const revalidationNonce = Math.floor(Math.random() * 10_000).toString()
 
   const projects = await getShowcaseProjects()
   return (
     <>
       <div
+        data-revalidation={revalidationNonce}
         className="fr-background-alt--blue-france"
         style={{ position: 'relative' }}
       >
