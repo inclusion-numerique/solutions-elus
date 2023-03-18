@@ -66,7 +66,7 @@ export const Showcase = ({ projects }: { projects: ShowcaseProject[] }) => {
           }}
         >
           {projects.map((project, index) => (
-            <ProjectCard
+            <ShowcaseCard
               project={project}
               key={project.id}
               ref={index === 0 ? firstCardRef : undefined}
@@ -78,7 +78,7 @@ export const Showcase = ({ projects }: { projects: ShowcaseProject[] }) => {
   )
 }
 
-const ProjectCard = forwardRef<
+const ShowcaseCard = forwardRef<
   HTMLAnchorElement,
   { project: ShowcaseProject; style?: CSSProperties | undefined }
 >(
@@ -89,11 +89,10 @@ const ProjectCard = forwardRef<
     },
     ref,
   ) => (
-    <a
+    <Link
       ref={ref}
       href={getProjectPath({ slug })}
       title={`Voir le projet "${title}"`}
-      target="_blank"
       className={styles.card}
     >
       <picture>
@@ -111,11 +110,11 @@ const ProjectCard = forwardRef<
           {localization.label} ({localization.department})
         </p>
         <h6 style={{ flexGrow: 1 }}>{title}</h6>
-        <p className="fr-link fr-link--icon-right fr-icon-external-link-line fr-mt-4v">
+        <p className="fr-link fr-link--icon-right fr-icon-arrow-right-line fr-mt-4v">
           Voir le projet
         </p>
       </div>
-    </a>
+    </Link>
   ),
 )
-ProjectCard.displayName = 'ProjectCard'
+ShowcaseCard.displayName = 'ShowcaseCard'

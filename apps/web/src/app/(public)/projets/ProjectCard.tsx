@@ -3,6 +3,7 @@ import { ProjectListItem } from '@sde/web/legacyProject/projectsList'
 import { getProjectPath } from '@sde/web/project/getProjectPath'
 import { getProjectFilePath } from '@sde/web/project/getProjectFilePath'
 import styles from './ProjectCard.module.css'
+import Link from 'next/link'
 
 export const ProjectCard = forwardRef(
   (
@@ -33,11 +34,10 @@ export const ProjectCard = forwardRef(
 
     return (
       <li style={style} ref={ref}>
-        <a
+        <Link
           className={`fr-mb-4v ${styles.projectCard}`}
           href={getProjectPath({ slug })}
           title={`Voir le projet "${title}"`}
-          target="_blank"
         >
           <picture className={styles.picture}>
             <img
@@ -67,11 +67,11 @@ export const ProjectCard = forwardRef(
                 </li>
               ))}
             </ul>
-            <p className="fr-link fr-link--icon-right fr-icon-external-link-line fr-mt-4v">
+            <p className="fr-link fr-link--icon-right fr-icon-arrow-right-line fr-mt-4v">
               Voir le projet
             </p>
           </div>
-        </a>
+        </Link>
       </li>
     )
   },
