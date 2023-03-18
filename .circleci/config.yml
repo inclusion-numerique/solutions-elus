@@ -20,14 +20,15 @@ executors:
       - image: cimg/postgres:14.0
         environment:
           POSTGRES_USER: postgres
-#        auth:
-#          username: mydockerhub-user
-#          password: $DOCKERHUB_PASSWORD
-  node-browsers:
+  node-e2e:
     docker:
       - image: cimg/node:18.13.0-browsers
         environment:
           TZ: 'UTC'
+          CI_DATABASE_URL: postgresql://postgres@localhost/test
+      - image: cimg/postgres:14.0
+        environment:
+          POSTGRES_USER: postgres
 
 parameters:
   cache_version:
@@ -317,7 +318,7 @@ jobs:
           command: pnpm --silent -F @sde/storybook chromatic
 
   test_e2e:
-    executor: node-browsers
+    executor: node-e2e
     resource_class: large
     parallelism: 1
     steps:
@@ -347,6 +348,25 @@ jobs:
       #          name: 'Up docker-compose'
       #          command: |
       #            docker-compose -f docker/web/docker-compose.ci.yml up
+      - run:
+          name: 'Create CI database schema'
+          command: |
+            DATABASE_URL=$CI_DATABASE_URL pnpm --silent -F @sde/web prisma db push --skip-generate --accept-data-loss
+      - run:
+          name: Download data
+          command: |
+            DATABASE_URL=$CI_DATABASE_URL pnpm --silent cli projects:grist:download
+      - run:
+          name: Update showcase projects
+          command: |
+            DATABASE_URL=$CI_DATABASE_URL pnpm --silent cli projects:update-showcases
+      - run:
+          name: 'Start web app container'
+          command: |
+            docker run -d --network=host \
+              -e "DATABASE_URL=$CI_DATABASE_URL" \
+              -e "PORT=3000" \
+              --name web $IMAGE_BUILD_TAG
       - run:
           name: 'Run playwright'
           command: |
