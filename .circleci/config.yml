@@ -237,11 +237,11 @@ jobs:
           docker_layer_caching: true
       - install_dependencies
       - create_dotenv_file
-      - add_secrets_to_dotenv_file
-      - setup_docker_web_env
       - run:
           name: 'Prisma generate'
           command: pnpm --silent -F @sde/web prisma:generate
+      - add_secrets_to_dotenv_file
+      - setup_docker_web_env
       - run:
           name: 'Install DSFR'
           command: pnpm --silent -F @sde/web setup:dsfr
