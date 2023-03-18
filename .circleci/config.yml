@@ -242,7 +242,7 @@ jobs:
           command: pnpm --silent -F @sde/web test
 
   build_web:
-    executor: node
+    executor: node-postgres
     resource_class: large
     steps:
       - checkout
@@ -305,6 +305,9 @@ jobs:
       - checkout
       - install_dependencies
       - create_dotenv_file
+      - run:
+          name: 'Prisma generate'
+          command: pnpm --silent -F @sde/web prisma:generate
       - add_secrets_to_dotenv_file
       - run:
           name: 'Setup DSFR'
@@ -324,6 +327,9 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - create_dotenv_file
+      - run:
+          name: 'Prisma generate'
+          command: pnpm --silent -F @sde/web prisma:generate
       - add_secrets_to_dotenv_file
       - setup_docker_web_env
       - run:
@@ -354,6 +360,9 @@ jobs:
       - checkout
       - create_dotenv_file
       - install_dependencies
+      - run:
+          name: 'Prisma generate'
+          command: pnpm --silent -F @sde/web prisma:generate
       - add_secrets_to_dotenv_file
       - setup_docker_web_env
       - run:
@@ -425,6 +434,9 @@ jobs:
       - install_dependencies
       - install_terraform
       - create_dotenv_file
+      - run:
+          name: 'Prisma generate'
+          command: pnpm --silent -F @sde/web prisma:generate
       - add_secrets_to_dotenv_file
       - run:
           name: "Create terraform variables file from environment variables"
@@ -444,6 +456,9 @@ jobs:
       - install_dependencies
       - install_terraform
       - create_dotenv_file
+      - run:
+          name: 'Prisma generate'
+          command: pnpm --silent -F @sde/web prisma:generate
       - add_secrets_to_dotenv_file
       - run:
           name: "Create terraform variables file from environment variables"
@@ -462,6 +477,9 @@ jobs:
       - install_dependencies
       - install_terraform
       - create_dotenv_file
+      - run:
+          name: 'Prisma generate'
+          command: pnpm --silent -F @sde/web prisma:generate
       - add_secrets_to_dotenv_file
       - run:
           name: "Create terraform variables file from environment variables"
