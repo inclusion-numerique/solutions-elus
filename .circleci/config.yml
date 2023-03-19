@@ -298,6 +298,10 @@ jobs:
           command: |
             docker login $WEB_APP_DOCKER_REGISTRY -u nologin --password-stdin \<<< "$CI_SCW_SECRET_KEY"
             docker push $IMAGE_BUILD_TAG
+      - save_cache:
+          key: << pipeline.id >>-web-build
+          paths:
+            - ./apps/web/.next
 
   chromatic:
     executor: node
@@ -360,13 +364,11 @@ jobs:
           name: Update showcase projects
           command: |
             DATABASE_URL=$CI_DATABASE_URL pnpm --silent cli projects:update-showcases
+      - restore_cache:
+          key: << pipeline.id >>-web-build
       - run:
-          name: 'Start web app container'
-          command: |
-            docker run -d --network=host \
-              -e "DATABASE_URL=$CI_DATABASE_URL" \
-              -e "PORT=3000" \
-              --name web $IMAGE_BUILD_TAG
+          name: 'Start built web app'
+          command: pnpm -F @sde/web start
       - run:
           name: 'Run playwright'
           command: |
