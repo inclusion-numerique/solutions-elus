@@ -336,22 +336,12 @@ jobs:
           name: 'Prisma generate'
           command: pnpm --silent -F @sde/web prisma:generate
       - add_secrets_to_dotenv_file
-      - setup_docker_web_env
-      - run:
-          name: 'Login to registry and pull image'
-          command: |
-            docker login $WEB_APP_DOCKER_REGISTRY -u nologin --password-stdin \<<< "$CI_SCW_SECRET_KEY"
-            docker pull $IMAGE_BUILD_TAG
       - run:
           name: 'Install playwright'
           # This will be instantly resolved from global store thanks to custom image playwright setup
           command: |
             pnpm --silent -F @sde/e2e install
             pnpx playwright install
-      #      - run:
-      #          name: 'Up docker-compose'
-      #          command: |
-      #            docker-compose -f docker/web/docker-compose.ci.yml up
       - run:
           name: 'Create CI database schema'
           command: |
@@ -434,12 +424,16 @@ jobs:
       - run:
           name: Set deployment status to data loading
           command: pnpm --silent cli github:deployment:update $DEPLOYMENT_ID in_progress -d 'Loading data' -l https://app.circleci.com/pipelines/workflows/$CIRCLE_WORKFLOW_ID
-#      - run:
-#          name: Download data
-#          command: pnpm --silent cli projects:grist:download
-#      - run:
-#          name: Update showcase projects
-#          command: pnpm --silent cli projects:update-showcases
+      - run:
+          name: Download data
+          command: pnpm --silent cli projects:grist:download
+      - run:
+          name: Update showcase projects
+          command: pnpm --silent cli projects:update-showcases
+      - run:
+          name: Check that deployed container status is ok
+          command: |
+            pnpm --silent cli deployment:check-status https://$WEB_BASE_URL
       - run:
           name: Set deployment status to success
           command: pnpm --silent cli github:deployment:update $DEPLOYMENT_ID success -d 'Deploy successful' -u https://$WEB_BASE_URL -l https://app.circleci.com/pipelines/workflows/$CIRCLE_WORKFLOW_ID
