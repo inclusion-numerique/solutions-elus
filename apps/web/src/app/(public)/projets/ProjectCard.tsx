@@ -1,7 +1,10 @@
 import { CSSProperties, ForwardedRef, forwardRef } from 'react'
 import { ProjectListItem } from '@sde/web/legacyProject/projectsList'
-import { getProjectPath } from '@sde/web/project/getProjectPath'
-import { getProjectFilePath } from '@sde/web/project/getProjectFilePath'
+import {
+  getProjectPath,
+  getProjectFilePath,
+  getCityWithDepartment,
+} from '@sde/web/project/project'
 import Link from 'next/link'
 import styles from './ProjectCard.module.css'
 
@@ -52,7 +55,7 @@ export const ProjectCard = forwardRef(
               style={{ color: 'var(--text-mention-grey' }}
             >
               <span className="fr-mr-1w fr-icon--sm fr-icon-map-pin-2-line" />
-              {localization.label} ({localization.department})
+              {getCityWithDepartment(localization)}
             </p>
             <h6 className={`fr-mt-4v fr-mb-0 fr-text--lg ${styles.title}`}>
               {title}

@@ -1,0 +1,9 @@
+.bloc {
+  display: block;
+  padding: 32px;
+  border: 1px solid #ddd;
+}
+
+.map {
+  height: 250px;
+}

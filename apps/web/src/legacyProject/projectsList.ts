@@ -30,6 +30,59 @@ export const getProjectsList = () =>
     },
   })
 
+export const getProject = (slug: string) =>
+  prismaClient.project.findUniqueOrThrow({
+    select: {
+      program: {
+        select: {
+          name: true,
+          description: true,
+        },
+      },
+      localization: {
+        select: {
+          label: true,
+          department: true,
+          departmentName: true,
+          regionName: true,
+          population: true,
+        },
+      },
+      localizationDescription: true,
+      longitude: true,
+      latitude: true,
+      created: true,
+      title: true,
+      categories: true,
+      coverImage: true,
+      coverImageAlt: true,
+      subtitle: true,
+      description: true,
+      goals: true,
+      characteristics: true,
+      funding: true,
+      budget: true,
+      inaugurationDate: true,
+      localActor1Image: true,
+      localActor1Text: true,
+      localActor1Name: true,
+      localActor2Image: true,
+      localActor2Text: true,
+      localActor2Name: true,
+      partner1Image: true,
+      partner1Text: true,
+      partner1Name: true,
+      partner2Image: true,
+      partner2Text: true,
+      partner2Name: true,
+    },
+    where: {
+      slug,
+    },
+  })
+
 export type ProjectListItem = Awaited<
   ReturnType<typeof getProjectsList>
 >[number]
+
+export type ProjectItem = Awaited<ReturnType<typeof getProject>>

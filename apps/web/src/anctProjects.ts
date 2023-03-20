@@ -1,4 +1,4 @@
-import { PopulationBracketConditions } from '@sde/web/project/population'
+import { PopulationBracketConditions } from '@sde/web/project/project'
 
 export const categoryProjectsLink = (category: Category) =>
   `/projets?thematiques=${category}`

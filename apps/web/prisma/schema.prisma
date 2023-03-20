@@ -159,18 +159,18 @@ model Localization {
   // If imported from grist (maybe we'll have other sources of projects)
   gristId Int @unique
 
-  label      String
-  insee      String?
-  echelon    String
-  department String?
+  label          String
+  insee          String?
+  echelon        String
+  department     String?
   departmentName String?
-  region     String?
-  regionName String?
-  population Int?
-  siren      String
-  nature     String
-  ncc        String
-  Project    Project[]
+  region         String?
+  regionName     String?
+  population     Int?
+  siren          String
+  nature         String
+  ncc            String
+  Project        Project[]
 }
 
 model Program {
@@ -179,8 +179,9 @@ model Program {
   // If imported from grist (maybe we'll have other sources of projects)
   gristId Int @unique
 
-  politique  String
-  name       String?
-  territoire String[]
+  politique   String
+  name        String?
+  description String
+  territoire  String[]
   projects    Project[]
 }
