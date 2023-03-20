@@ -46,7 +46,7 @@ export const getProject = (slug: string) =>
           departmentName: true,
           regionName: true,
           population: true,
-        }
+        },
       },
       localizationDescription: true,
       longitude: true,
@@ -77,8 +77,8 @@ export const getProject = (slug: string) =>
       partner2Name: true,
     },
     where: {
-      slug
-    }
+      slug,
+    },
   })
 
 export type ProjectListItem = Awaited<

@@ -1,9 +1,11 @@
 import { ProjectListItem } from '@sde/web/legacyProject/projectsList'
+import { populationIsInBracket } from '@sde/web/project/project'
 import {
+  Category,
+  District,
   PopulationBracket,
-  populationIsInBracket,
-} from '@sde/web/project/project'
-import { Category, District, populationBracketsConditions } from '../anctProjects'
+  populationBracketsConditions,
+} from '../anctProjects'
 
 export const filterProjects = ({
   projects,

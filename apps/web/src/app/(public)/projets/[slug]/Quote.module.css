@@ -4,8 +4,9 @@
 }
 
 .verticalSeparator {
-  border-left: solid 1px #dddddd;
+  border-left: solid 1px #ddd;
   display: none;
+
   @media (min-width: 62em) {
     display: block;
   }
@@ -13,8 +14,9 @@
 
 .horizontalSeparator {
   width: 50%;
-  border-top: solid 1px #dddddd;
+  border-top: solid 1px #ddd;
   display: block;
+
   @media (min-width: 62em) {
     display: none;
   }
@@ -23,6 +25,7 @@
 .bigImage {
   border-radius: 50%;
   display: none;
+  
   @media (min-width: 62em) {
     display: block;
   }
@@ -31,6 +34,7 @@
 .smallImage {
   border-radius: 50%;
   display: block;
+
   @media (min-width: 62em) {
     display: none;
   }

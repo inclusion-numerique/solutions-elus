@@ -12,6 +12,7 @@
 .content,
 .header {
   justify-content: center;
+
   @media (min-width: 62em) {
     flex-wrap: nowrap;
   }
@@ -19,7 +20,7 @@
 
 .separator {
   width: 100%;
-  border-top: 1px solid #dddddd;
+  border-top: 1px solid #ddd;
   margin: 48px 0;
 }
 
@@ -29,9 +30,10 @@
   justify-content: space-between;
   flex-wrap: wrap;
   width: 100%;
-  border-top: 1px solid #dddddd;
-  border-bottom: 1px solid #dddddd;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
   padding: 24px 0;
+
   p {
     color: var(--text-mention-grey);
     margin-bottom: 0;
@@ -60,13 +62,14 @@
 .bloc {
   display: block;
   padding: 32px;
-  border: 1px solid #dddddd;
+  border: 1px solid #ddd;
   width: 333px;
 }
 
 .blocHeader {
   display: flex;
   align-items: center;
+  
   h2 {
     margin-bottom: 0;
   }
