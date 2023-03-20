@@ -21,16 +21,16 @@ export const convertGristLocalisationToModel = (
     return {
       gristId: localisation.id,
       label: localisation.fields.lib_groupement?.trim(),
-      insee: localisation.fields.insee_geo,
-      echelon: localisation.fields.echelon_geo,
-      department: localisation.fields.insee_dep,
+      insee: localisation.fields.insee_geo?.trim(),
+      echelon: localisation.fields.echelon_geo?.trim(),
+      department: localisation.fields.insee_dep?.trim(),
       departmentName: dataGouvDepartment?.dep_name,
-      region: localisation.fields.insee_reg,
+      region: localisation.fields.insee_reg?.trim(),
       regionName: dataGouvDepartment?.region_name,
       population: localisation.fields.population,
       siren: localisation.fields.siren_groupement.toString(),
       nature: localisation.fields.nature_juridique?.trim(),
-      ncc: localisation.fields.NCC,
+      ncc: localisation.fields.NCC?.trim(),
     }
   })
 
@@ -50,10 +50,10 @@ export const convertGristProjectToModel = (
   projects.map((project) => ({
     gristId: project.id,
     slug: project.fields.drupal_url
-      ? project.fields.drupal_url.replace(
-          'https://agence-cohesion-territoires.gouv.fr/',
-          '',
-        )
+      ? project.fields.drupal_url
+          .replace('https://agence-cohesion-territoires.gouv.fr/', '')
+          // Remove drupal id at the end of the slug
+          .replace(/-(\d+)$/, '')
       : '',
     coverImage: project.fields.Visuel
       ? attachments[project.fields.Visuel[1]]
@@ -68,7 +68,7 @@ export const convertGristProjectToModel = (
     categories:
       (project.fields.Thematiques?.filter((thematique, index) => index !== 0)
         .map((thematique) => thematiques.find((x) => x.id === thematique))
-        .map((thematique) => thematique?.fields.nom)
+        .map((thematique) => thematique?.fields.nom?.trim())
         .filter((x) => x !== undefined) as string[]) || [],
     description: project.fields.Texte?.trim() ?? '',
     goals: project.fields.Objectifs?.trim() ?? '',

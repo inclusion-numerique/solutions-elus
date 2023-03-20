@@ -54,31 +54,39 @@ export default async function HomePage() {
       <div className="fr-pt-20v">
         <Showcase projects={projects} />
       </div>
-      <div className="fr-py-30v fr-background-alt--blue-france">
+      <div className="fr-py-20v fr-pb-24v fr-background-alt--blue-france">
         <div className="fr-container">
           <div className="fr-grid-row fr-grid-row--gutters">
-            <div className="fr-col-12 fr-col-md-6">
-              <div className="fr-btns-group fr-btns-group--lg">
+            <div
+              className="fr-col-12"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              <picture>
+                <img
+                  src="/dsfr/artwork/pictograms/buildings/city-hall.svg"
+                  alt="Boite email"
+                  style={{ textAlign: 'center', width: 96 }}
+                />
+              </picture>
+              <h2 className="fr-mt-1v" style={{ textAlign: 'center' }}>
+                Je suis maire ou président d&apos;intercommunalité
+              </h2>
+              <div className="fr-btns-group fr-btns-group--inline-md fr-btns-group--icon-left">
                 <Link
-                  href="/projet"
-                  className="fr-btn fr-py-8v fr-mb-0"
-                  style={{ textAlign: 'center' }}
+                  href="/partager"
+                  className="fr-btn fr-mb-0 fr-icon-send-plane-fill"
                 >
-                  Je suis maire ou président d&apos;intercommunalité,
-                  <br />
-                  je partage mes solutions&nbsp;!
+                  Je partage mes solutions&nbsp;!
                 </Link>
-              </div>
-            </div>
-            <div className="fr-col-12 fr-col-md-6">
-              <div className="fr-btns-group fr-btns-group--lg">
                 <Link
                   href="/projets"
-                  className="fr-btn fr-btn--secondary fr-py-8v fr-mb-0"
-                  style={{ textAlign: 'center' }}
+                  className="fr-btn fr-mt-4v fr-mt-md-0 fr-mb-0 fr-icon-search-line"
                 >
-                  Je suis maire ou président d&apos;intercommunalité, <br />
-                  je cherche des solutions&nbsp;!
+                  Je cherche des solutions&nbsp;!
                 </Link>
               </div>
             </div>

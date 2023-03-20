@@ -45,7 +45,7 @@ const ShareProjectForm = () => {
 
   return (
     <div
-      className="fr-container fr-background-default--grey fr-p-10v fr-mt-20v"
+      className="fr-container fr-background-default--grey fr-py-8v fr-px-4v fr-px-md-8v fr-mt-20v"
       style={{
         position: 'relative',
         border: '1px solid var(--border-default-grey)',

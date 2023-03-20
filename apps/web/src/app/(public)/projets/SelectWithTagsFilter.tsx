@@ -46,7 +46,7 @@ export const SelectTagsFormField = <T extends string>({
   hint,
   disabled,
   required,
-  emptyLabel = 'Sélectionnez une option',
+  emptyLabel = 'Ajouter un filtre',
   onAdd,
   onRemove,
   id,
