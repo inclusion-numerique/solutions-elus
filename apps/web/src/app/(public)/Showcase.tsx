@@ -4,9 +4,10 @@ import { CSSProperties, forwardRef } from 'react'
 import styles from '@sde/web/app/(public)/Showcase.module.css'
 import { useShowcase } from '@sde/web/app/(public)/useShowcase'
 import Link from 'next/link'
-import { legacyProjectImageUrl, legacyProjectUrl } from '@sde/web/projethoteque/legacyProjects'
 import { useSwipeable } from 'react-swipeable'
 import { ShowcaseProject } from '@sde/web/legacyProject/showcaseProjects'
+import { getProjectPath } from '@sde/web/project/getProjectPath'
+import { getProjectFilePath } from '@sde/web/project/getProjectFilePath'
 
 export const Showcase = ({ projects }: { projects: ShowcaseProject[] }) => {
   const { containerRef, firstCardRef, offsetString, next, previous } =
@@ -25,9 +26,9 @@ export const Showcase = ({ projects }: { projects: ShowcaseProject[] }) => {
 
   return (
     <div ref={swipeRef}>
-      <div className='fr-container' ref={containerRef}>
+      <div className="fr-container" ref={containerRef}>
         <div className={styles.header}>
-          <h2 className='fr-mb-0'>
+          <h2 className="fr-mb-0">
             Retrouvez ici les projets
             <br />
             et réalisations des collectivités.
@@ -36,22 +37,22 @@ export const Showcase = ({ projects }: { projects: ShowcaseProject[] }) => {
             className={`fr-mt-8v fr-btns-group fr-btns-group--inline ${styles.buttons}`}
           >
             <button
-              type='button'
-              className='fr-btn fr-btn--secondary fr-icon-arrow-left-line'
-              aria-label='Voir le projet précédent'
+              type="button"
+              className="fr-btn fr-btn--secondary fr-icon-arrow-left-line"
+              aria-label="Voir le projet précédent"
               onClick={previous}
             />
             <button
-              type='button'
-              className='fr-btn fr-btn--secondary fr-icon-arrow-right-line'
-              aria-label='Voir le projet suivant'
+              type="button"
+              className="fr-btn fr-btn--secondary fr-icon-arrow-right-line"
+              aria-label="Voir le projet suivant"
               onClick={next}
             />
           </div>
         </div>
         <Link
-          href='/projets'
-          className='fr-link fr-link--icon-right fr-icon-arrow-right-line fr-mt-0 fr-mt-md-4v'
+          href="/projets"
+          className="fr-link fr-link--icon-right fr-icon-arrow-right-line fr-mt-0 fr-mt-md-4v"
           style={{ display: 'inline-block' }}
         >
           Voir tous les projets
@@ -65,7 +66,7 @@ export const Showcase = ({ projects }: { projects: ShowcaseProject[] }) => {
           }}
         >
           {projects.map((project, index) => (
-            <ProjectCard
+            <ShowcaseCard
               project={project}
               key={project.id}
               ref={index === 0 ? firstCardRef : undefined}
@@ -77,49 +78,43 @@ export const Showcase = ({ projects }: { projects: ShowcaseProject[] }) => {
   )
 }
 
-const ProjectCard = forwardRef<
+const ShowcaseCard = forwardRef<
   HTMLAnchorElement,
   { project: ShowcaseProject; style?: CSSProperties | undefined }
 >(
   (
     {
-      project: {
-        title, slug, city, district, coverImage,
-        coverImageAlt,
-      }, style,
+      project: { title, slug, localization, coverImage, coverImageAlt },
+      style,
     },
     ref,
-  ) => {
-    const href = legacyProjectUrl(slug)
-    return (
-      <a
-        ref={ref}
-        href={href}
-        title={`Voir le projet "${title}"`}
-        target='_blank'
-        className={styles.card}
-      >
-        <picture>
-          <img
-            src={legacyProjectImageUrl(coverImage)}
-            alt={coverImageAlt ?? `Photo illustrant le projet "${title}"`}
-          />
-        </picture>
-        <div className={`fr-px-5w fr-py-10v ${styles.cardContent}`}>
-          <p
-            className="fr-hint-text"
-            style={{ color: 'var(--text-mention-grey)' }}
-          >
-            <span className='fr-mr-1w fr-icon--sm fr-icon-map-pin-2-line' />
-            {city}
-          </p>
-          <h6 style={{ flexGrow: 1 }}>{title}</h6>
-          <p className='fr-link fr-link--icon-right fr-icon-external-link-line fr-mt-4v'>
-            Voir le projet
-          </p>
-        </div>
-      </a>
-    )
-  },
+  ) => (
+    <Link
+      ref={ref}
+      href={getProjectPath({ slug })}
+      title={`Voir le projet "${title}"`}
+      className={styles.card}
+    >
+      <picture>
+        <img
+          src={getProjectFilePath(coverImage)}
+          alt={coverImageAlt ?? `Photographie illustrant le projet "${title}"`}
+        />
+      </picture>
+      <div className={`fr-px-5w fr-py-10v ${styles.cardContent}`}>
+        <p
+          className="fr-hint-text"
+          style={{ color: 'var(--text-mention-grey' }}
+        >
+          <span className="fr-mr-1w fr-icon--sm fr-icon-map-pin-2-line" />
+          {localization.label} ({localization.department})
+        </p>
+        <h6 style={{ flexGrow: 1 }}>{title}</h6>
+        <p className="fr-link fr-link--icon-right fr-icon-arrow-right-line fr-mt-4v">
+          Voir le projet
+        </p>
+      </div>
+    </Link>
+  ),
 )
-ProjectCard.displayName = 'ProjectCard'
+ShowcaseCard.displayName = 'ShowcaseCard'

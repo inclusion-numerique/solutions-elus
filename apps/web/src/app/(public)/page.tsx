@@ -1,17 +1,17 @@
 import Link from 'next/link'
-import styles from './styles.module.css'
 import { categories, categoryProjectsLink } from '@sde/web/anctProjects'
 import { Showcase } from '@sde/web/app/(public)/Showcase'
 import { getShowcaseProjects } from '@sde/web/legacyProject/showcaseProjects'
-
-// Revalidate this page every day
-export const revalidate = 86_400
+import styles from './PublicLayout.module.css'
 
 export default async function HomePage() {
+  const revalidationNonce = Math.floor(Math.random() * 10_000).toString()
+
   const projects = await getShowcaseProjects()
   return (
     <>
       <div
+        data-revalidation={revalidationNonce}
         className="fr-background-alt--blue-france"
         style={{ position: 'relative' }}
       >

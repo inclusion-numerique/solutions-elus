@@ -1,4 +1,4 @@
-import styles from '@sde/web/app/(public)/styles.module.css'
+import styles from '@sde/web/app/(public)/PublicLayout.module.css'
 import { ProjectsListContainer } from '@sde/web/app/(public)/projets/ProjectsListContainer'
 import { getProjectsList } from '@sde/web/legacyProject/projectsList'
 import { Category } from '@sde/web/anctProjects'

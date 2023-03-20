@@ -17,9 +17,9 @@ type UploadingFileInfo = {
 const validator = (_file: File): FileError | FileError[] | null => null
 
 const AttachmentUploader = ({
-                              onChange,
-                              reference,
-                            }: {
+  onChange,
+  reference,
+}: {
   reference: string
   onChange: (files: UploadingFileInfo[]) => void
 }) => {
@@ -68,7 +68,6 @@ const AttachmentUploader = ({
     onChange(updatedFiles)
   }
 
-
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
 
@@ -88,38 +87,42 @@ const AttachmentUploader = ({
   return (
     <>
       <div
-        className='fr-card fr-background-contrast--grey'
+        className="fr-card fr-background-contrast--grey"
         style={{ height: 'auto', borderRadius: '4px 4px 0 0' }}
       >
         <div
-          className='fr-p-8v'
+          className="fr-p-8v"
           style={{ cursor: 'pointer' }}
           {...getRootProps()}
         >
           <input {...getInputProps()} />
-          <p className='' style={{ pointerEvents: 'none' }}>
+          <p className="" style={{ pointerEvents: 'none' }}>
             Vous pouvez <strong>glisser-déposer</strong> des pièces jointes ici,{' '}
             <strong>ou cliquer</strong> pour sélectionner des fichiers.
           </p>
         </div>
       </div>
-      <ul className='fr-mt-4v fr-raw-list'>
+      <ul className="fr-mt-4v fr-raw-list">
         {files.map((file, index) => (
-          <li key={file.key ?? index} className='fr-mt-2v' style={{
-            display: 'flex',
-            alignItems: 'center',
-          }}>
+          <li
+            key={file.key ?? index}
+            className="fr-mt-2v"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
             {file.status === 'pending' ? (
-              <Spinner size='sm' />
+              <Spinner size="sm" />
             ) : (
-              <span className='fr-icon-checkbox-circle-fill fr-text-label--blue-france' />
+              <span className="fr-icon-checkbox-circle-fill fr-text-label--blue-france" />
             )}
-            <span className='fr-ml-4v fr-text--sm fr-m-0'>
+            <span className="fr-ml-4v fr-text--sm fr-m-0">
               {file.file.name}
             </span>
             <button
-              type='button'
-              className='fr-btn fr-icon-close-line fr-btn--tertiary-no-outline fr-btn--sm fr-ml-4v'
+              type="button"
+              className="fr-btn fr-icon-close-line fr-btn--tertiary-no-outline fr-btn--sm fr-ml-4v"
               aria-label={`Retirer le fichier ${file.file.name}`}
               onClick={() => onRemove(index)}
             />

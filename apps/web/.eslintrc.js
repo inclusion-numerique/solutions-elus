@@ -15,10 +15,6 @@ const temporarilyDisabledRules = [
   '@typescript-eslint/require-await',
   '@typescript-eslint/restrict-template-expressions',
   'consistent-return',
-  'eqeqeq',
-  'import/no-cycle',
-  'import/no-extraneous-dependencies',
-  'import/order',
   'jest/expect-expect',
   'jest/no-commented-out-tests',
   'jest/no-disabled-tests',
@@ -55,5 +51,11 @@ const temporarilyDisabledRules = [
 // eslint-disable-next-line unicorn/prefer-module
 module.exports = {
   extends: ['next/core-web-vitals'],
-  rules: { ...Object.fromEntries(temporarilyDisabledRules) },
+  rules: {
+    ...Object.fromEntries(temporarilyDisabledRules),
+    // __dirname is fine for now
+    'unicorn/prefer-module': 'off',
+    // Common abbreviations are fine (e.g. react ref)
+    'unicorn/prevent-abbreviations': 'off',
+  },
 }

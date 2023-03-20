@@ -1,4 +1,4 @@
-import fs from "node:fs"
+import fs from 'node:fs'
 import { resolve } from 'node:path'
 import { Command } from '@commander-js/extra-typings'
 import { output } from '@sde/cli/output'
@@ -9,7 +9,6 @@ export const drupalOutputFile = resolve('var', 'drupal-projects.json')
 export const downloadDrupalProjects = new Command()
   .command('projects:drupal:download')
   .action(async () => {
-
     const drupalProjects = await fetchDrupalProjects()
     if (!fs.existsSync('var')) {
       output(`Creating var directory`)

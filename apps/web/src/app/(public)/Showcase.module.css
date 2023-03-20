@@ -1,7 +1,7 @@
 .header {
   display: flex;
-
   flex-direction: column;
+
   @media (min-width: 48em) {
     /*! media md */
     flex-direction: row;
@@ -25,11 +25,13 @@
   padding-left: 1rem;
   padding-right: 1rem;
   width: 100%;
+
   @media (min-width: 62em) {
     /* lg */
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
+
   @media (min-width: 78em) {
     /* xl */
     padding-left: calc((50% - 39em) + 1.5em);
@@ -48,25 +50,30 @@
 .card {
   text-decoration: none !important;
   background: none !important;
-  &::after{
+
+  &::after {
     display: none !important;
   }
 
   width: 100%;
   margin-right: 16px;
+
   @media (min-width: 48em) {
     /*! media md */
     width: 380px;
   }
+
   @media (min-width: 62em) {
     /* lg */
     margin-right: 24px;
   }
 
   border: 1px solid var(--border-default-grey);
+
   &:hover {
     box-shadow: 0 4px 12px var(--shadow-color);
   }
+
   display: flex;
   flex-direction: column;
   flex-grow: 0;
@@ -83,6 +90,7 @@
     object-fit: cover;
   }
 }
+
 .cardContent {
   flex-grow: 1;
   display: flex;

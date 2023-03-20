@@ -6,28 +6,27 @@ import { v4 } from 'uuid'
 
 const t = initTRPC.context<RpcContext>().create()
 
-
 export const appRouter = t.router({
   createProject: t.procedure
     .input(ShareProjectFormDataValidation)
     .mutation(
       async ({
-               input: {
-                 reference,
-                 community,
-                 quality,
-                 name,
-                 description,
-                 domain,
-                 email,
-                 partners,
-                 phone,
-                 tech,
-                 solution,
-                 dates,
-                 attachments,
-               },
-             }) => {
+        input: {
+          reference,
+          community,
+          quality,
+          name,
+          description,
+          domain,
+          email,
+          partners,
+          phone,
+          tech,
+          solution,
+          dates,
+          attachments,
+        },
+      }) => {
         const id = v4()
         const project = await prismaClient.shareProjectFormSubmission.create({
           data: {

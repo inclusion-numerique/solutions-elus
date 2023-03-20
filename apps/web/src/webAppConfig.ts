@@ -6,8 +6,6 @@ const NodeEnvironment = process.env.NODE_ENV
  * Necessary environment variables for web app are listed here.
  */
 
-
-
 /**
  * Only use ServerWebAppConfig on server side
  * It contains secrets that must not be sent to the client

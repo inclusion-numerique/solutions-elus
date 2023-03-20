@@ -33,9 +33,6 @@ const ShareProjectSubmissionPage = async ({
     tech,
   } = project
 
-  const onViewAttachment = ({}: { key: string; name: string }) => {}
-  const onDownloadAttachment = ({}: { key: string; name: string }) => {}
-
   return (
     <>
       <div className="fr-grid-row fr-pt-8v">

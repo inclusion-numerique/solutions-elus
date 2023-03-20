@@ -5,7 +5,11 @@ import { ProjectsCategories } from '@sde/web/app/(public)/projets/ProjectsCatego
 import { ProjectsList } from '@sde/web/app/(public)/projets/ProjectsList'
 import { Category } from '@sde/web/anctProjects'
 import { useOnDiff } from '@sde/web/hooks/useOnDiff'
-import { useCategoriesFilters, useDistrictFilters } from '@sde/web/legacyProject/projectFiltersStore'
+import {
+  useCategoriesFilters,
+  useDistrictFilters,
+  usePopulationBracketFilters,
+} from '@sde/web/legacyProject/projectFiltersStore'
 import { filterProjects } from '@sde/web/legacyProject/filterProjectList'
 import { ProjectListItem } from '@sde/web/legacyProject/projectsList'
 import { District } from '@sde/web/projethoteque/legacyProjects'
@@ -34,8 +38,16 @@ export const ProjectsListContainer = ({
 
   const districts = useDistrictFilters(({ selected }) => selected)
   const categories = useCategoriesFilters(({ selected }) => selected)
+  const populationBrackets = usePopulationBracketFilters(
+    ({ selected }) => selected,
+  )
 
-  const filteredProjects = filterProjects({ projects, districts, categories })
+  const filteredProjects = filterProjects({
+    projects,
+    districts,
+    categories,
+    populationBrackets,
+  })
 
   return (
     <div className="fr-grid-row fr-p-0">

@@ -3,23 +3,36 @@ version: 2.1
 orbs:
   skip: theodo/skip@0.1.2
   queue: eddiewebb/queue@1.8.4
-  dotenv: anilanar/dotenv@1.0.0
 executors:
   node:
     docker:
       - image: cimg/node:18.13.0
         environment:
           TZ: 'UTC'
-  node-browsers:
+
+  node-postgres:
+    docker:
+      - image: cimg/node:18.13.0
+        environment:
+          TZ: 'UTC'
+          CI_DATABASE_URL: postgresql://postgres@localhost/test
+      - image: cimg/postgres:14.0
+        environment:
+          POSTGRES_USER: postgres
+  node-e2e:
     docker:
       - image: cimg/node:18.13.0-browsers
         environment:
           TZ: 'UTC'
+          CI_DATABASE_URL: postgresql://postgres@localhost/test
+      - image: cimg/postgres:14.0
+        environment:
+          POSTGRES_USER: postgres
 
 parameters:
   cache_version:
     type: string
-    default: '2023-03-11-02'
+    default: '2023-03-16-01'
   virtual_store_dir:
     type: string
     default: './.pnpm'
@@ -77,9 +90,8 @@ workflows:
           requires:
             - lint
             - test
-            #            - chromatic
-            - build_web
-            # - test_e2e
+            #  - chromatic
+            - test_e2e
 
   project_infrastructure_deployment:
     # This workflow exclusively runs on the infra branch
@@ -229,7 +241,7 @@ jobs:
           command: pnpm --silent -F @sde/web test
 
   build_web:
-    executor: node
+    executor: node-postgres
     resource_class: large
     steps:
       - checkout
@@ -237,17 +249,29 @@ jobs:
           docker_layer_caching: true
       - install_dependencies
       - create_dotenv_file
-      - add_secrets_to_dotenv_file
-      - setup_docker_web_env
       - run:
           name: 'Prisma generate'
           command: pnpm --silent -F @sde/web prisma:generate
+      - add_secrets_to_dotenv_file
+      - setup_docker_web_env
       - run:
           name: 'Install DSFR'
           command: pnpm --silent -F @sde/web setup:dsfr
       - run:
+          name: 'Create CI database schema'
+          command: |
+            DATABASE_URL=$CI_DATABASE_URL pnpm --silent -F @sde/web prisma db push --skip-generate --accept-data-loss
+      - run:
+          name: Download data
+          command: |
+            DATABASE_URL=$CI_DATABASE_URL pnpm --silent cli projects:grist:download
+      - run:
+          name: Update showcase projects
+          command: |
+            DATABASE_URL=$CI_DATABASE_URL pnpm --silent cli projects:update-showcases
+      - run:
           name: 'Build next app'
-          command: pnpm --silent -F @sde/web build
+          command: DATABASE_URL=$CI_DATABASE_URL pnpm --silent -F @sde/web build
       - run:
           name: 'Clear dependencies to install only prod dependencies'
           command: |
@@ -272,6 +296,10 @@ jobs:
           command: |
             docker login $WEB_APP_DOCKER_REGISTRY -u nologin --password-stdin \<<< "$CI_SCW_SECRET_KEY"
             docker push $IMAGE_BUILD_TAG
+      - save_cache:
+          key: << pipeline.id >>-web-build
+          paths:
+            - ./apps/web/.next
 
   chromatic:
     executor: node
@@ -280,6 +308,9 @@ jobs:
       - checkout
       - install_dependencies
       - create_dotenv_file
+      - run:
+          name: 'Prisma generate'
+          command: pnpm --silent -F @sde/web prisma:generate
       - add_secrets_to_dotenv_file
       - run:
           name: 'Setup DSFR'
@@ -289,7 +320,7 @@ jobs:
           command: pnpm --silent -F @sde/storybook chromatic
 
   test_e2e:
-    executor: node-browsers
+    executor: node-e2e
     resource_class: large
     parallelism: 1
     steps:
@@ -299,23 +330,30 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - create_dotenv_file
-      - add_secrets_to_dotenv_file
-      - setup_docker_web_env
       - run:
-          name: 'Login to registry and pull image'
-          command: |
-            docker login $WEB_APP_DOCKER_REGISTRY -u nologin --password-stdin \<<< "$CI_SCW_SECRET_KEY"
-            docker pull $IMAGE_BUILD_TAG
+          name: 'Prisma generate'
+          command: pnpm --silent -F @sde/web prisma:generate
+      - add_secrets_to_dotenv_file
       - run:
           name: 'Install playwright'
           # This will be instantly resolved from global store thanks to custom image playwright setup
           command: |
             pnpm --silent -F @sde/e2e install
             pnpx playwright install
-      #      - run:
-      #          name: 'Up docker-compose'
-      #          command: |
-      #            docker-compose -f docker/web/docker-compose.ci.yml up
+      - run:
+          name: 'Create CI database schema'
+          command: |
+            DATABASE_URL=$CI_DATABASE_URL pnpm --silent -F @sde/web prisma db push --skip-generate --accept-data-loss
+      - run:
+          name: Download data
+          command: |
+            DATABASE_URL=$CI_DATABASE_URL pnpm --silent cli projects:grist:download
+      - run:
+          name: Update showcase projects
+          command: |
+            DATABASE_URL=$CI_DATABASE_URL pnpm --silent cli projects:update-showcases
+      - restore_cache:
+          key: << pipeline.id >>-web-build
       - run:
           name: 'Run playwright'
           command: |
@@ -329,6 +367,9 @@ jobs:
       - checkout
       - create_dotenv_file
       - install_dependencies
+      - run:
+          name: 'Prisma generate'
+          command: pnpm --silent -F @sde/web prisma:generate
       - add_secrets_to_dotenv_file
       - setup_docker_web_env
       - run:
@@ -366,8 +407,10 @@ jobs:
           name: 'Create .env file from deployment outputs'
           command: |
             pnpm --silent cli dotenv:from-cdk web
-      - dotenv/source:
-          path: .env
+      - run:
+          name: 'Add .env vars to bash env'
+          command: |
+            grep -v -e '^[[:space:]]*$' -e '^#' .env | awk '{print "export " $0}' >> $BASH_ENV
       - run:
           name: Set deployment status to migration
           command: pnpm --silent cli github:deployment:update $DEPLOYMENT_ID in_progress -d 'Executing database migrations' -l https://app.circleci.com/pipelines/workflows/$CIRCLE_WORKFLOW_ID
@@ -376,12 +419,18 @@ jobs:
           command: |
             pnpm --silent -F @sde/web prisma db push --skip-generate --accept-data-loss
       - run:
-          name: Set deployment status to fixtures load
-          command: pnpm --silent cli github:deployment:update $DEPLOYMENT_ID in_progress -d 'Loading fixtures' -l https://app.circleci.com/pipelines/workflows/$CIRCLE_WORKFLOW_ID
+          name: Set deployment status to data loading
+          command: pnpm --silent cli github:deployment:update $DEPLOYMENT_ID in_progress -d 'Loading data' -l https://app.circleci.com/pipelines/workflows/$CIRCLE_WORKFLOW_ID
       - run:
-          name: 'Load fixtures'
+          name: Download data
+          command: pnpm --silent cli projects:grist:download
+      - run:
+          name: Update showcase projects
+          command: pnpm --silent cli projects:update-showcases
+      - run:
+          name: Check that deployed container status is ok
           command: |
-            pnpm --silent cli fixtures:load
+            pnpm --silent cli deployment:check-status https://$WEB_BASE_URL
       - run:
           name: Set deployment status to success
           command: pnpm --silent cli github:deployment:update $DEPLOYMENT_ID success -d 'Deploy successful' -u https://$WEB_BASE_URL -l https://app.circleci.com/pipelines/workflows/$CIRCLE_WORKFLOW_ID
@@ -398,6 +447,9 @@ jobs:
       - install_dependencies
       - install_terraform
       - create_dotenv_file
+      - run:
+          name: 'Prisma generate'
+          command: pnpm --silent -F @sde/web prisma:generate
       - add_secrets_to_dotenv_file
       - run:
           name: "Create terraform variables file from environment variables"
@@ -417,6 +469,9 @@ jobs:
       - install_dependencies
       - install_terraform
       - create_dotenv_file
+      - run:
+          name: 'Prisma generate'
+          command: pnpm --silent -F @sde/web prisma:generate
       - add_secrets_to_dotenv_file
       - run:
           name: "Create terraform variables file from environment variables"
@@ -435,6 +490,9 @@ jobs:
       - install_dependencies
       - install_terraform
       - create_dotenv_file
+      - run:
+          name: 'Prisma generate'
+          command: pnpm --silent -F @sde/web prisma:generate
       - add_secrets_to_dotenv_file
       - run:
           name: "Create terraform variables file from environment variables"
@@ -493,9 +551,13 @@ commands:
   add_secrets_to_dotenv_file:
     steps:
       - run:
+          name: "Add ci secrets to .env"
+          command: |
+            SCW_ACCESS_KEY=$CI_SCW_ACCESS_KEY SCW_SECRET_KEY=$CI_SCW_SECRET_KEY pnpm --silent cli dotenv:from-secrets ci
+      - run:
           name: "Add project secrets to .env"
           command: |
-            SCW_ACCESS_KEY=$CI_SCW_ACCESS_KEY SCW_SECRET_KEY=$CI_SCW_SECRET_KEY pnpm --silent cli dotenv:from-secrets project
+            pnpm --silent cli dotenv:from-secrets project
       - run:
           name: "Add web secrets to .env"
           command: |

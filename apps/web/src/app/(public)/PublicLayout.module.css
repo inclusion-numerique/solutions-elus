@@ -2,28 +2,35 @@
   background-size: cover;
   background-position: center;
   height: 55vh;
+
   @media (min-width: 34em) {
     height: 46vh;
   }
+
   @media (min-width: 48em) {
     /*! media md */
     height: 50vh;
   }
+
   @media (min-width: 62em) {
     /* lg */
     height: 44vh;
   }
+
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),url('/images/village.webp') ;
+  background-image: linear-gradient(rgb(0 0 0 / 30%), rgb(0 0 0 / 30%)),
+    url('/images/village.webp');
 }
+
 .withImageBackground {
   position: relative;
   background: var(--background-alt-grey);
+
   &::before {
-    content: " ";
+    content: ' ';
     position: absolute;
     top: 0;
     left: 0;
@@ -31,7 +38,8 @@
     background-position: center;
     height: 55vh;
     width: 100%;
-    background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),url('/images/village.webp') ;
+    background-image: linear-gradient(rgb(0 0 0 / 30%), rgb(0 0 0 / 30%)),
+      url('/images/village.webp');
   }
 }
 
@@ -50,6 +58,7 @@
   font-size: 18px;
   line-height: 28px;
 }
+
 .asideCover {
   position: absolute;
   top: 0;

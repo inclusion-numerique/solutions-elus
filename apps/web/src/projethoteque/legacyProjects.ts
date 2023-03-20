@@ -1,4 +1,3 @@
-import { projethotequeUrl } from '@sde/web/projethoteque/projethoteque'
 import { Category } from '@sde/web/anctProjects'
 
 export const categoryToLegacyCategory = (category: string): string => category
@@ -23,7 +22,7 @@ const legacyCategories = [
   'Transport et mobilités',
 ] as const
 
-export type LegacyCategory = typeof legacyCategories[number]
+export type LegacyCategory = (typeof legacyCategories)[number]
 
 export const legacyCategoryToCategory = (
   legacyCategory: LegacyCategory,
@@ -45,10 +44,10 @@ export const legacyCategoryToCategory = (
     return 'Développement économique'
   }
 
-  if (legacyCategory == 'Inclusion sociale') {
+  if (legacyCategory === 'Inclusion sociale') {
     return 'Solidarité'
   }
-  if (legacyCategory == 'Ingénierie sur mesure') {
+  if (legacyCategory === 'Ingénierie sur mesure') {
     return 'Infrastructures locales'
   }
 
@@ -58,12 +57,6 @@ export const legacyCategoryToCategory = (
 
   return legacyCategory
 }
-
-export const legacyProjectUrl = (slug: string): string =>
-  `${projethotequeUrl}/${slug}`
-
-export const legacyProjectImageUrl = (imagePath: string): string =>
-  `${projethotequeUrl}${imagePath}`
 
 export const districts = [
   'Auvergne-Rhône-Alpes',
@@ -86,4 +79,4 @@ export const districts = [
   'La Réunion',
 ] as const
 
-export type District = typeof districts[number]
+export type District = (typeof districts)[number]

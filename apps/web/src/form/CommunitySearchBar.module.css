@@ -1,12 +1,12 @@
-.search-result {
-    width: 100%;
-    cursor: pointer;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    border-bottom: 1px solid var(--blue-cumulus-850-200);
+.searchResult {
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 1px solid var(--blue-cumulus-850-200);
 
-    &:hover {
-        background-color: var(--blue-cumulus-925-125);
-    }
+  &:hover {
+    background-color: var(--blue-cumulus-925-125);
+  }
 }
