@@ -2,6 +2,7 @@ import { Command } from '@commander-js/extra-typings'
 import { output } from '@sde/cli/output'
 import axios from 'axios'
 import { projectTitle } from '@sde/config/config'
+import axiosRetry from 'axios-retry'
 
 export const checkDeploymentStatus = new Command()
   .command('deployment:check-status')
@@ -12,6 +13,10 @@ export const checkDeploymentStatus = new Command()
       headers: {
         Accept: 'text/html',
       },
+    })
+    axiosRetry(client, {
+      retries: 3,
+      retryDelay: (retryCount) => retryCount * 3000,
     })
 
     const statusResponse = await client.get<{ status: string }>('/api/health')
