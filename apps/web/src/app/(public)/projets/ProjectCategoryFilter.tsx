@@ -24,7 +24,7 @@ export const ProjectCategoryFilter = () => {
         />
       </div>
       <div className="fr-hidden fr-unhidden-md fr-px-2w fr-px-md-4w">
-        <p className="fr-text--regular fr-text--bold fr-text--lg fr-mt-8v fr-mb-2v">
+        <p className="fr-text--regular fr-text--bold fr-text--lg fr-mb-2v">
           Rechercher par thématiques
         </p>
         {categories.map((category) => {

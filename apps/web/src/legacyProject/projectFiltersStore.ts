@@ -39,3 +39,11 @@ export const useCategoriesFilters = createFilterStore<Category>()
 
 export const usePopulationBracketFilters =
   createFilterStore<PopulationBracket>()
+
+export const useProjectSearch = create<{
+  query: string
+  search: (query: string) => void
+}>((set) => ({
+  query: '',
+  search: (query: string) => set({ query }),
+}))
