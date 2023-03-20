@@ -91,9 +91,9 @@ workflows:
           requires:
             - lint
             - test
-            #            - chromatic
+            #  - chromatic
             - build_web
-            # - test_e2e
+            - test_e2e
 
   project_infrastructure_deployment:
     # This workflow exclusively runs on the infra branch
