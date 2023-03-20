@@ -73,14 +73,6 @@ export const ProjectsList = ({
     return result.map(({ item }) => item)
   }, [projects, fuse, searchQuery])
 
-  console.log(
-    'CATEGORIES FILTER',
-    [...categories],
-    projects.filter((project) => {
-      console.log('MATCH ? ', project.categories, [...categories])
-    }),
-  )
-
   // Apply simple filters
   const filteredProjects = filterProjects({
     projects: searchResult,
