@@ -91,7 +91,6 @@ workflows:
             - lint
             - test
             #  - chromatic
-            - build_web
             - test_e2e
 
   project_infrastructure_deployment:
