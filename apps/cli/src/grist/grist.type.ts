@@ -91,6 +91,7 @@ const gristProgramFieldsValidation = z.object({
   nom_programme: z.string(),
   politique_publique: z.string(),
   territoire: z.array(z.string()),
+  description: z.string()
 })
 
 export const gristProjectValidation = z.object({

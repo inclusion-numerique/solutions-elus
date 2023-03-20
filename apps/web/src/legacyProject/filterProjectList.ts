@@ -4,7 +4,7 @@ import { Category } from '@sde/web/anctProjects'
 import {
   PopulationBracket,
   populationIsInBracket,
-} from '@sde/web/project/population'
+} from '@sde/web/project/project'
 
 export const filterProjects = ({
   projects,

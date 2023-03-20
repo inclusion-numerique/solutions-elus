@@ -6,20 +6,21 @@
 .header {
   flex-wrap: wrap-reverse;
   align-items: center;
-
-  img {
-    max-width: 100%;
-  }
+  gap: 24px 0;
 }
 
 .content,
 .header {
-  display: flex;
-  gap: 24px 128px;
   justify-content: center;
   @media (min-width: 62em) {
     flex-wrap: nowrap;
   }
+}
+
+.separator {
+  width: 100%;
+  border-top: 1px solid #dddddd;
+  margin: 48px 0;
 }
 
 .metaInfos {
@@ -57,6 +58,7 @@
 }
 
 .bloc {
+  display: block;
   padding: 32px;
   border: 1px solid #dddddd;
   width: 333px;

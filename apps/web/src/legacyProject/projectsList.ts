@@ -31,11 +31,26 @@ export const getProjectsList = () =>
   })
 
 export const getProject = (slug: string) =>
-  prismaClient.project.findUnique({
+  prismaClient.project.findUniqueOrThrow({
     select: {
-      program: true,
-      localization: true,
+      program: {
+        select: {
+          name: true,
+          description: true,
+        },
+      },
+      localization: {
+        select: {
+          label: true,
+          department: true,
+          departmentName: true,
+          regionName: true,
+          population: true,
+        }
+      },
       localizationDescription: true,
+      longitude: true,
+      latitude: true,
       created: true,
       title: true,
       categories: true,

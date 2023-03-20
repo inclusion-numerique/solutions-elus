@@ -6,8 +6,11 @@ import { useShowcase } from '@sde/web/app/(public)/useShowcase'
 import Link from 'next/link'
 import { useSwipeable } from 'react-swipeable'
 import { ShowcaseProject } from '@sde/web/legacyProject/showcaseProjects'
-import { getProjectPath } from '@sde/web/project/getProjectPath'
-import { getProjectFilePath } from '@sde/web/project/getProjectFilePath'
+import {
+  getCityWithDepartment,
+  getProjectFilePath,
+  getProjectPath,
+} from '@sde/web/project/project'
 
 export const Showcase = ({ projects }: { projects: ShowcaseProject[] }) => {
   const { containerRef, firstCardRef, offsetString, next, previous } =
@@ -107,7 +110,7 @@ const ShowcaseCard = forwardRef<
           style={{ color: 'var(--text-mention-grey' }}
         >
           <span className="fr-mr-1w fr-icon--sm fr-icon-map-pin-2-line" />
-          {localization.label} ({localization.department})
+          {getCityWithDepartment(localization)}
         </p>
         <h6 style={{ flexGrow: 1 }}>{title}</h6>
         <p className="fr-link fr-link--icon-right fr-icon-arrow-right-line fr-mt-4v">

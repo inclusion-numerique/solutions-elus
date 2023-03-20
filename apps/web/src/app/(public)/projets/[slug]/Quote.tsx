@@ -1,4 +1,4 @@
-import { getProjectFilePath } from '@sde/web/project/getProjectFilePath'
+import { getProjectFilePath } from '@sde/web/project/project'
 import Image from 'next/image'
 import React from 'react'
 import styles from './Quote.module.css'
@@ -7,17 +7,19 @@ const Quote = ({
   image,
   name,
   text,
+  className,
 }: {
   image: string | null
   name: string | null
   text: string | null
+  className?: string
 }) => {
   if (!image || !name || !text) {
     return null
   }
   return (
     <>
-      <div className={styles.container}>
+      <div className={`${styles.container} ${className}`}>
         <Image
           width={184}
           height={184}
