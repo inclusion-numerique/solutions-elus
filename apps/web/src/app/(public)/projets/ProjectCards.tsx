@@ -1,5 +1,3 @@
-'use client'
-
 import { ProjectListCta } from '@sde/web/app/(public)/projets/ProjectListCta'
 import { ProjectListItem } from '@sde/web/legacyProject/projectsList'
 import { ProjectCard } from '@sde/web/app/(public)/projets/ProjectCard'

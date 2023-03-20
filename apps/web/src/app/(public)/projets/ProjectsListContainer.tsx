@@ -1,18 +1,23 @@
 'use client'
 
-import { ProjectsFilters } from '@sde/web/app/(public)/projets/ProjectsFilters'
-import { ProjectsCategories } from '@sde/web/app/(public)/projets/ProjectsCategories'
+import { ProjectsListAside } from '@sde/web/app/(public)/projets/ProjectsListAside'
+import { ProjectCategoryFilter } from '@sde/web/app/(public)/projets/ProjectCategoryFilter'
 import { ProjectsList } from '@sde/web/app/(public)/projets/ProjectsList'
-import { Category } from '@sde/web/anctProjects'
+import { Category, District } from '@sde/web/anctProjects'
 import { useOnDiff } from '@sde/web/hooks/useOnDiff'
 import {
   useCategoriesFilters,
   useDistrictFilters,
   usePopulationBracketFilters,
+  useProjectSearch,
 } from '@sde/web/legacyProject/projectFiltersStore'
 import { filterProjects } from '@sde/web/legacyProject/filterProjectList'
 import { ProjectListItem } from '@sde/web/legacyProject/projectsList'
-import { District } from '@sde/web/projethoteque/legacyProjects'
+import { ProjectPopulationFilter } from '@sde/web/app/(public)/projets/ProjectPopulationFilter'
+import { ProjectRegionFilter } from '@sde/web/app/(public)/projets/ProjectRegionFilter'
+import { ProjectSearchBar } from '@sde/web/app/(public)/projets/ProjectSearchBar'
+import { useMemo } from 'react'
+import Fuse from 'fuse.js'
 
 export const ProjectsListContainer = ({
   projects,
@@ -30,6 +35,7 @@ export const ProjectsListContainer = ({
 
   const initDistricts = useDistrictFilters(({ initialize }) => initialize)
   const initCategories = useCategoriesFilters(({ initialize }) => initialize)
+  const searchQuery = useProjectSearch(({ query }) => query)
 
   useOnDiff(filtersString, () => {
     initDistricts(initialDistrictsFilter)
@@ -42,8 +48,40 @@ export const ProjectsListContainer = ({
     ({ selected }) => selected,
   )
 
+  // TODO move this in child component to prevent re-render of asides and filters components
+
+  // Memoize fuze instance to avoid re-indexing on each change
+  const fuse = useMemo(
+    () =>
+      new Fuse<ProjectListItem>(projects, {
+        includeScore: true,
+        keys: [
+          'title',
+          'program.name',
+          'localization.label',
+          'localization.departmentName',
+          'localization.regionName',
+          'categories',
+        ],
+      }),
+    [projects],
+  )
+
+  // Memoize search result to avoid re-searching on other filter changes
+  const searchResult = useMemo(() => {
+    if (searchQuery.trim() === '') {
+      return projects
+    }
+
+    const result = fuse
+      .search(searchQuery)
+      .sort((a, b) => (a.score ?? 0) - (b.score ?? 0))
+    return result.map(({ item }) => item)
+  }, [projects, fuse, searchQuery])
+
+  // Apply simple filters
   const filteredProjects = filterProjects({
-    projects,
+    projects: searchResult,
     districts,
     categories,
     populationBrackets,
@@ -59,11 +97,14 @@ export const ProjectsListContainer = ({
           }}
           aria-label="Menu latéral"
         >
-          <ProjectsFilters />
+          <ProjectsListAside />
         </aside>
       </div>
       <div className="fr-col-12 fr-col-md-8">
-        <ProjectsCategories />
+        <ProjectSearchBar />
+        <ProjectPopulationFilter />
+        <ProjectRegionFilter />
+        <ProjectCategoryFilter />
         <div className="fr-px-2w fr-px-md-4w fr-pb-8v">
           <ProjectsList projects={filteredProjects} />
         </div>

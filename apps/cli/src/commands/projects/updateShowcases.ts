@@ -1,5 +1,6 @@
 import { Command } from '@commander-js/extra-typings'
 import { prismaClient } from '@sde/web/prismaClient'
+import { output } from '@sde/cli/output'
 
 const showcases = [
   // 'des-produits-locaux-pour-la-restauration-collective-322',
@@ -18,7 +19,7 @@ const showcases = [
 export const updateShowcases = new Command()
   .command('projects:update-showcases')
   .action(async () => {
-    console.log(`🖼️ Configuring the showcase with ${showcases.length} projects`)
+    output(`🖼️ Configuring the showcase with ${showcases.length} projects`)
 
     await prismaClient.$transaction(async (transaction) => {
       await transaction.project.updateMany({ data: { showcase: null } })
@@ -36,7 +37,7 @@ export const updateShowcases = new Command()
       )
     })
 
-    console.log(
+    output(
       `👍 ${showcases.length} projects have been configured for showcasing`,
     )
   })

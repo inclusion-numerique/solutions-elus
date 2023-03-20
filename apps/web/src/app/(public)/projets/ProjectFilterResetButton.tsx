@@ -1,5 +1,3 @@
-import styles from './ProjectFilterResetButton.module.css'
-
 export const ProjectFilterResetButton = ({
   label,
   hidden,
@@ -11,7 +9,7 @@ export const ProjectFilterResetButton = ({
 }) => (
   <button
     type="button"
-    className={`fr-link fr-link--sm fr-mt-8v ${styles.button}`}
+    className="fr-btn fr-btn--tertiary-no-outline fr-btn--sm"
     onClick={onClick}
     style={{
       cursor: 'pointer',

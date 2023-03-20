@@ -57,26 +57,3 @@ export const legacyCategoryToCategory = (
 
   return legacyCategory
 }
-
-export const districts = [
-  'Auvergne-Rhône-Alpes',
-  'Bourgogne-Franche-Comté',
-  'Bretagne',
-  'Centre-Val de Loire',
-  'Corse',
-  'Grand Est',
-  'Guadeloupe',
-  'Guyane Française',
-  'Hauts-de-France',
-  'Île-de-France',
-  'Martinique',
-  'Mayotte',
-  'Normandie',
-  'Nouvelle-Aquitaine',
-  'Occitanie',
-  'Pays de la Loire',
-  "Provence-Alpes-Côte d'Azur",
-  'La Réunion',
-] as const
-
-export type District = (typeof districts)[number]

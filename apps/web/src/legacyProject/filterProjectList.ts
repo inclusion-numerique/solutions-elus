@@ -1,10 +1,9 @@
-import { District } from '@sde/web/projethoteque/legacyProjects'
 import { ProjectListItem } from '@sde/web/legacyProject/projectsList'
-import { Category } from '@sde/web/anctProjects'
 import {
   PopulationBracket,
   populationIsInBracket,
 } from '@sde/web/project/project'
+import { Category, District, populationBracketsConditions } from '../anctProjects'
 
 export const filterProjects = ({
   projects,
@@ -37,6 +36,9 @@ export const filterProjects = ({
         !project.localization.population ||
         // Or Project population is in one of the brackets
         [...populationBrackets].some((bracket) =>
-          populationIsInBracket(project.localization.population ?? 0, bracket),
+          populationIsInBracket(
+            project.localization.population ?? 0,
+            populationBracketsConditions[bracket],
+          ),
         )),
   )
