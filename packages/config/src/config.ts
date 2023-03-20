@@ -3,7 +3,7 @@
  * ⚠️ Never put any secret value or authentication token in this file (or in any version controlled file)
  */
 
-export const projectTitle = 'Solutions d\'élus'
+export const projectTitle = "Solutions d'élus"
 export const projectSlug = 'sde'
 export const mainLiveUrl = 'https://solutionsdelus.gouv.fr'
 export const repositoryUrl =

@@ -6,6 +6,6 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  background-image: linear-gradient(rgb(0 0 0 / 30%), rgb(0 0 0 / 30%)),url('/images/village.webp') ;
+  background-image: linear-gradient(rgb(0 0 0 / 30%), rgb(0 0 0 / 30%)),
+    url('/images/village.webp');
 }
-

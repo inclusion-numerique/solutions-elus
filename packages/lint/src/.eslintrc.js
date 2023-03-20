@@ -71,6 +71,8 @@ module.exports = {
         'no-restricted-syntax': 'off',
         // Module resolve leads to false negatives in monorepo, typescript compiler will handle any error
         'import/no-unresolved': [2, { ignore: ['^@sde/'] }],
+        // This rule is unreliable in monorepos and typescript compiler will help on bad imports
+        'import/no-extraneous-dependencies': 'off',
         '@typescript-eslint/unbound-method': 'off',
         'unicorn/no-array-callback-reference': 'off',
         'import/prefer-default-export': 'off',

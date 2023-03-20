@@ -1,6 +1,6 @@
-export const listProjectsFromDrupal = async ()=>{
-  const result = [];
+export const listProjectsFromDrupal = async () => {
+  const result = []
   const pageUrl = ''
 
- // TODO WIP
+  // TODO WIP
 }

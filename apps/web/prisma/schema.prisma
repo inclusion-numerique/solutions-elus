@@ -163,7 +163,9 @@ model Localization {
   insee      String?
   echelon    String
   department String?
+  departmentName String?
   region     String?
+  regionName String?
   population Int?
   siren      String
   nature     String
@@ -180,5 +182,5 @@ model Program {
   politique  String
   name       String?
   territoire String[]
-  Project    Project[]
+  projects    Project[]
 }

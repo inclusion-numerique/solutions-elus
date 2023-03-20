@@ -7,6 +7,19 @@ export const getShowcaseProjects = () =>
         not: null,
       },
     },
+    select: {
+      id: true,
+      title: true,
+      localization: {
+        select: {
+          label: true,
+          department: true,
+        },
+      },
+      slug: true,
+      coverImage: true,
+      coverImageAlt: true,
+    },
     orderBy: { showcase: 'asc' },
   })
 

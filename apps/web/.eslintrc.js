@@ -15,10 +15,6 @@ const temporarilyDisabledRules = [
   '@typescript-eslint/require-await',
   '@typescript-eslint/restrict-template-expressions',
   'consistent-return',
-  'eqeqeq',
-  'import/no-cycle',
-  'import/no-extraneous-dependencies',
-  'import/order',
   'jest/expect-expect',
   'jest/no-commented-out-tests',
   'jest/no-disabled-tests',
@@ -59,5 +55,7 @@ module.exports = {
     ...Object.fromEntries(temporarilyDisabledRules),
     // __dirname is fine for now
     'unicorn/prefer-module': 'off',
+    // Common abbreviations are fine (e.g. react ref)
+    'unicorn/prevent-abbreviations': 'off',
   },
 }

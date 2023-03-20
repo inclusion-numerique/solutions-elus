@@ -14,6 +14,7 @@ import { convertDrupalProjectsToGristProjectFields } from '@sde/cli/commands/pro
 import { uploadGristProjectFields } from '@sde/cli/commands/projects/uploadGristProjectFields'
 import { downloadGristProjectFields } from '@sde/cli/commands/projects/downloadGristProjectFields'
 import { updateShowcases } from '@sde/cli/commands/projects/updateShowcases'
+import { checkDeploymentStatus } from '@sde/cli/commands/deployment/checkDeploymentStatus'
 
 const program = new Command()
 
@@ -32,5 +33,6 @@ program.addCommand(convertDrupalProjectsToGristProjectFields)
 program.addCommand(uploadGristProjectFields)
 program.addCommand(downloadGristProjectFields)
 program.addCommand(updateShowcases)
+program.addCommand(checkDeploymentStatus)
 
 program.parse()

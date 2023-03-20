@@ -23,8 +23,8 @@ export const PublicHeaderNav = () => {
       <li className="fr-nav__item">
         <Link
           className="fr-nav__link"
-          aria-current={pathname === '/projet' ? 'page' : undefined}
-          href="/projet"
+          aria-current={pathname === '/partager' ? 'page' : undefined}
+          href="/partager"
         >
           Partager
         </Link>

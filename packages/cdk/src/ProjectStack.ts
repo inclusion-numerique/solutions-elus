@@ -88,10 +88,14 @@ export class ProjectStack extends TerraformStack {
       subdomain: '',
     })
 
-    const previewDomainZone = new DataScalewayDomainZone(this, 'previewDomainZone', {
-      domain: previewDomain,
-      subdomain: '',
-    })
+    const previewDomainZone = new DataScalewayDomainZone(
+      this,
+      'previewDomainZone',
+      {
+        domain: previewDomain,
+        subdomain: '',
+      },
+    )
 
     // If preview domain or email from domain differ, create different zones for those
     const emailDomainZone = mainDomainZone
@@ -154,9 +158,9 @@ export class ProjectStack extends TerraformStack {
         SCW_SECRET_KEY: sensitiveEnvironmentVariables.SCW_SECRET_KEY.value,
         AWS_ACCESS_KEY_ID: sensitiveEnvironmentVariables.SCW_ACCESS_KEY.value,
         AWS_SECRET_ACCESS_KEY:
-        sensitiveEnvironmentVariables.SCW_SECRET_KEY.value,
+          sensitiveEnvironmentVariables.SCW_SECRET_KEY.value,
         SENTRY_AUTH_TOKEN:
-        sensitiveEnvironmentVariables.SENTRY_AUTH_TOKEN.value,
+          sensitiveEnvironmentVariables.SENTRY_AUTH_TOKEN.value,
         SMTP_PASSWORD: sensitiveEnvironmentVariables.SMTP_PASSWORD.value,
         SMTP_SERVER: sensitiveEnvironmentVariables.SMTP_SERVER.value,
         SMTP_USERNAME: sensitiveEnvironmentVariables.SMTP_USERNAME.value,
