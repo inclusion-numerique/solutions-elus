@@ -357,9 +357,6 @@ jobs:
       - restore_cache:
           key: << pipeline.id >>-web-build
       - run:
-          name: 'Start built web app'
-          command: pnpm -F @sde/web start
-      - run:
           name: 'Run playwright'
           command: |
             SHARD="$((${CIRCLE_NODE_INDEX}+1))"
