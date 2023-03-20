@@ -1,5 +1,9 @@
-export type Option<T> = { name: string; value: T }
-export type Options<T = string> = Option<T>[]
+export type Option<T extends string = string> = {
+  name: string
+  value: T
+  disabled?: boolean
+}
+export type Options<T extends string = string> = Option<T>[]
 
 export const labelsToOptions = <T extends string>(
   object: Record<T, string>,

@@ -1,8 +1,7 @@
 import styles from '@sde/web/app/(public)/PublicLayout.module.css'
 import { ProjectsListContainer } from '@sde/web/app/(public)/projets/ProjectsListContainer'
 import { getProjectsList } from '@sde/web/legacyProject/projectsList'
-import { Category } from '@sde/web/anctProjects'
-import { District } from '@sde/web/projethoteque/legacyProjects'
+import { Category, District } from '@sde/web/anctProjects'
 import { parseArraySearchParam } from '@sde/web/utils/parseArraySearchParam'
 
 // Need to SSR since search params are dynamic

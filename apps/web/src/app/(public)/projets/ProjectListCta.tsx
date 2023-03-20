@@ -14,7 +14,7 @@ export const ProjectListCta = ({ style }: { style?: CSSProperties }) => (
           alignItems: 'center',
         }}
       >
-        <h6>Vous êtes maire ou président d&apos;intercommunalité ?</h6>
+        <h6>Vous êtes maire ou président d&apos;intercommunalité&nbsp;?</h6>
         <Link className="fr-btn fr-mt-2v fr-py-4v fr-px-4w" href="/partager">
           Partagez vos solutions&nbsp;!
         </Link>
