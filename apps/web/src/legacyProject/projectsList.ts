@@ -35,6 +35,7 @@ export const getProject = (slug: string) =>
     select: {
       program: true,
       localization: true,
+      localizationDescription: true,
       created: true,
       title: true,
       categories: true,
@@ -45,6 +46,20 @@ export const getProject = (slug: string) =>
       goals: true,
       characteristics: true,
       funding: true,
+      budget: true,
+      inaugurationDate: true,
+      localActor1Image: true,
+      localActor1Text: true,
+      localActor1Name: true,
+      localActor2Image: true,
+      localActor2Text: true,
+      localActor2Name: true,
+      partner1Image: true,
+      partner1Text: true,
+      partner1Name: true,
+      partner2Image: true,
+      partner2Text: true,
+      partner2Name: true,
     },
     where: {
       slug

@@ -1,7 +1,9 @@
 import Icon from '@sde/web/components/Icon/Icon'
 import { ProjectItem } from '@sde/web/legacyProject/projectsList'
 import React from 'react'
+import Map from './Map'
 import styles from './Project.module.css'
+import Quote from './Quote'
 
 const Project = ({ project }: { project: ProjectItem }) =>
   project ? (
@@ -82,9 +84,74 @@ const Project = ({ project }: { project: ProjectItem }) =>
               </ul>
             </div>
           </div>
-          <h2>Partenaires/cofinanceurs</h2>
+          <h2 className="fr-text-title--blue-france">
+            Partenaires/cofinanceurs
+          </h2>
           {project.funding}
+          <div className={styles.metaInfos}>
+            <div>
+              <p>Budget alloué au projet</p>
+              <span className={styles.metaInfoValue}>{project.budget}</span>
+            </div>
+            {project.inaugurationDate && (
+              <div>
+                <p>Date d'inauguration</p>
+                <span className={styles.metaInfoValue}>
+                  {project.inaugurationDate.toLocaleDateString()}
+                </span>
+              </div>
+            )}
+          </div>
+          <h2 className="fr-text-title--blue-france">
+            La parole aux acteurs locaux
+          </h2>
+          <Quote
+            image={project.localActor1Image}
+            name={project.localActor1Name}
+            text={project.localActor1Text}
+          />
+          <Quote
+            image={project.localActor2Image}
+            name={project.localActor2Name}
+            text={project.localActor2Text}
+          />
+          <h2 className="fr-text-title--blue-france">
+            La parole aux partenaires des collectivités
+          </h2>
+          <Quote
+            image={project.partner1Image}
+            name={project.partner1Name}
+            text={project.partner1Text}
+          />
+          <Quote
+            image={project.partner2Image}
+            name={project.partner2Name}
+            text={project.partner2Text}
+          />
+          <div className={styles.separator} />
+          {project.program && (
+            <>
+              <h2 className="fr-text-title--blue-france">
+                Le programme {project.program.name}
+              </h2>
+              <div className="fr-text--lg">TODO</div>
+            </>
+          )}
+          <div className={styles.separator} />
+          <h2 className="fr-text-title--blue-france">
+            L’Agence nationale de la cohésion des territoires
+          </h2>
+          <div className="fr-text--lg">
+            L’Agence nationale de la cohésion des territoires (ANCT) est un
+            nouveau partenaire pour les collectivités locales : elle conçoit et
+            anime des programmes d’appui nationaux pour mettre en œuvre les
+            politiques publiques, dont Action Cœur de Ville fait partie. Dans ce
+            cadre, elle est chargée de la mise en œuvre opérationnelle du
+            programme et de son évaluation, du pilotage du centre de ressources
+            collaboratif ainsi que de l’organisation des séminaires nationaux.
+          </div>
         </div>
+        <Map project={project} />
       </div>
     </>
   ) : null

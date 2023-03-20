@@ -1,11 +1,30 @@
 import { getProject } from '@sde/web/legacyProject/projectsList'
 import Link from 'next/link'
 import React from 'react'
+import { prismaClient } from '@sde/web/prismaClient'
+import { notFound } from 'next/navigation'
 import Project from './Project'
 
+export const dynamic = 'force-static'
+
+// populate the [slug] dynamic segment
+export async function generateStaticParams() {
+  const projects = await prismaClient.project.findMany({
+    select: { slug: true },
+  })
+
+  return projects.map(({ slug }) => slug)
+}
+
 const ProjectPage = async ({ params }: { params: { slug: string } }) => {
+  // Filtering and pagination is done in the frontend
+  // We have only a small dataset of projects so this is way more performant
   const project = await getProject(params.slug)
-  return project ? (
+  if (!project) {
+    notFound()
+  }
+
+  return (
     <div className="fr-container">
       <nav
         role="navigation"
@@ -47,7 +66,7 @@ const ProjectPage = async ({ params }: { params: { slug: string } }) => {
       </Link>
       <Project project={project} />
     </div>
-  ) : null
+  )
 }
 
 export default ProjectPage
