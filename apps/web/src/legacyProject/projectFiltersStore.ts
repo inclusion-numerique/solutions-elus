@@ -1,8 +1,6 @@
 import { create } from 'zustand'
-import { District } from '@sde/web/projethoteque/legacyProjects'
-import { Category } from '@sde/web/anctProjects'
+import { Category, District, PopulationBracket } from '@sde/web/anctProjects'
 import { setsAreEqual } from '@sde/web/utils/setsAreEqual'
-import { PopulationBracket } from '@sde/web/project/population'
 
 type FiltersState<T> = {
   selected: Set<T>

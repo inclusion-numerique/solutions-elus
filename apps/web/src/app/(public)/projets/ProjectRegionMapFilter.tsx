@@ -1,8 +1,8 @@
 /* eslint react/jsx-props-no-spreading: 0 */
-import { District } from '@sde/web/projethoteque/legacyProjects'
 import { useDistrictFilters } from '@sde/web/legacyProject/projectFiltersStore'
+import { District } from '@sde/web/anctProjects'
 
-export const ProjectMap = () => {
+export const ProjectRegionMapFilter = () => {
   const selectedDistricts = useDistrictFilters(({ selected }) => selected)
   const toggleDistrict = useDistrictFilters(({ toggle }) => toggle)
   // const [_hovered, setHovered] = useState<District | null>(null)
