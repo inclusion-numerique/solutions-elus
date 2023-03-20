@@ -1,3 +1,5 @@
+'use client'
+
 import { useProjectSearch } from '@sde/web/legacyProject/projectFiltersStore'
 import { FormEventHandler } from 'react'
 
@@ -12,7 +14,7 @@ export const ProjectSearchBar = () => {
     search(event.currentTarget.query.value)
   }
   return (
-    <div className="fr-p-8v">
+    <div className="fr-p-4v fr-p-md-8v">
       <form
         className="fr-search-bar"
         style={{ flex: 1, position: 'relative' }}
@@ -22,11 +24,11 @@ export const ProjectSearchBar = () => {
       >
         <input
           className="fr-input"
-          placeholder="Rechercher"
+          placeholder="Rechercher un projet, un territoire, une thématique..."
           name="query"
           type="search"
           onChange={(ev) => {
-            // Dsfr ads a "erase" icon to search bar that does not trigger submit
+            // Dsfr ads a "erase" button to search bar that does not trigger submit
             if (ev.currentTarget.value === '') {
               search('')
             }

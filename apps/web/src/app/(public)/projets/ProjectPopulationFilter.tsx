@@ -46,14 +46,11 @@ export const ProjectPopulationFilter = () => {
             </button>
           )
         })}
-        <br />
-        <div className="fr-mt-4v">
-          <ProjectFilterResetButton
-            label="Voir toutes les catégories de population"
-            onClick={reset}
-            hidden={isEmpty}
-          />
-        </div>
+        <ProjectFilterResetButton
+          label="Voir toutes les catégories de population"
+          onClick={reset}
+          hidden={isEmpty}
+        />
       </div>
     </>
   )

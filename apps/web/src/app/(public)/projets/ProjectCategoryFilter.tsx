@@ -23,7 +23,7 @@ export const ProjectCategoryFilter = () => {
           options={categories}
         />
       </div>
-      <div className="fr-hidden fr-unhidden-md fr-px-2w fr-px-md-4w">
+      <div className="fr-hidden fr-unhidden-md fr-px-2w fr-px-md-4w fr-mt-8v">
         <p className="fr-text--regular fr-text--bold fr-text--lg fr-mb-2v">
           Rechercher par thématiques
         </p>
@@ -42,14 +42,11 @@ export const ProjectCategoryFilter = () => {
             </button>
           )
         })}
-        <br />
-        <div className="fr-mt-4v">
-          <ProjectFilterResetButton
-            label="Voir toutes les thématiques"
-            onClick={reset}
-            hidden={isEmpty}
-          />
-        </div>
+        <ProjectFilterResetButton
+          label="Voir toutes les thématiques"
+          onClick={reset}
+          hidden={isEmpty}
+        />
       </div>
     </>
   )
