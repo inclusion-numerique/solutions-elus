@@ -47,7 +47,7 @@ export const ProjectPopulationFilter = () => {
           )
         })}
         <ProjectFilterResetButton
-          label="Voir toutes les catégories de population"
+          label="Effacer les filtres"
           onClick={reset}
           hidden={isEmpty}
         />

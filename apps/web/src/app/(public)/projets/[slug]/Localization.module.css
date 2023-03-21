@@ -1,9 +1,8 @@
 .bloc {
-  display: block;
-  padding: 32px;
-  border: 1px solid #ddd;
+  border: var(--slim-grey-border);
 }
 
 .map {
   height: 250px;
+  width: 100%;
 }

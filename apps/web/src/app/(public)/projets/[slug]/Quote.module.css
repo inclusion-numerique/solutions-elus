@@ -1,48 +1,13 @@
-.container {
-  display: flex;
-  gap: 32px;
-}
-
-.verticalSeparator {
-  border-left: solid 1px #ddd;
-  display: none;
-
-  @media (min-width: 62em) {
-    display: block;
-  }
-}
-
 .horizontalSeparator {
   width: 50%;
-  border-top: solid 1px #ddd;
-  display: block;
-
-  @media (min-width: 62em) {
-    display: none;
-  }
-}
-
-.bigImage {
-  border-radius: 50%;
-  display: none;
-  
-  @media (min-width: 62em) {
-    display: block;
-  }
 }
 
 .smallImage {
   border-radius: 50%;
-  display: block;
-
-  @media (min-width: 62em) {
-    display: none;
-  }
 }
 
 .quoteIcon {
   color: var(--blue-france-main-525);
-  margin-bottom: 8px;
 }
 
 .nameContainer {

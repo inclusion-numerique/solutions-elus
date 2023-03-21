@@ -44,6 +44,7 @@
 }
 
 .titleOnBackground {
+  text-align: center;
   font-size: 48px;
   line-height: 56px;
   color: white;

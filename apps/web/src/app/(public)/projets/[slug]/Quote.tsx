@@ -1,6 +1,7 @@
 import { getProjectFilePath } from '@sde/web/project/project'
 import Image from 'next/image'
 import React from 'react'
+import { textToParagraphs } from '@sde/web/utils/textParser'
 import styles from './Quote.module.css'
 
 const Quote = ({
@@ -14,27 +15,32 @@ const Quote = ({
   text: string | null
   className?: string
 }) => {
-  if (!image || !name || !text) {
+  if (!name || !text) {
     return null
   }
   return (
     <>
-      <div className={`${styles.container} ${className}`}>
-        <Image
-          width={184}
-          height={184}
-          className={styles.bigImage}
-          src={getProjectFilePath(image)}
-          alt={`Profil de ${name}`}
+      <div className={`${className ?? ''}`}>
+        <span
+          className={`fr-icon-quote-line fr-icon--lg ${styles.quoteIcon}`}
+          aria-hidden="true"
         />
-        <div className={styles.verticalSeparator} />
-        <div>
-          <div
-            className={`fr-icon-quote-line ${styles.quoteIcon}`}
-            aria-hidden="true"
-          />
-          <div className="fr-text--xl fr-text--bold">{text}</div>
-          <div className={styles.nameContainer}>
+        <p className="fr-mt-4v fr-text--lg fr-text--bold">
+          &laquo;&nbsp;
+          {textToParagraphs(text).map((paragraph, index) => (
+            <>
+              {/* eslint-disable-next-line react/no-array-index-key */}
+              {index === 0 ? null : <br key={`br_${index}`} />}
+              {/* eslint-disable-next-line react/no-array-index-key */}
+              <span key={index} className="fr-text--lg">
+                {paragraph}
+              </span>
+            </>
+          ))}
+          &nbsp;&raquo;
+        </p>
+        <div className={styles.nameContainer}>
+          {image ? (
             <Image
               width={68}
               height={68}
@@ -42,13 +48,13 @@ const Quote = ({
               src={getProjectFilePath(image)}
               alt={`Profil de ${name}`}
             />
-            <span className={`fr-text--md fr-text--bold ${styles.name}`}>
-              {name}
-            </span>
-          </div>
+          ) : null}
+          <p className={`fr-text--md fr-mb-0 fr-text--bold ${styles.name}`}>
+            {name}
+          </p>
         </div>
       </div>
-      <div className={styles.horizontalSeparator} />
+      <hr className={`fr-mt-8v fr-mb-0 ${styles.horizontalSeparator}`} />
     </>
   )
 }

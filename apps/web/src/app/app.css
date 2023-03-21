@@ -13,3 +13,12 @@ body > div:not(#environment-information) {
 textarea {
   resize: none;
 }
+
+:root {
+  --slim-grey-border: 1px solid var(--border-default-grey);
+}
+
+/* Extensions of DSFR */
+.fr-text--medium {
+  font-weight: 500 !important;
+}

@@ -1,79 +1,131 @@
 import { ProjectItem } from '@sde/web/legacyProject/projectsList'
 import React from 'react'
+import { getProjectFilePath } from '@sde/web/project/project'
+import { formatInteger } from '@sde/web/utils/formatInteger'
+import { dateAsDay } from '@sde/web/utils/dateAsDay'
+import { textToParagraphs } from '@sde/web/utils/textParser'
 import Header from './Header'
 import Localization from './Localization'
 import Blocs from './Blocs'
 import Quotes from './Quotes'
 import styles from './Project.module.css'
 
-const Project = ({ project }: { project: ProjectItem }) => (
-  <>
-    <div className={`fr-grid-row ${styles.header} fr-mt-3w`}>
-      <div className="fr-col-12 fr-col-lg-7">
-        <Header project={project} />
-      </div>
+const Project = ({ project }: { project: ProjectItem }) => {
+  const coverPicture = (
+    <picture>
       <img
-        className="fr-col-12 fr-col-offset-lg-1 fr-col-lg-4"
-        src={`/images/grist-attachments/${project.coverImage}`}
+        src={getProjectFilePath(project.coverImage)}
+        className="fr-mt-lg-8v"
         alt={
           project.coverImageAlt ??
           `Photo illustrant le projet "${project.title}"`
         }
       />
-    </div>
-    <div className={`fr-grid-row ${styles.content}`}>
-      <div className="fr-col-12 fr-col-lg-7">
-        <div className="fr-text--lead fr-mb-6w">
-          <b>{project.subtitle}</b>
-        </div>
-        {project.description}
-        <Localization project={project} className="fr-hidden-lg fr-mt-6w" />
-        <Blocs project={project} />
-        <h2 className="fr-text-title--blue-france">Partenaires/cofinanceurs</h2>
-        {project.funding}
-        <div className={`${styles.metaInfos} fr-my-6w`}>
-          <div>
-            <p>Budget alloué au projet</p>
-            <span className={styles.metaInfoValue}>{project.budget}</span>
+    </picture>
+  )
+
+  return (
+    <>
+      <div className="fr-grid-row fr-pb-16v">
+        <div className="fr-col-12 fr-col-lg-7 fr-pt-4v fr-pt-lg-12v">
+          <div
+            className={`fr-hidden-lg fr-col-12 fr-col-offset-lg-1 fr-col-lg-4  ${styles.coverImageContainer}`}
+          >
+            {coverPicture}
           </div>
-          {project.inaugurationDate && (
-            <div>
-              <p>Date d&lsquo;inauguration</p>
-              <span className={styles.metaInfoValue}>
-                {project.inaugurationDate.toLocaleDateString()}
-              </span>
-            </div>
+          <Header project={project} />
+          <p className="fr-text--xl fr-text--bold fr-mt-12v fr-mb-6w">
+            {project.subtitle}
+          </p>
+          {textToParagraphs(project.description).map((paragraph) => (
+            <p key={paragraph} className="fr-text--lg">
+              {paragraph}
+            </p>
+          ))}
+
+          <Localization project={project} className="fr-hidden-lg fr-mt-6w" />
+          <Blocs className="fr-mt-6v" project={project} />
+          {project.funding ? (
+            <>
+              <h2 className="fr-text-title--blue-france fr-mt-12v">
+                Partenaires/cofinanceurs
+              </h2>
+              <p className="fr-text--lg">
+                {textToParagraphs(project.funding).map((paragraph, index) => (
+                  <>
+                    {index === 0 ? null : <br key={`br_${paragraph}`} />}
+                    <span key={paragraph}>{paragraph}</span>
+                  </>
+                ))}
+              </p>
+            </>
+          ) : null}
+          {project.budget || project.inaugurationDate ? (
+            <>
+              <div className={`${styles.metaInfos} fr-mt-12v`}>
+                {project.budget ? (
+                  <div style={{ flex: 1 }}>
+                    <p>Budget alloué au projet</p>
+                    <p className={styles.metaInfoValue}>
+                      {formatInteger(project.budget)}&nbsp;€
+                    </p>
+                  </div>
+                ) : null}
+                {project.inaugurationDate ? (
+                  <div style={{ flex: 1 }}>
+                    <p>Date d&lsquo;inauguration</p>
+                    <p className={styles.metaInfoValue}>
+                      {dateAsDay(project.inaugurationDate)}
+                    </p>
+                  </div>
+                ) : null}
+              </div>
+            </>
+          ) : null}
+          <Quotes project={project} />
+          <hr className="fr-mt-6v" />
+
+          {project.program && (
+            <>
+              <h2 className="fr-text-title--blue-france fr-mt-8v">
+                Le programme {project.program.name}
+              </h2>
+              {textToParagraphs(project.program.description).map(
+                (paragraph) => (
+                  <p key={paragraph} className="fr-text--lg">
+                    {paragraph}
+                  </p>
+                ),
+              )}
+              <hr className="fr-mt-12v" />
+            </>
           )}
+          <h2 className="fr-text-title--blue-france fr-mt-8v">
+            L’Agence nationale de la cohésion des territoires
+          </h2>
+          <p className="fr-text--lg">
+            L’Agence nationale de la cohésion des territoires (ANCT) est un
+            nouveau partenaire pour les collectivités locales : elle conçoit et
+            anime des programmes d’appui nationaux pour mettre en œuvre les
+            politiques publiques, dont Action Cœur de Ville fait partie.
+          </p>
+          <p className="fr-text--lg">
+            Dans ce cadre, elle est chargée de la mise en œuvre opérationnelle
+            du programme et de son évaluation, du pilotage du centre de
+            ressources collaboratif ainsi que de l’organisation des séminaires
+            nationaux.
+          </p>
         </div>
-        <Quotes project={project} />
-        {project.program && (
-          <>
-            <div className={styles.separator} />
-            <h2 className="fr-text-title--blue-france">
-              Le programme {project.program.name}
-            </h2>
-            <div className="fr-text--lg">{project.program.description}</div>
-          </>
-        )}
-        <div className={styles.separator} />
-        <h2 className="fr-text-title--blue-france">
-          L’Agence nationale de la cohésion des territoires
-        </h2>
-        <div className="fr-text--lg">
-          L’Agence nationale de la cohésion des territoires (ANCT) est un
-          nouveau partenaire pour les collectivités locales : elle conçoit et
-          anime des programmes d’appui nationaux pour mettre en œuvre les
-          politiques publiques, dont Action Cœur de Ville fait partie. Dans ce
-          cadre, elle est chargée de la mise en œuvre opérationnelle du
-          programme et de son évaluation, du pilotage du centre de ressources
-          collaboratif ainsi que de l’organisation des séminaires nationaux.
+        <div
+          className="fr-hidden fr-unhidden-lg fr-col-4 fr-col-offset-1 fr-pt-12v"
+          style={{ flexDirection: 'column' }}
+        >
+          <div className={styles.coverImageContainer}>{coverPicture}</div>
+          <Localization className="fr-mt-8v" project={project} />
         </div>
       </div>
-      <div className="fr-col-4 fr-col-offset-1 ">
-        <Localization project={project} className="fr-hidden fr-unhidden-lg" />
-      </div>
-    </div>
-  </>
-)
+    </>
+  )
+}
 
 export default Project

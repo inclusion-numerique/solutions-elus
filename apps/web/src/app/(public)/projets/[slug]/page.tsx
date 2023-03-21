@@ -25,7 +25,7 @@ const ProjectPage = async ({ params }: { params: { slug: string } }) => {
       <div className="fr-container">
         <nav
           role="navigation"
-          className="fr-breadcrumb"
+          className="fr-breadcrumb fr-mt-4v"
           aria-label="vous êtes ici :"
         >
           <button
@@ -56,7 +56,7 @@ const ProjectPage = async ({ params }: { params: { slug: string } }) => {
           </div>
         </nav>
         <Link
-          className="fr-btn fr-btn--tertiary fr-btn--icon-left fr-icon-arrow-left-line"
+          className="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-icon-arrow-left-line"
           href="/projets"
         >
           Retour à la liste des projets

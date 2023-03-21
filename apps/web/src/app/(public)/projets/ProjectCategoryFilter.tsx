@@ -43,7 +43,7 @@ export const ProjectCategoryFilter = () => {
           )
         })}
         <ProjectFilterResetButton
-          label="Voir toutes les thématiques"
+          label="Effacer les filtres"
           onClick={reset}
           hidden={isEmpty}
         />

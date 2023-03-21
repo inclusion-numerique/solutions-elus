@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import { ProjectItem } from '@sde/web/legacyProject/projectsList'
-import { getCityWithDepartment } from '@sde/web/project/project'
+import { formatInteger } from '@sde/web/utils/formatInteger'
+import { textToParagraphs } from '@sde/web/utils/textParser'
 import Map from './Map'
 import styles from './Localization.module.css'
 
@@ -10,36 +11,52 @@ const Localization = ({
   className,
 }: {
   project: ProjectItem
-  className: string
+  className?: string
 }) => (
-  <div>
-    <div className={className}>
-      {project.latitude && project.longitude && (
-        <Map latitude={project.latitude} longitude={project.longitude} />
-      )}
-      <div className={styles.bloc}>
-        <h2 className="fr-text-title--blue-france">Le territoire</h2>
-        <div className="fr-mt-4w">
-          {getCityWithDepartment(project.localization)}
-          <br />
-          {project.localization.regionName}
-          <br />
-          {project.localization.departmentName}
+  <div className={className ?? ''}>
+    {project.latitude && project.longitude && (
+      <Map latitude={project.latitude} longitude={project.longitude} />
+    )}
+    <div className={`fr-p-6v ${styles.bloc}`}>
+      <h2 className="fr-mb-0 fr-text-title--blue-france">Le territoire</h2>
+      <p className="fr-mt-6v fr-mb-0 fr-text--bold">
+        {project.localization.label},
+      </p>
+      <p className="fr-mb-0 fr-text--bold">
+        {project.localization.departmentName} ({project.localization.department}
+        )
+      </p>
+      {project.localization.regionName ? (
+        <p className="fr-mb-0 fr-text--bold">
+          {project.localization.regionName.toUpperCase()}
+        </p>
+      ) : null}
+
+      {project.localization.population ? (
+        <>
+          <p className="fr-mb-0 fr-mt-4v fr-text-mention--grey">Population</p>
+          <p className="fr-mb-0 fr-text--medium">
+            {formatInteger(project.localization.population)} Habitants
+          </p>
+        </>
+      ) : null}
+      {project.localizationDescription ? (
+        <div className="fr-mt-4v">
+          {textToParagraphs(project.localizationDescription).map(
+            (paragraph) => (
+              <p key={paragraph} className="fr-text--lg">
+                {paragraph}
+              </p>
+            ),
+          )}
         </div>
-        <div className="fr-mt-2w">
-          Population
-          <br />
-          {project.localization.population} Habitants
-        </div>
-        <div className="fr-mt-4w fr-text--lg">
-          {project.localizationDescription}
-        </div>
+      ) : null}
+      <div className="fr-btns-group">
         <Link
-          className="fr-btn"
+          className="fr-btn fr-mb-0"
           href={`/projets?regions=${project.localization.regionName}`}
         >
-          Voir tous les projets de la région
-          <span className="fr-icon-arrow-right-line" />
+          Voir les projets de la région
         </Link>
       </div>
     </div>

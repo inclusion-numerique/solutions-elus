@@ -15,7 +15,10 @@ export const ProjectListCta = ({ style }: { style?: CSSProperties }) => (
         }}
       >
         <h6>Vous êtes maire ou président d&apos;intercommunalité&nbsp;?</h6>
-        <Link className="fr-btn fr-mt-2v fr-py-4v fr-px-4w" href="/partager">
+        <Link
+          className="fr-btn fr-mt-2v fr-btn--icon-left fr-icon-send-plane-fill fr-px-4w"
+          href="/partager"
+        >
           Partagez vos solutions&nbsp;!
         </Link>
       </div>

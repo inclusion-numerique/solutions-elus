@@ -72,8 +72,8 @@ export const convertGristProjectToModel = (
         .map((thematique) => thematique?.fields.nom?.trim())
         .filter((x) => x !== undefined) as string[]) || [],
     description: project.fields.Texte?.trim() ?? '',
-    goals: project.fields.Objectifs?.trim() ?? '',
-    characteristics: project.fields.Specificites?.trim() ?? '',
+    goals: project.fields.Objectifs?.trim().split('\n') ?? [],
+    characteristics: project.fields.Specificites?.trim().split('\n') ?? [],
     funding: project.fields.Partenaires_et_cofinanceurs?.trim() ?? '',
     budget: project.fields.Budget,
     inaugurationDate: project.fields.Calendrier
