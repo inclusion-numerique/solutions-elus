@@ -25,7 +25,7 @@ const Blocs = ({
       </div>
     </div>
     <div className="fr-col-12 fr-col-lg-6 fr-py-0">
-      <div className={`fr-p-6v fr-p-lg-8v ${styles.bloc}`}>
+      <div className={`fr-p-6v fr-p-lg-8v fr-mt-6v fr-mt-lg-0 ${styles.bloc}`}>
         <div className={styles.blocHeader}>
           <Icon name="fr-icon-list-unordered" />
           <h2 className="fr-ml-1w">Spécificités</h2>
