@@ -30,38 +30,35 @@ export const Showcase = ({ projects }: { projects: ShowcaseProject[] }) => {
   return (
     <div ref={swipeRef}>
       <div className="fr-container" ref={containerRef}>
-        <div className={styles.header}>
-          <h2 className="fr-mb-0">
-            Retrouvez ici les projets
-            <br />
-            et réalisations des collectivités.
-          </h2>
-          <div
-            className={`fr-mt-8v fr-btns-group fr-btns-group--inline ${styles.buttons}`}
+        <h2 className="fr-mb-0">
+          Retrouvez ici les projets
+          <br />
+          et réalisations des collectivités.
+        </h2>
+        <div className={`fr-mt-8v ${styles.header}`}>
+          <Link
+            href="/projets"
+            className="fr-link fr-link--icon-right fr-icon-arrow-right-line"
           >
+            Voir tous les projets
+          </Link>
+          <div className="fr-btns-group fr-btns-group--inline fr-mt-8v fr-mt-md-0">
             <button
               type="button"
-              className="fr-btn fr-btn--secondary fr-icon-arrow-left-line"
+              className="fr-btn fr-btn--secondary fr-mb-0 fr-mr-0 fr-icon-arrow-left-line"
               aria-label="Voir le projet précédent"
               onClick={previous}
             />
             <button
               type="button"
-              className="fr-btn fr-btn--secondary fr-icon-arrow-right-line"
+              className="fr-btn fr-btn--secondary fr-mb-0 fr-ml-2w fr-icon-arrow-right-line"
               aria-label="Voir le projet suivant"
               onClick={next}
             />
           </div>
         </div>
-        <Link
-          href="/projets"
-          className="fr-link fr-link--icon-right fr-icon-arrow-right-line fr-mt-0 fr-mt-md-4v"
-          style={{ display: 'inline-block' }}
-        >
-          Voir tous les projets
-        </Link>
       </div>
-      <div className={`fr-pt-12v fr-pb-20v ${styles.showcaseContainer}`}>
+      <div className={`fr-pt-8v fr-pb-20v ${styles.showcaseContainer}`}>
         <div
           className={styles.cardsWrapper}
           style={{

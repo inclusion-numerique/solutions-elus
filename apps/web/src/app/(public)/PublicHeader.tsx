@@ -50,62 +50,57 @@ const PublicHeader = () => (
         </div>
       </div>
     </div>
-    <div
-      className="fr-header__menu fr-modal"
-      id="fr-menu-mobile"
-      data-fr-js-modal="true"
-      data-fr-js-header-modal="true"
-    >
+    <div className="fr-header__menu fr-modal" id="fr-menu-mobile">
       <div className="fr-container">
         <button
           type="button"
           className="fr-btn--close fr-btn"
           aria-controls="fr-menu-mobile"
-          data-fr-js-modal-button="true"
         >
           Fermer
         </button>
         <div className="fr-header__menu-links">
-          <ul className="fr-btns-group" data-fr-js-header-links="true" />
+          <ul className="fr-btns-group" />
         </div>
-        <nav
-          className="fr-nav"
-          id="fr-navigation"
-          aria-label="Menu principal"
-          data-fr-js-navigation="true"
-        >
+        <nav className="fr-nav" id="fr-navigation" aria-label="Menu principal">
           <PublicHeaderNav />
         </nav>
       </div>
     </div>
-    <div
-      id="modal-menu-mobile"
-      className="fr-header__menu fr-modal"
-      data-fr-js-modal="true"
-      data-fr-js-header-modal="true"
-    >
+    <div id="modal-menu-mobile" className="fr-header__menu fr-modal">
       <div className="fr-container">
         <button
           aria-controls="modal-menu-mobile"
           className="fr-btn--close fr-btn"
-          data-fr-js-modal-button="true"
         >
           Fermer
         </button>
         <div className="fr-header__menu-links">
-          <ul className="fr-btns-group" data-fr-js-header-links="true">
+          <ul className="fr-btns-group">
             <li>
-              <Link className="fr-btn" href="/">
+              <Link
+                className="fr-btn"
+                href="/"
+                aria-controls="modal-menu-mobile"
+              >
                 Accueil
               </Link>
             </li>
             <li>
-              <Link className="fr-btn" href="/partager">
+              <Link
+                className="fr-btn"
+                href="/partager"
+                aria-controls="modal-menu-mobile"
+              >
                 Partager
               </Link>
             </li>
             <li>
-              <Link className="fr-btn" href="/projets">
+              <Link
+                className="fr-btn"
+                href="/projets"
+                aria-controls="modal-menu-mobile"
+              >
                 Voir les projets
               </Link>
             </li>

@@ -56,7 +56,6 @@
 
 .bloc {
   border: var(--slim-grey-border);
-  margin-top: 1.5rem !important;
 
   @media (min-width: 62em) {
     height:  100%;

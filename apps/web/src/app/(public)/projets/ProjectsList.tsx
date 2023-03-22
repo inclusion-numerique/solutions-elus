@@ -49,7 +49,7 @@ export const ProjectsList = ({
       new Fuse<ProjectListItem>(projects, {
         includeScore: true,
         keys: [
-          'title',
+          { name: 'title', weight: 2 },
           'program.name',
           'localization.label',
           'localization.departmentName',
