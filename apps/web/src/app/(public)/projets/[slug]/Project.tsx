@@ -83,7 +83,7 @@ const Project = ({ project }: { project: ProjectItem }) => {
             </>
           ) : null}
           <Quotes project={project} />
-          <hr className="fr-mt-6v" />
+          <hr className="fr-mt-8v" />
 
           {project.program && (
             <>
