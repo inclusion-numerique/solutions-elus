@@ -65,6 +65,7 @@
 
 .secondBloc {
     margin-top: 24px;
+
     @media (min-width: 62em) {
         margin-top: 0 !important;
     }
