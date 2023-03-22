@@ -11,13 +11,6 @@
   }
 }
 
-.buttons {
-  @media (min-width: 48em) {
-    /*! media md */
-    margin-top: 0;
-  }
-}
-
 .showcaseContainer {
   position: relative;
   overflow: hidden;

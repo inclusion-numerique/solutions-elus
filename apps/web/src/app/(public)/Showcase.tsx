@@ -42,9 +42,7 @@ export const Showcase = ({ projects }: { projects: ShowcaseProject[] }) => {
           >
             Voir tous les projets
           </Link>
-          <div
-            className={`fr-btns-group fr-btns-group--inline fr-mt-8v fr-mt-md-0 ${styles.buttons}`}
-          >
+          <div className="fr-btns-group fr-btns-group--inline fr-mt-8v fr-mt-md-0">
             <button
               type="button"
               className="fr-btn fr-btn--secondary fr-mb-0 fr-mr-0 fr-icon-arrow-left-line"
