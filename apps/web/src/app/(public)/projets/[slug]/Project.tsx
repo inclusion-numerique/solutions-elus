@@ -34,9 +34,11 @@ const Project = ({ project }: { project: ProjectItem }) => {
             {coverPicture}
           </div>
           <Header project={project} />
-          <p className="fr-text--xl fr-text--bold fr-mt-12v fr-mb-6w">
-            {project.subtitle}
-          </p>
+          {project.subtitle ? (
+            <p className="fr-text--xl fr-text--bold fr-mt-12v fr-mb-6w">
+              {project.subtitle}
+            </p>
+          ) : null}
           {textToParagraphs(project.description).map((paragraph) => (
             <p key={paragraph} className="fr-text--lg">
               {paragraph}
@@ -83,8 +85,6 @@ const Project = ({ project }: { project: ProjectItem }) => {
             </>
           ) : null}
           <Quotes project={project} />
-          <hr className="fr-mt-8v" />
-
           {project.program && (
             <>
               <h2 className="fr-text-title--blue-france fr-mt-8v">

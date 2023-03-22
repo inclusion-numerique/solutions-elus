@@ -44,6 +44,10 @@ const Quotes = ({ project }: { project: ProjectItem }) => {
   const hasLocalActorQuote = local.length > 0
   const hasPartnerQuote = partner.length > 0
 
+  if (!hasLocalActorQuote && !hasPartnerQuote) {
+    return null
+  }
+
   return (
     <>
       {hasLocalActorQuote ? (
@@ -76,6 +80,7 @@ const Quotes = ({ project }: { project: ProjectItem }) => {
           ))}
         </>
       ) : null}
+      <hr className="fr-mt-12v" />
     </>
   )
 }

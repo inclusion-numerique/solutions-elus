@@ -20,12 +20,15 @@ const Localization = ({
     <div className={`fr-p-6v ${styles.bloc}`}>
       <h2 className="fr-mb-0 fr-text-title--blue-france">Le territoire</h2>
       <p className="fr-mt-6v fr-mb-0 fr-text--bold">
-        {project.localization.label},
+        {project.localization.label}
       </p>
-      <p className="fr-mb-0 fr-text--bold">
-        {project.localization.departmentName} ({project.localization.department}
-        )
-      </p>
+      {project.localization.departmentName &&
+      project.localization.department ? (
+        <p className="fr-mb-0 fr-text--bold">
+          {project.localization.departmentName} (
+          {project.localization.department})
+        </p>
+      ) : null}
       {project.localization.regionName ? (
         <p className="fr-mb-0 fr-text--bold">
           {project.localization.regionName.toUpperCase()}
@@ -51,14 +54,16 @@ const Localization = ({
           )}
         </div>
       ) : null}
-      <div className="fr-btns-group">
-        <Link
-          className="fr-btn fr-mb-0"
-          href={`/projets?regions=${project.localization.regionName}`}
-        >
-          Voir les projets de la région
-        </Link>
-      </div>
+      {project.localization.regionName ? (
+        <div className="fr-btns-group">
+          <Link
+            className="fr-btn fr-mb-0"
+            href={`/projets?regions=${project.localization.regionName}`}
+          >
+            Voir les projets de la région
+          </Link>
+        </div>
+      ) : null}
     </div>
   </div>
 )
