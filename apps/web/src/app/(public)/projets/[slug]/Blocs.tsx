@@ -17,7 +17,10 @@ const Blocs = ({
   }
 
   return (
-    <div className={`fr-grid-row fr-grid-row--gutters ${className}`}>
+    <div
+      id="project-blocs"
+      className={`fr-grid-row fr-grid-row--gutters ${className}`}
+    >
       {hasGoals ? (
         <div className="fr-col-12 fr-col-lg-6 fr-py-0">
           <div className={`fr-p-6v fr-p-lg-8v ${styles.bloc}`}>
@@ -37,8 +40,8 @@ const Blocs = ({
         <div className="fr-col-12 fr-col-lg-6 fr-py-0">
           <div
             className={`fr-p-6v fr-p-lg-8v ${
-              hasGoals ? 'fr-mt-6v' : ''
-            } fr-mt-lg-0 ${styles.bloc}`}
+              hasGoals ? styles.secondBloc : ''
+            } ${styles.bloc}`}
           >
             <div className={styles.blocHeader}>
               <Icon name="fr-icon-list-unordered" />
