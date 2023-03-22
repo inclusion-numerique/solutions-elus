@@ -22,6 +22,7 @@ module.exports = {
     // We want this on, but a lot of libraries we integrate with need commonJs (eslint, next config ...)
     'unicorn/prefer-module': 'off',
     'unicorn/no-array-callback-reference': 'off',
+    'no-continue': 'off',
     'no-unused-vars': [
       'error',
       {
@@ -69,6 +70,7 @@ module.exports = {
       ],
       rules: {
         'no-restricted-syntax': 'off',
+        'no-continue': 'off',
         // Module resolve leads to false negatives in monorepo, typescript compiler will handle any error
         'import/no-unresolved': [2, { ignore: ['^@sde/'] }],
         // This rule is unreliable in monorepos and typescript compiler will help on bad imports

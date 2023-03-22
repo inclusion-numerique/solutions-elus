@@ -58,7 +58,7 @@ export const convertGristProjectToModel = (
       : '',
     coverImage: project.fields.Visuel
       ? attachments[project.fields.Visuel[1]]
-      : '',
+      : '../village.webp',
     title: project.fields.Titre?.trim() ?? '',
     subtitle: project.fields.Sous_titre?.trim() ?? '',
     programId: project.fields.Programme || null,

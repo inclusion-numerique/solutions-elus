@@ -1,6 +1,6 @@
 import fs from 'node:fs'
 import { resolve } from 'node:path'
-import z, { ZodType } from 'zod'
+import z, { ZodError, ZodType } from 'zod'
 import axios from 'axios'
 import FormData from 'form-data'
 import { output } from '@sde/cli/output'
@@ -86,11 +86,19 @@ export const createProjectRecords = async (
 export type ListRecordsOptions = {
   filter?: Record<string, (string | number | null | boolean)[]>
 }
+export type InvalidRecord = {
+  data: { id: number; fields: Record<string, unknown> }
+  error: ZodError
+}
+
 const listRecords = async <T extends ZodType>(
   table: string,
   validation: T,
   options?: ListRecordsOptions,
-): Promise<z.infer<T>[]> => {
+): Promise<{
+  records: z.infer<T>[]
+  invalidRecords: InvalidRecord[]
+}> => {
   const url = `https://grist.incubateur.anct.gouv.fr/api/docs/${ServerWebAppConfig.Grist.documentId}/tables/${table}/records`
 
   const response = await axios.get<{ records: unknown[] }>(url, {
@@ -105,22 +113,26 @@ const listRecords = async <T extends ZodType>(
   /**
    * To be type safe and resistant to Grist changes in table structures, we parse input
    */
-  const { records } = gristRecordsResponse.parse(response.data)
+  const responseData = gristRecordsResponse.parse(response.data)
 
-  const projects = records.map((record, index) => {
-    const parsed = validation.safeParse(record)
+  const records: z.infer<T>[] = []
+  const invalidRecords: InvalidRecord[] = []
+
+  for (const maybeInvalidRecord of responseData.records) {
+    const parsed = validation.safeParse(maybeInvalidRecord)
 
     if (parsed.success) {
-      return parsed.data as T
+      records.push(parsed.data as z.infer<T>)
+      continue
     }
 
-    output(`Got invalid project record from Grist at index ${index}`)
-    output(record)
+    output(
+      `Got invalid project record from Grist. id: ${maybeInvalidRecord.id}`,
+    )
+    invalidRecords.push({ error: parsed.error, data: maybeInvalidRecord })
+  }
 
-    throw parsed.error
-  })
-
-  return projects
+  return { records, invalidRecords }
 }
 
 export const listThematiques = () =>
