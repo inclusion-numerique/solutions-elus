@@ -11,7 +11,7 @@ const showcases = [
   // 'renforcer-la-resilience-alimentaire-dune-petite-ville',
 
   // Temp for full project grist table integration tests
-  'lutte-contre-les-deserts-medicaux-avec-le-centre-de-sante-adour-madiran',
+  'une-place-des-services-en-coeur-de-ville-epone',
   'la-maison-des-patrimoines-une-pepiniere-dartisans-dart-et-dartistes',
   'la-traverse-projet-dhabitat-social-et-ecologique-intergenerationnelle-creon',
 ]

@@ -44,13 +44,15 @@ describe('Grist', () => {
   })
 
   it('Lists projects', async () => {
-    const projectRecords = await listProjectRecords()
+    const { records, invalidRecords } = await listProjectRecords()
 
-    expect(projectRecords).toBeArray()
+    expect(records).toBeArray()
 
-    expect(projectRecords[0]).toBeObject()
-    expect(projectRecords[0].id).toBeInteger()
-    expect(projectRecords[0].fields).toBeObject()
-    expect(projectRecords[0].fields.Titre).toBeString()
+    expect(records[0]).toBeObject()
+    expect(records[0].id).toBeInteger()
+    expect(records[0].fields).toBeObject()
+    expect(records[0].fields.Titre).toBeString()
+
+    expect(invalidRecords).toBeArray()
   })
 })

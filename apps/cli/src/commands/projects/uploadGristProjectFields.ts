@@ -3,6 +3,7 @@ import { Command } from '@commander-js/extra-typings'
 import { output } from '@sde/cli/output'
 import { createProjectRecords, listProjectRecords } from '@sde/cli/grist/grist'
 import { GristProjectFields } from '@sde/cli/grist/grist.type'
+import { isDefinedAndNotNull } from '@sde/web/utils/isDefinedAndNotNull'
 import { gristOutputFile } from './convertDrupalProjectsToGristProjectFields'
 
 export const uploadGristProjectFields = new Command()
@@ -15,7 +16,12 @@ export const uploadGristProjectFields = new Command()
 
     const existingGristProjects = await listProjectRecords()
     const existingGristProjectsId = new Set(
-      existingGristProjects.map((project) => project.fields.drupal_id),
+      [
+        ...existingGristProjects.records,
+        ...existingGristProjects.invalidRecords.map(({ data }) => data),
+      ]
+        .map((project) => project.fields.drupal_id)
+        .filter(isDefinedAndNotNull),
     )
 
     const gristProjects = JSON.parse(
