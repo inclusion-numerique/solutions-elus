@@ -34,18 +34,26 @@ const Project = ({ project }: { project: ProjectItem }) => {
             {coverPicture}
           </div>
           <Header project={project} />
-          {project.subtitle ? (
-            <p className="fr-text--xl fr-text--bold fr-mt-12v fr-mb-6w">
-              {project.subtitle}
+          {textToParagraphs(project.subtitle).map((paragraph, index) => (
+            <p
+              key={paragraph}
+              className={`fr-text--xl fr-text--bold  ${
+                index === 0 ? 'fr-mt-12v' : ''
+              }`}
+            >
+              {paragraph}
             </p>
-          ) : null}
-          {textToParagraphs(project.description).map((paragraph) => (
-            <p key={paragraph} className="fr-text--lg">
+          ))}
+          {textToParagraphs(project.description).map((paragraph, index) => (
+            <p
+              key={paragraph}
+              className={`fr-text--lg ${index === 0 ? 'fr-mt-12v' : ''}`}
+            >
               {paragraph}
             </p>
           ))}
 
-          <Localization project={project} className="fr-hidden-lg fr-mt-6w" />
+          <Localization project={project} className="fr-hidden-lg fr-mt-12v" />
           <Blocs className="fr-mt-6v" project={project} />
           {project.funding ? (
             <>
