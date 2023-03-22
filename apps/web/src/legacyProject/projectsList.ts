@@ -28,6 +28,9 @@ export const getProjectsList = () =>
       coverImageAlt: true,
       slug: true,
     },
+    orderBy: {
+      created: 'desc',
+    },
   })
 
 export const getProject = (slug: string) =>
