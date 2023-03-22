@@ -67,7 +67,11 @@ const Quotes = ({ project }: { project: ProjectItem }) => {
       ) : null}
       {hasPartnerQuote ? (
         <>
-          <h2 className="fr-text-title--blue-france fr-mt-12v">
+          <h2
+            className={`fr-text-title--blue-france ${
+              hasLocalActorQuote ? 'fr-mt-8v' : 'fr-mt-12v'
+            }`}
+          >
             La parole aux partenaires des collectivités
           </h2>
           {partner.map((quote, index) => (
