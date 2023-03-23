@@ -1,8 +1,11 @@
-import { getProject } from '@sde/web/legacyProject/projectsList'
+import { Metadata } from 'next'
 import Link from 'next/link'
-import React from 'react'
-import { prismaClient } from '@sde/web/prismaClient'
 import { notFound } from 'next/navigation'
+import React from 'react'
+import { getProject } from '@sde/web/legacyProject/projectsList'
+import { prismaClient } from '@sde/web/prismaClient'
+import { getServerUrl } from '@sde/web/utils/baseUrl'
+import { getProjectPath } from '@sde/web/project/project'
 import Project from './Project'
 
 export const dynamic = 'force-static'
@@ -14,6 +17,28 @@ export async function generateStaticParams() {
   })
 
   return projects.map(({ slug }) => slug)
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string }
+}): Promise<Metadata> {
+  const project = await getProject(params.slug)
+  return {
+    openGraph: {
+      type: 'website',
+      url: getServerUrl(getProjectPath(project)),
+      title: project.title,
+      description: project.subtitle,
+      images: [
+        {
+          url: getServerUrl(project.coverImage),
+          alt: project.coverImageAlt || undefined,
+        },
+      ],
+    },
+  }
 }
 
 const ProjectPage = async ({ params }: { params: { slug: string } }) => {

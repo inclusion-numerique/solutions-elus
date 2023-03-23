@@ -51,6 +51,7 @@ export const getProject = (slug: string) =>
           population: true,
         },
       },
+      slug: true,
       localizationDescription: true,
       longitude: true,
       latitude: true,
