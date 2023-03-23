@@ -24,26 +24,28 @@ export async function generateMetadata({
 }: {
   params: { slug: string }
 }): Promise<Metadata> {
-  const project = await getProject(params.slug)
-  return {
-    openGraph: {
-      type: 'website',
-      url: getServerUrl(getProjectPath(project)),
-      title: project.title,
-      description: project.subtitle,
-      images: [
-        {
-          url: getServerUrl(project.coverImage),
-          alt: project.coverImageAlt || undefined,
-        },
-      ],
-    },
+  try {
+    const project = await getProject(params.slug)
+    return {
+      openGraph: {
+        type: 'website',
+        url: getServerUrl(getProjectPath(project)),
+        title: project.title,
+        description: project.subtitle,
+        images: [
+          {
+            url: getServerUrl(project.coverImage),
+            alt: project.coverImageAlt || undefined,
+          },
+        ],
+      },
+    }
+  } catch {
+    return {}
   }
 }
 
 const ProjectPage = async ({ params }: { params: { slug: string } }) => {
-  // Filtering and pagination is done in the frontend
-  // We have only a small dataset of projects so this is way more performant
   try {
     const project = await getProject(params.slug)
     return (
