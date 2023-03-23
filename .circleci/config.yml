@@ -327,8 +327,6 @@ jobs:
       - checkout
       - install_pnpm
       - install_dependencies
-      - setup_remote_docker:
-          docker_layer_caching: true
       - create_dotenv_file
       - run:
           name: 'Prisma generate'
@@ -341,24 +339,27 @@ jobs:
             pnpm --silent -F @sde/e2e install
             pnpx playwright install
       - run:
+          name: 'Add e2e CI database url to env'
+          command: |
+            echo "export DATABASE_URL=$CI_DATABASE_URL" >> ${BASH_ENV}
+      - run:
           name: 'Create CI database schema'
           command: |
-            DATABASE_URL=$CI_DATABASE_URL pnpm --silent -F @sde/web prisma db push --skip-generate --accept-data-loss
+            pnpm --silent -F @sde/web prisma db push --skip-generate --accept-data-loss
       - run:
           name: Download data
           command: |
-            DATABASE_URL=$CI_DATABASE_URL pnpm --silent cli projects:grist:download
+            pnpm --silent cli projects:grist:download
       - run:
           name: Update showcase projects
           command: |
-            DATABASE_URL=$CI_DATABASE_URL pnpm --silent cli projects:update-showcases
+            pnpm --silent cli projects:update-showcases
       - restore_cache:
           key: << pipeline.id >>-web-build
       - run:
           name: 'Run playwright'
           command: |
             SHARD="$((${CIRCLE_NODE_INDEX}+1))"
-            DATABASE_URL=$CI_DATABASE_URL
             pnpm --silent -F @sde/e2e playwright test --shard=${SHARD}/${CIRCLE_NODE_TOTAL}
 
   deploy_web:
