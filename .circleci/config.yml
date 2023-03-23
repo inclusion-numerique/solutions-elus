@@ -358,6 +358,7 @@ jobs:
           name: 'Run playwright'
           command: |
             SHARD="$((${CIRCLE_NODE_INDEX}+1))"
+            DATABASE_URL=$CI_DATABASE_URL
             pnpm --silent -F @sde/e2e playwright test --shard=${SHARD}/${CIRCLE_NODE_TOTAL}
 
   deploy_web:
