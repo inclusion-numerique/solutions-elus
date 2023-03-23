@@ -6,13 +6,13 @@ orbs:
 executors:
   node:
     docker:
-      - image: cimg/node:18.13.0
+      - image: cimg/node:18.15.0
         environment:
           TZ: 'UTC'
 
   node-postgres:
     docker:
-      - image: cimg/node:18.13.0
+      - image: cimg/node:18.15.0
         environment:
           TZ: 'UTC'
           CI_DATABASE_URL: postgresql://postgres@localhost/test
@@ -21,7 +21,7 @@ executors:
           POSTGRES_USER: postgres
   node-e2e:
     docker:
-      - image: cimg/node:18.13.0-browsers
+      - image: cimg/node:18.15.0-browsers
         environment:
           TZ: 'UTC'
           CI_DATABASE_URL: postgresql://postgres@localhost/test
