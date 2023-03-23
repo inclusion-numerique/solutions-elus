@@ -1,14 +1,16 @@
 import { ProjectItem } from '@sde/web/legacyProject/projectsList'
 import React from 'react'
-import { getProjectFilePath } from '@sde/web/project/project'
+import { getProjectFilePath, getProjectPath } from '@sde/web/project/project'
 import { formatInteger } from '@sde/web/utils/formatInteger'
 import { dateAsDay } from '@sde/web/utils/dateAsDay'
 import { textToParagraphs } from '@sde/web/utils/textParser'
+import { getServerUrl } from '@sde/web/utils/baseUrl'
 import Header from './Header'
 import Localization from './Localization'
 import Blocs from './Blocs'
 import Quotes from './Quotes'
 import styles from './Project.module.css'
+import SocialNetworks from './SocialNetworks'
 
 const Project = ({ project }: { project: ProjectItem }) => {
   const coverPicture = (
@@ -53,6 +55,10 @@ const Project = ({ project }: { project: ProjectItem }) => {
             </p>
           ))}
 
+          <SocialNetworks
+            className="fr-hidden-lg fr-mt-12v"
+            url={getServerUrl(getProjectPath(project))}
+          />
           <Localization project={project} className="fr-hidden-lg fr-mt-12v" />
           <Blocs className="fr-mt-6v" project={project} />
           {project.funding ? (
@@ -129,6 +135,10 @@ const Project = ({ project }: { project: ProjectItem }) => {
           style={{ flexDirection: 'column' }}
         >
           <div className={styles.coverImageContainer}>{coverPicture}</div>
+          <SocialNetworks
+            className="fr-mt-8v"
+            url={getServerUrl(getProjectPath(project))}
+          />
           <Localization className="fr-mt-8v" project={project} />
         </div>
       </div>

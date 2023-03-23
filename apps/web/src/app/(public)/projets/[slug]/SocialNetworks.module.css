@@ -1,0 +1,32 @@
+.icons {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.icon {
+  position: relative;
+  color: var(--blue-france-sun-113-625);
+  width: fit-content;
+  padding: 12px;
+  border: var(--slim-grey-border);
+  background-image: none !important;
+
+  &:hover {
+    background-color: var(--background-default-grey-hover) !important;
+  }
+
+  &::after {
+    display: none !important;
+  }
+}
+
+.copiedHover {
+  position: absolute;
+  background-color: black;
+  color: white;
+  padding: 4px;
+  border-radius: 4px;
+  top: -16px;
+  right: -32px;
+}
