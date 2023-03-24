@@ -31,19 +31,9 @@
     "docker:build:web": "docker buildx build --platform linux/amd64 -t rg.fr-par.scw.cloud/mec-web/mec-web-dev:latest -f docker/web/Dockerfile .",
     "docker:build:web:debug": "DOCKER_BUILDKIT=0 docker build -t mec-web/mec-web-dev:debug -f docker/web/Dockerfile ."
   },
-
   "pnpm": {
-    "packageExtensions": {
-      "@storybook/jest": {
-        "dependencies": {
-          "@storybook/instrumenter": "^7.0.0-rc.7"
-        }
-      },
-      "@storybook/testing-library": {
-        "dependencies": {
-          "@storybook/instrumenter": "^7.0.0-rc.7"
-        }
-      }
+    "overrides": {
+      "@storybook/instrumenter": "^7.0.0-rc.7"
     }
   },
   "optionalDependencies": {

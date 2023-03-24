@@ -30,20 +30,6 @@
   "engines": {
     "node": "^18.15"
   },
-  "pnpm": {
-    "packageExtensions": {
-      "@storybook/jest": {
-        "dependencies": {
-          "@storybook/instrumenter": "^7.0.0-rc.7"
-        }
-      },
-      "@storybook/testing-library": {
-        "dependencies": {
-          "@storybook/instrumenter": "^7.0.0-rc.7"
-        }
-      }
-    }
-  },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.304.0",
     "@aws-sdk/s3-request-presigner": "^3.304.0",
