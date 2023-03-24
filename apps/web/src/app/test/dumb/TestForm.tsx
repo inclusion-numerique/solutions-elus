@@ -1,8 +1,9 @@
 import { useForm } from 'react-hook-form'
-import { InputFormField } from '@sde/web/form/InputFormField'
+import { ObjectFormData } from '@sde/web/pages/api/test/type'
+import TestComponent from './TestComponent'
 
 export const TestForm = () => {
-  const form = useForm({
+  const form = useForm<ObjectFormData>({
     defaultValues: {
       name: 'John Doe',
     },
@@ -12,10 +13,5 @@ export const TestForm = () => {
     console.log('submit')
   }
 
-  return (
-    <form onSubmit={form.handleSubmit(onSubmit)}>
-      <InputFormField control={form.control} path="name" label="Name" />
-      <button type="submit">Submit</button>
-    </form>
-  )
+  return <TestComponent control={form.control} onSubmit={onSubmit} />
 }
