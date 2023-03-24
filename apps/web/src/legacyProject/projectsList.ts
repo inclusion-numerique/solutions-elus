@@ -34,7 +34,7 @@ export const getProjectsList = () =>
   })
 
 export const getProject = (slug: string) =>
-  prismaClient.project.findUniqueOrThrow({
+  prismaClient.project.findUnique({
     select: {
       program: {
         select: {

@@ -254,6 +254,7 @@ jobs:
           command: pnpm --silent -F @sde/web prisma:generate
       - add_secrets_to_dotenv_file
       - setup_docker_web_env
+      - setup_next_public_env
       - run:
           name: 'Install DSFR'
           command: pnpm --silent -F @sde/web setup:dsfr
@@ -377,7 +378,7 @@ jobs:
           name: 'Setup and export database password'
           command: |
             pnpm --silent cli secrets:database:setup $NAMESPACE
-            echo "export DATABASE_PASSWORD=$(pnpm --silent cli secrets:get DATABASE_PASSWORD_$NAMESPACE)" >> ${BASH_ENV}
+            echo "export DATABASE_PASSWORD=$(pnpm --silent cli secrets:database-password $NAMESPACE)" >> ${BASH_ENV}
       - run:
           name: "Create terraform variables file from environment variables"
           command: |
@@ -563,6 +564,13 @@ commands:
           name: "Add web secrets to .env"
           command: |
             pnpm --silent cli dotenv:from-secrets web
+
+  setup_next_public_env:
+    steps:
+      - run:
+          name: "Add NEXT_PUBLIC_* env to .env"
+          command: |
+            pnpm --silent cli dotenv:add-next-public $NAMESPACE
 
   setup_docker_web_env:
     steps:
