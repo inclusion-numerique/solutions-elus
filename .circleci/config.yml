@@ -385,6 +385,17 @@ jobs:
       - restore_cache:
           key: << pipeline.id >>-web-build
       - run:
+          name: Running next server
+          background: true
+          command: |
+            DATABASE_URL=$CI_DATABASE_URL
+            pnpm --silent -F @sde/web start
+      - run:
+          name: 'Run e2e test'
+          command: |
+            DATABASE_URL=$CI_DATABASE_URL
+            pnpm --silent -F @sde/web e2e
+      - run:
           name: 'Run playwright'
           command: |
             SHARD="$((${CIRCLE_NODE_INDEX}+1))"

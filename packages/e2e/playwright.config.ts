@@ -102,10 +102,6 @@ const config: PlaywrightTestConfig = {
 
 if (process.env.CI === 'true') {
   config.outputDir = 'test-results/'
-  config.webServer = {
-    command: 'pnpm -F @sde/web start',
-    port: 3000,
-  }
 }
 
 export default config

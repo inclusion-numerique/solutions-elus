@@ -18,10 +18,12 @@ export const packageJestConfig = ({
   transformIgnorePackages = [],
   testPathIgnorePatterns = [],
   mockableFilePatterns = [],
+  testMatch,
 }: {
   transformIgnorePackages?: string[]
   testPathIgnorePatterns?: string[]
   mockableFilePatterns?: string[]
+  testMatch?: string[]
 }) => {
   testDotenvConfig()
 
@@ -46,7 +48,7 @@ export const packageJestConfig = ({
       createNodeModulesTransformIgnorePattern(transformIgnorePackages),
     ],
     setupFilesAfterEnv: ['<rootDir>/../../packages/test/src/jest.setup.ts'],
-    testMatch: [
+    testMatch: testMatch ?? [
       '**/*.spec.ts',
       '**/*.spec.tsx',
       '**/*.integration.ts',

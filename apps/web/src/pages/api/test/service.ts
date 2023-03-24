@@ -8,7 +8,7 @@ export const reset = () => {
 export const getValue = async () => Promise.resolve(value)
 
 export const updateValue = async (newValue: string) => {
-  if (value) {
+  if (newValue) {
     return new Promise((resolve) => {
       value = newValue
       resolve(null)

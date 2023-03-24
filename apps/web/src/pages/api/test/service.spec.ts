@@ -19,7 +19,7 @@ describe('service', () => {
       expect(value).toBe(newValue)
     })
 
-    test('should not update value when new value is correct', async () => {
+    test('should not update value when new value is not correct', async () => {
       await updateValue('')
 
       const value = await getValue()

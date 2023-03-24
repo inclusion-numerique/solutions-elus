@@ -14,7 +14,8 @@
     "tsc": "tsc --noEmit",
     "postinstall": "pnpm --silent setup:dsfr && pnpm --silent prisma:generate",
     "setup:dsfr": "FROM=\"./node_modules/@gouvfr/dsfr/dist\"; TO=\"public/dsfr\"; if [ ! -d \"$FROM\" ]; then FROM=\"../../node_modules/@gouvfr/dsfr/dist\"; fi; mkdir -p public/dsfr/utility && cp $FROM/dsfr.module.min.js $TO/ && cp $FROM/dsfr.module.min.js.map $TO/ && cp $FROM/dsfr.nomodule.min.js $TO/ && cp $FROM/dsfr.nomodule.min.js.map $TO/ && cp $FROM/dsfr.min.css $TO/ && cp $FROM/utility/utility.min.css $TO/utility/ && cp -R $FROM/icons $TO/ && cp -R $FROM/artwork $TO/ && cp -R $FROM/fonts $TO/",
-    "test": "jest",
+    "test": "jest -c jest.unit.config.ts",
+    "e2e": "jest -c jest.e2e.config.ts",
     "with-env": "dotenv -e ../../.env --",
     "with-remote-env": "dotenv -e ../../.env.remote -e ../../.env --",
     "prisma:dev": "pnpm --silent with-env prisma studio --port 5556",
@@ -28,6 +29,20 @@
   },
   "engines": {
     "node": "^18.15"
+  },
+  "pnpm": {
+    "packageExtensions": {
+      "@storybook/jest": {
+        "dependencies": {
+          "@storybook/instrumenter": "^7.0.0-rc.7"
+        }
+      },
+      "@storybook/testing-library": {
+        "dependencies": {
+          "@storybook/instrumenter": "^7.0.0-rc.7"
+        }
+      }
+    }
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.304.0",
@@ -93,6 +108,9 @@
   "devDependencies": {
     "@next/bundle-analyzer": "^13.2.4",
     "@sde/test": "*",
+    "@storybook/jest": "^0.0.10",
+    "@storybook/react": "7.0.0-rc.7",
+    "@storybook/testing-library": "0.0.14-next.1",
     "@types/file-saver": "^2.0.5",
     "@types/js-cookie": "^3.0.3",
     "@types/mime-types": "^2.1.1",

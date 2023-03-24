@@ -7,6 +7,12 @@ import { getProjectCategories } from '@sde/web/legacyProject/categories'
 const t = initTRPC.create()
 
 export const appRouter = t.router({
+  testReset: t.procedure.mutation(async ({ ctx }) => {
+    ctx.req.headers.host
+    if (process.env.CI !== 'true') {
+      throw new Error('Not allowed to reset state')
+    }
+  }),
   createProject: t.procedure
     .input(ShareProjectFormDataValidation)
     .mutation(
