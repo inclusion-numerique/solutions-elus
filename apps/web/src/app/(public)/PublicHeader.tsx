@@ -51,7 +51,7 @@ const PublicHeader = () => (
                 </button>
               </div>
             </div>
-            <div class="fr-header__service">
+            <div className="fr-header__service">
               <Link
                 href="/"
                 aria-current="page"
