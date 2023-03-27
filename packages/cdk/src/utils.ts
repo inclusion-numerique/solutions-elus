@@ -3,7 +3,20 @@ import { branch as gitBranch } from 'git-rev-sync'
 export const getBranch = () => process.env.CDK_FORCE_BRANCH || gitBranch()
 
 export const computeBranchNamespace = (branch: string) =>
-  branch.replace(/[./@_]/g, '-').toLowerCase()
+  branch
+    // Replace special characters with hyphen
+    .replace(/[./@_]/g, '-')
+    // Do not include digits
+    .replace(/\d/g, '')
+    // When digits are removed, there might be multiple hyphens in a row
+    .replace(/--+/g, '-')
+    // Remove prefix hyphen
+    .replace(/^-/, '')
+    // Namespace should be shorter than 32 chars to ensure all resources can be deployed
+    .slice(0, 32)
+    // Remove suffix hyphen
+    .replace(/-$/, '')
+    .toLowerCase()
 
 export const namespacer = (namespace: string) => (name: string) =>
   `${name}-${namespace}`

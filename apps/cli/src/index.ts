@@ -17,7 +17,6 @@ import { updateShowcases } from '@sde/cli/commands/projects/updateShowcases'
 import { checkDeploymentStatus } from '@sde/cli/commands/deployment/checkDeploymentStatus'
 import { getDatabasePasswordSecret } from '@sde/cli/commands/secrets/getDatabasePasswordSecret'
 import { addNextPublicVariablesToDotEnv } from '@sde/cli/commands/infrastructure/addNextPublicVariablesToDotEnv'
-import { listInlineHashes } from '@sde/cli/commands/infrastructure/listInlineHashes'
 
 const program = new Command()
 
@@ -39,6 +38,5 @@ program.addCommand(uploadGristProjectFields)
 program.addCommand(downloadGristProjectFields)
 program.addCommand(updateShowcases)
 program.addCommand(checkDeploymentStatus)
-program.addCommand(listInlineHashes)
 
 program.parse()
