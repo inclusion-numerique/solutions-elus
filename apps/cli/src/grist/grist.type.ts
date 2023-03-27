@@ -22,7 +22,10 @@ const gristNullableString = z
 export const gristProjectFieldsValidation = z.object({
   drupal_id: gristNullableString,
   drupal_url: gristNullableString,
-  Programme: z.number().gt(0, 'Missing Program').nullable(),
+  Programme: z.preprocess(
+    (value) => (value === 0 ? null : value),
+    z.number().positive().nullable(),
+  ),
   Localisation: z.number().gt(0, 'Missing localization'),
   Titre: gristNullableString,
   Sous_titre: gristNullableString,
