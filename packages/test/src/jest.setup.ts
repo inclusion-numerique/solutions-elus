@@ -1,5 +1,4 @@
 import 'jest'
-import { matchers as joiMatchers } from 'jest-joi'
 import 'jest-extended'
 import 'jest-extended/all'
 import '@testing-library/jest-dom/extend-expect'
@@ -14,5 +13,3 @@ dotenv.config({
 
 global.TextEncoder = TextEncoder
 global.TextDecoder = TextDecoder as never
-
-expect.extend(joiMatchers)
