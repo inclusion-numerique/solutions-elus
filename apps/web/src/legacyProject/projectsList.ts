@@ -34,7 +34,7 @@ export const getProjectsList = () =>
   })
 
 export const getProject = (slug: string) =>
-  prismaClient.project.findUniqueOrThrow({
+  prismaClient.project.findUnique({
     select: {
       program: {
         select: {
@@ -89,4 +89,4 @@ export type ProjectListItem = Awaited<
   ReturnType<typeof getProjectsList>
 >[number]
 
-export type ProjectItem = Awaited<ReturnType<typeof getProject>>
+export type ProjectItem = Exclude<Awaited<ReturnType<typeof getProject>>, null>

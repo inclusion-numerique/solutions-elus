@@ -15,14 +15,18 @@ import { uploadGristProjectFields } from '@sde/cli/commands/projects/uploadGrist
 import { downloadGristProjectFields } from '@sde/cli/commands/projects/downloadGristProjectFields'
 import { updateShowcases } from '@sde/cli/commands/projects/updateShowcases'
 import { checkDeploymentStatus } from '@sde/cli/commands/deployment/checkDeploymentStatus'
+import { getDatabasePasswordSecret } from '@sde/cli/commands/secrets/getDatabasePasswordSecret'
+import { addNextPublicVariablesToDotEnv } from '@sde/cli/commands/infrastructure/addNextPublicVariablesToDotEnv'
 
 const program = new Command()
 
 program.addCommand(listSecrets)
 program.addCommand(getSecretValue)
 program.addCommand(setupDatabaseSecret)
+program.addCommand(getDatabasePasswordSecret)
 program.addCommand(createDotEnvFromCdk)
 program.addCommand(createDotEnvFromSecrets)
+program.addCommand(addNextPublicVariablesToDotEnv)
 program.addCommand(createGithubDeployment)
 program.addCommand(updateGithubDeployment)
 program.addCommand(deactivateGithubDeployment)
