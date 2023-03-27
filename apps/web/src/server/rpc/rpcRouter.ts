@@ -1,10 +1,10 @@
 import { initTRPC } from '@trpc/server'
-import { RpcContext } from '@sde/web/server/rpc/rpcContext'
 import { ShareProjectFormDataValidation } from '@sde/web/shareProject/project'
 import { prismaClient } from '@sde/web/prismaClient'
 import { v4 } from 'uuid'
+import { getProjectCategories } from '@sde/web/legacyProject/categories'
 
-const t = initTRPC.context<RpcContext>().create()
+const t = initTRPC.create()
 
 export const appRouter = t.router({
   createProject: t.procedure

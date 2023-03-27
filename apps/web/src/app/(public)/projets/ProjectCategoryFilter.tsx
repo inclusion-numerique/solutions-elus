@@ -1,11 +1,14 @@
 'use client'
 
-import { categories } from '@sde/web/anctProjects'
 import { ProjectFilterResetButton } from '@sde/web/app/(public)/projets/ProjectFilterResetButton'
 import { useCategoriesFilters } from '@sde/web/legacyProject/projectFiltersStore'
 import { SelectTagsFormField } from '@sde/web/app/(public)/projets/SelectWithTagsFilter'
 
-export const ProjectCategoryFilter = () => {
+const ProjectCategoryFilter = ({
+  projectCategories,
+}: {
+  projectCategories: string[]
+}) => {
   const selectedCategories = useCategoriesFilters(({ selected }) => selected)
   const toggleCategory = useCategoriesFilters(({ toggle }) => toggle)
   const reset = useCategoriesFilters(({ reset }) => reset)
@@ -20,14 +23,14 @@ export const ProjectCategoryFilter = () => {
           label="Par thématiques"
           onAdd={toggleCategory}
           onRemove={toggleCategory}
-          options={categories}
+          options={projectCategories}
         />
       </div>
       <div className="fr-hidden fr-unhidden-md fr-px-2w fr-px-md-4w fr-mt-8v">
         <p className="fr-text--regular fr-text--bold fr-text--lg fr-mb-2v">
           Rechercher par thématiques
         </p>
-        {categories.map((category) => {
+        {projectCategories.map((category) => {
           const isSelected = selectedCategories.has(category)
           return (
             <button
@@ -51,3 +54,5 @@ export const ProjectCategoryFilter = () => {
     </>
   )
 }
+
+export default ProjectCategoryFilter

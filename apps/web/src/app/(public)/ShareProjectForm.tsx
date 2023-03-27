@@ -1,11 +1,11 @@
 'use client'
 
+import Link from 'next/link'
 import { Controller, useForm } from 'react-hook-form'
 import { trpc } from '@sde/web/trpc'
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod'
 import { withTrpc } from '@sde/web/withTrpc'
 import {
-  domainOptions,
   ShareProjectData,
   ShareProjectFormDataValidation,
 } from '@sde/web/shareProject/project'
@@ -15,10 +15,25 @@ import AttachmentUploader from '@sde/web/attachments/AttachmentUploader'
 import { generateReference } from '@sde/web/shareProject/generateReference'
 import { RadioFormField } from '@sde/web/form/RadioFormField'
 import { CommunitySearchFormField } from '@sde/web/form/CommunitySearchFormField'
-import Link from 'next/link'
+
+const projectCategories = [
+  'Accès aux soins',
+  'Accès au numérique',
+  'Attractivité et revitalisation',
+  'Développement économique',
+  'Éducation et jeunesse',
+  'Infrastructures locales',
+  'Logement et cadre de vie',
+  'Services au public',
+  'Solidarité',
+  'Soutien aux associations',
+  'Transition écologique',
+  'Transport et mobilités',
+].map((category) => ({ name: category, value: category }))
 
 const ShareProjectForm = () => {
   const createProject = trpc.createProject.useMutation()
+
   // Unique client side reference for this forms
   const reference = useMemo(generateReference, [])
 
@@ -109,7 +124,7 @@ const ShareProjectForm = () => {
             <RadioFormField
               label="Votre idée concerne le domaine suivant"
               disabled={fieldsDisabled}
-              options={domainOptions}
+              options={projectCategories}
               control={control}
               path="domain"
             />

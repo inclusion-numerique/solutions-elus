@@ -67,22 +67,3 @@ export const ShareProjectFormDataValidation = z.object({
 })
 
 export type ShareProjectData = z.infer<typeof ShareProjectFormDataValidation>
-
-const projectDomains = [
-  'Accès au numérique',
-  'Services au public',
-  'Transport et mobilités',
-  'Transition écologique',
-  'Logement et cadre de vie',
-  'Développement économique',
-  'Infrastructures locales',
-  'Solidarité',
-  'Éducation et jeunesse',
-  'Attractivité et dynamisme territorial',
-]
-
-// Labels and values are the same
-export const domainOptions: Options = projectDomains.map((domain) => ({
-  name: domain,
-  value: domain,
-}))

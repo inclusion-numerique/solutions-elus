@@ -1,7 +1,7 @@
 import styles from '@sde/web/app/(public)/PublicLayout.module.css'
 import ShareProjectForm from '@sde/web/app/(public)/ShareProjectForm'
 
-export default function ShareProjectPage() {
+export default async function ShareProjectPage() {
   return (
     <div className={`${styles.withImageBackground}`}>
       <div className="fr-container fr-py-20v" style={{ position: 'relative' }}>
