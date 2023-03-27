@@ -14,7 +14,6 @@ const PublicHeader = () => (
                   aria-current="page"
                   target="_self"
                   title="Solutions d'élus"
-                  className="nuxt-link-exact-active nuxt-link-active"
                 >
                   <p className="fr-logo">
                     Ministère
@@ -28,9 +27,15 @@ const PublicHeader = () => (
                     des territoires
                   </p>
                 </Link>
-              </div>
-              <div className="fr-header__operator">
-                <h2>Solutions d&apos;élus</h2>
+                <picture>
+                  <img
+                    alt="Logo du Conseil National de la Refondation"
+                    src="/images/cnr_logo_horizontal.svg"
+                    className="fr-ml-2w fr-ml-md-6w fr-hidden-lg"
+                    height={54}
+                    style={{ verticalAlign: 'middle' }}
+                  />
+                </picture>
               </div>
               <div className="fr-header__navbar">
                 <button
@@ -46,10 +51,24 @@ const PublicHeader = () => (
                 </button>
               </div>
             </div>
+            <div class="fr-header__service">
+              <Link
+                href="/"
+                aria-current="page"
+                target="_self"
+                title="Solutions d'élus"
+              >
+                <h2>Solutions d&apos;élus</h2>
+              </Link>
+            </div>
           </div>
           <div className="fr-header__tools fr-hidden fr-unhidden-lg">
             <picture>
-              <img src="/images/cnr_logo_horizontal.svg" />
+              <img
+                alt="Logo du Conseil National de la Refondation"
+                src="/images/cnr_logo_horizontal.svg"
+                className="fr-p-2v"
+              />
             </picture>
           </div>
         </div>
