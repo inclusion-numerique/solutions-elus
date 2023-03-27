@@ -47,6 +47,11 @@ const PublicHeader = () => (
               </div>
             </div>
           </div>
+          <div className="fr-header__tools fr-hidden fr-unhidden-lg">
+            <picture>
+              <img src="/images/cnr_logo_horizontal.svg" />
+            </picture>
+          </div>
         </div>
       </div>
     </div>
