@@ -1,5 +1,6 @@
 import { getDataGouvDepartment } from '@sde/cli/departments'
 import { prismaClient } from '@sde/web/prismaClient'
+import slug from 'slug'
 import {
   GristLocalisation,
   GristProgram,
@@ -55,7 +56,7 @@ export const convertGristProjectToModel = (
           .replace('https://agence-cohesion-territoires.gouv.fr/', '')
           // Remove drupal id at the end of the slug
           .replace(/-(\d+)$/, '')
-      : '',
+      : slug(project.fields.Titre?.trim() ?? ''),
     coverImage: project.fields.Visuel
       ? attachments[project.fields.Visuel[1]]
       : '../village.webp',
