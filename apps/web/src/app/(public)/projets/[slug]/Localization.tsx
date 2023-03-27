@@ -14,9 +14,9 @@ const Localization = ({
   className?: string
 }) => (
   <div className={className ?? ''}>
-    {project.latitude && project.longitude && (
+    {project.latitude && project.longitude ? (
       <Map latitude={project.latitude} longitude={project.longitude} />
-    )}
+    ) : null}
     <div className={`fr-p-6v ${styles.bloc}`}>
       <h2 className="fr-mb-0 fr-text-title--blue-france">Le territoire</h2>
       <p className="fr-mt-6v fr-mb-0 fr-text--bold">
