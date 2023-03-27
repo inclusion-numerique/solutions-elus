@@ -18,6 +18,7 @@ const emptyStringToNull = <T>(value: T) =>
 const gristNullableString = z
   .preprocess(emptyStringToNull, z.string().nullable())
   .optional()
+const gristString = z.preprocess(emptyStringToNull, z.string())
 
 export const gristProjectFieldsValidation = z.object({
   drupal_id: gristNullableString,
@@ -27,7 +28,7 @@ export const gristProjectFieldsValidation = z.object({
     z.number().positive().nullable(),
   ),
   Localisation: z.number().gt(0, 'Missing localization'),
-  Titre: gristNullableString,
+  Titre: gristString,
   Sous_titre: gristNullableString,
   // TODO Type this
   // e.g. Visuel: [ 'L', 6 ],
