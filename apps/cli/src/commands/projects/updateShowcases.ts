@@ -25,14 +25,18 @@ export const updateShowcases = new Command()
       await transaction.project.updateMany({ data: { showcase: null } })
       await Promise.all(
         showcases.map((slug, showcase) =>
-          transaction.project.update({
-            data: {
-              showcase,
-            },
-            where: {
-              slug,
-            },
-          }),
+          transaction.project
+            .update({
+              data: {
+                showcase,
+              },
+              where: {
+                slug,
+              },
+            })
+            .catch(() => {
+              output(`⚠️ Slug ${slug} not found`)
+            }),
         ),
       )
     })

@@ -71,6 +71,7 @@ export const gristProjectDumb: GristProjectFields = {
   drupal_id: '66ef1294-9bcc-4ba4-9ac8-8b9a649bcf2b',
   drupal_url:
     'https://agence-cohesion-territoires.gouv.fr/sur-les-bancs-de-la-cite-educative-de-charleville-mezieres-40',
+  A_Publier_le: Date.now() / 1000,
 }
 export const gristProjectArrayDumb: GristProjectFields[] = [
   gristProjectDumb,
