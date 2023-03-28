@@ -79,7 +79,7 @@ export const convertGristProjectToModel = (
     budget: project.fields.Budget,
     inaugurationDate: project.fields.Calendrier
       ? new Date(project.fields.Calendrier * 1000)
-      : new Date(),
+      : null,
     localActor1Name: project.fields.Acteur_local_1_nom?.trim() ?? '',
     localActor1Text: project.fields.Acteur_local_1_texte?.trim() ?? '',
     localActor1Image: project.fields.Acteur_local_1_image
