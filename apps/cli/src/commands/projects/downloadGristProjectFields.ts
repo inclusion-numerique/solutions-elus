@@ -46,16 +46,17 @@ export const downloadGristProjectFields = new Command()
     }
 
     const now = Date.now() / 1000
-    const filteredGristProjects = gristProjects.records.filter(
+
+    const projectsToPublish = gristProjects.records.filter(
       (project) =>
-        project.fields.A_Publier_le && project.fields.A_Publier_le <= now,
+        project.fields.A_publier_le && project.fields.A_publier_le <= now,
     )
 
     // To avoid pagination logic (50 000 records and 500 max items per page)
     // And long running time, only fetch required localizations
     const localisationIds = [
       ...new Set(
-        filteredGristProjects
+        projectsToPublish
           .map(({ fields: { Localisation } }) => Localisation)
           .filter(isDefinedAndNotNull),
       ),
@@ -65,31 +66,31 @@ export const downloadGristProjectFields = new Command()
     })
     if (gristProjects.invalidRecords.length > 0) {
       output(
-        `⚠️ There was ${gristProjects.invalidRecords.length}/${
+        `⚠️  There was ${gristProjects.invalidRecords.length}/${
           gristProjects.records.length + gristProjects.invalidRecords.length
         } invalid projects in Grist dataset that will NOT be imported`,
       )
     }
 
-    if (gristProjects.records.length - filteredGristProjects.length !== 0) {
+    if (gristProjects.records.length - projectsToPublish.length !== 0) {
       output(
-        `⚠️ ${
-          gristProjects.records.length - filteredGristProjects.length
+        `⚠️  ${
+          gristProjects.records.length - projectsToPublish.length
         } projects are waiting to be published and will NOT be imported`,
       )
     }
 
     output(`Downloaded grist data`)
-    output(`- ${filteredGristProjects.length} projects`)
+    output(`- ${projectsToPublish.length} projects`)
     output(`- ${programs.records.length} programs`)
     output(`- ${thematiques.records.length} thematiques`)
     output(
       `- ${localisations.records.length} localisations (only relevant ones)`,
     )
 
-    const attachments = await downloadAttachments(filteredGristProjects)
+    const attachments = await downloadAttachments(projectsToPublish)
     await insertInDataBase(
-      filteredGristProjects,
+      projectsToPublish,
       localisations.records,
       programs.records,
       thematiques.records,

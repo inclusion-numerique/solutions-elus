@@ -77,7 +77,7 @@ export const gristProjectFieldsValidation = z.object({
   Region: gristNullableString,
   Lattitude: z.number().nullable(),
   Longitude: z.number().nullable(),
-  A_Publier_le: z.number().nullable(),
+  A_publier_le: z.number().nullable(),
 })
 
 const gristLocalisationFieldsValidation = z.object({
