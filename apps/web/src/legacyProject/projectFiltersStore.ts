@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { Category, District, PopulationBracket } from '@sde/web/anctProjects'
+import { District, PopulationBracket } from '@sde/web/anctProjects'
 import { setsAreEqual } from '@sde/web/utils/setsAreEqual'
 
 type FiltersState<T> = {
@@ -35,7 +35,7 @@ const createFilterStore = <T = string>() =>
 
 export const useDistrictFilters = createFilterStore<District>()
 
-export const useCategoriesFilters = createFilterStore<Category>()
+export const useCategoriesFilters = createFilterStore<string>()
 
 export const usePopulationBracketFilters =
   createFilterStore<PopulationBracket>()

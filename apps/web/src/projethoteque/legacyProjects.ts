@@ -1,5 +1,3 @@
-import { Category } from '@sde/web/anctProjects'
-
 export const categoryToLegacyCategory = (category: string): string => category
 
 const legacyCategories = [
@@ -26,9 +24,9 @@ export type LegacyCategory = (typeof legacyCategories)[number]
 
 export const legacyCategoryToCategory = (
   legacyCategory: LegacyCategory,
-): Category => {
+): string => {
   if (legacyCategory === 'Attractivité et dynamisme territorial') {
-    return 'Attractivité'
+    return 'Attractivité et revitalisation'
   }
 
   // Contrat de relance et de transition écologique

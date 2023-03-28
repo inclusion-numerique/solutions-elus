@@ -12,7 +12,7 @@ import {
 } from '@sde/web/legacyProject/projectFiltersStore'
 import Fuse from 'fuse.js'
 import { filterProjects } from '@sde/web/legacyProject/filterProjectList'
-import { Category, District } from '@sde/web/anctProjects'
+import { District } from '@sde/web/anctProjects'
 import { useOnDiff } from '@sde/web/hooks/useOnDiff'
 
 export const ProjectsList = ({
@@ -21,7 +21,7 @@ export const ProjectsList = ({
   initialCategoriesFilter,
 }: {
   initialDistrictsFilter: District[]
-  initialCategoriesFilter: Category[]
+  initialCategoriesFilter: string[]
   projects: ProjectListItem[]
 }) => {
   const filtersString = [

@@ -1,13 +1,15 @@
 import Link from 'next/link'
-import { categories, categoryProjectsLink } from '@sde/web/anctProjects'
+import { categoryProjectsLink } from '@sde/web/anctProjects'
 import { Showcase } from '@sde/web/app/(public)/Showcase'
 import { getShowcaseProjects } from '@sde/web/legacyProject/showcaseProjects'
+import { getProjectCategories } from '@sde/web/legacyProject/categories'
 import styles from './PublicLayout.module.css'
 
 export default async function HomePage() {
   const revalidationNonce = Math.floor(Math.random() * 10_000).toString()
 
   const projects = await getShowcaseProjects()
+  const categories = await getProjectCategories()
   return (
     <>
       <div

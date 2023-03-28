@@ -1,7 +1,6 @@
 import { ProjectListItem } from '@sde/web/legacyProject/projectsList'
 import { populationIsInBracket } from '@sde/web/project/project'
 import {
-  Category,
   District,
   PopulationBracket,
   populationBracketsConditions,
@@ -15,7 +14,7 @@ export const filterProjects = ({
 }: {
   projects: ProjectListItem[]
   districts: Set<District>
-  categories: Set<Category>
+  categories: Set<string>
   populationBrackets: Set<PopulationBracket>
 }) =>
   projects.filter(
@@ -28,9 +27,7 @@ export const filterProjects = ({
       // No categories filter
       (categories.size === 0 ||
         // Or one of project categories is selected
-        project.categories.some((category) =>
-          categories.has(category as Category),
-        )) &&
+        project.categories.some((category) => categories.has(category))) &&
       // And
       // No population filter
       (populationBrackets.size === 0 ||
