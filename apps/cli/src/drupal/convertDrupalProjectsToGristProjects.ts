@@ -22,7 +22,7 @@ export const convertToGristProject = (
   Programme: 0,
   Localisation: 0,
   Population: 0,
-  A_publier_le: Date.now() / 1000,
+  A_publier_le: new Date('2023-01-01').getTime() / 1000,
 })
 
 export const convertDrupalProjectsToGristProjects = (
