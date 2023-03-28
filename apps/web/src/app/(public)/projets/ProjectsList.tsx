@@ -57,6 +57,7 @@ export const ProjectsList = ({
           'localization.regionName',
           'categories',
         ],
+        threshold: 0.4,
       }),
     [projects],
   )
