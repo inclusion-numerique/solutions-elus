@@ -19,7 +19,7 @@ const showcases = [
 export const updateShowcases = new Command()
   .command('projects:update-showcases')
   .action(async () => {
-    output(`🖼️ Configuring the showcase with ${showcases.length} projects`)
+    output(`🖼️  Configuring the showcase with ${showcases.length} projects`)
 
     await prismaClient.$transaction(async (transaction) => {
       await transaction.project.updateMany({ data: { showcase: null } })
