@@ -151,6 +151,8 @@ export class ProjectStack extends TerraformStack {
         SCW_DEFAULT_REGION: region,
         AWS_DEFAULT_REGION: region,
         S3_HOST: environmentVariables.S3_HOST.value,
+        NODE_ENV: 'production',
+        TZ: 'utc',
       },
       secretEnvironmentVariables: {
         NEXTAUTH_SECRET: sensitiveEnvironmentVariables.NEXTAUTH_SECRET.value,
