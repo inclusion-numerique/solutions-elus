@@ -22,7 +22,7 @@ export const convertToGristProject = (
   Programme: 0,
   Localisation: 0,
   Population: 0,
-  A_Publier_le: Date.now() / 100,
+  A_Publier_le: Date.now() / 1000,
 })
 
 export const convertDrupalProjectsToGristProjects = (
