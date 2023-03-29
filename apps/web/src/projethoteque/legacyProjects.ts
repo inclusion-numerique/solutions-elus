@@ -1,6 +1,3 @@
-import { projethotequeUrl } from '@sde/web/projethoteque/projethoteque'
-import { Category } from '@sde/web/anctProjects'
-
 export const categoryToLegacyCategory = (category: string): string => category
 
 const legacyCategories = [
@@ -23,13 +20,13 @@ const legacyCategories = [
   'Transport et mobilités',
 ] as const
 
-export type LegacyCategory = typeof legacyCategories[number]
+export type LegacyCategory = (typeof legacyCategories)[number]
 
 export const legacyCategoryToCategory = (
   legacyCategory: LegacyCategory,
-): Category => {
+): string => {
   if (legacyCategory === 'Attractivité et dynamisme territorial') {
-    return 'Attractivité'
+    return 'Attractivité et revitalisation'
   }
 
   // Contrat de relance et de transition écologique
@@ -45,10 +42,10 @@ export const legacyCategoryToCategory = (
     return 'Développement économique'
   }
 
-  if (legacyCategory == 'Inclusion sociale') {
+  if (legacyCategory === 'Inclusion sociale') {
     return 'Solidarité'
   }
-  if (legacyCategory == 'Ingénierie sur mesure') {
+  if (legacyCategory === 'Ingénierie sur mesure') {
     return 'Infrastructures locales'
   }
 
@@ -58,32 +55,3 @@ export const legacyCategoryToCategory = (
 
   return legacyCategory
 }
-
-export const legacyProjectUrl = (slug: string): string =>
-  `${projethotequeUrl}/${slug}`
-
-export const legacyProjectImageUrl = (imagePath: string): string =>
-  `${projethotequeUrl}${imagePath}`
-
-export const districts = [
-  'Auvergne-Rhône-Alpes',
-  'Bourgogne-Franche-Comté',
-  'Bretagne',
-  'Centre-Val de Loire',
-  'Corse',
-  'Grand Est',
-  'Guadeloupe',
-  'Guyane Française',
-  'Hauts-de-France',
-  'Île-de-France',
-  'Martinique',
-  'Mayotte',
-  'Normandie',
-  'Nouvelle-Aquitaine',
-  'Occitanie',
-  'Pays de la Loire',
-  "Provence-Alpes-Côte d'Azur",
-  'La Réunion',
-] as const
-
-export type District = typeof districts[number]

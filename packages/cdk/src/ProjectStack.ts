@@ -6,13 +6,13 @@ import { createOutput } from '@sde/cdk/output'
 import { ScalewayProvider } from '@sde/scaleway/provider'
 import { RdbInstance } from '@sde/scaleway/rdb-instance'
 import { ContainerNamespace } from '@sde/scaleway/container-namespace'
-import { TemDomain } from '@sde/scaleway/tem-domain'
 import {
   chromaticAppId,
   containerNamespaceName,
   databaseInstanceName,
   mainDomain,
-  nextTelemetryDisabled, previewDomain,
+  nextTelemetryDisabled,
+  previewDomain,
   publicContactEmail,
   publicSentryDsn,
   region,
@@ -27,6 +27,7 @@ import { ObjectBucket } from '@sde/scaleway/object-bucket'
 import { RegistryNamespace } from '@sde/scaleway/registry-namespace'
 import { Cockpit } from '@sde/scaleway/cockpit'
 import { DataScalewayDomainZone } from '@sde/scaleway/data-scaleway-domain-zone'
+import { DataScalewayTemDomain } from '@sde/scaleway/data-scaleway-tem-domain'
 
 export const projectStackVariables = [
   'SCW_DEFAULT_ORGANIZATION_ID',
@@ -45,6 +46,7 @@ export const projectStackSensitiveVariables = [
   'SMTP_PASSWORD',
   'SMTP_SERVER',
   'SMTP_USERNAME',
+  'GRIST_API_KEY',
 ] as const
 
 /**
@@ -86,15 +88,19 @@ export class ProjectStack extends TerraformStack {
       subdomain: '',
     })
 
-    const previewDomainZone = new DataScalewayDomainZone(this, 'mainDomainZone', {
-      domain: previewDomain,
-      subdomain: '',
-    })
+    const previewDomainZone = new DataScalewayDomainZone(
+      this,
+      'previewDomainZone',
+      {
+        domain: previewDomain,
+        subdomain: '',
+      },
+    )
 
     // If preview domain or email from domain differ, create different zones for those
     const emailDomainZone = mainDomainZone
 
-    const transactionalEmailDomain = new TemDomain(
+    const transactionalEmailDomain = new DataScalewayTemDomain(
       this,
       'transactionalEmailDomain',
       {
@@ -145,6 +151,8 @@ export class ProjectStack extends TerraformStack {
         SCW_DEFAULT_REGION: region,
         AWS_DEFAULT_REGION: region,
         S3_HOST: environmentVariables.S3_HOST.value,
+        NODE_ENV: 'production',
+        TZ: 'utc',
       },
       secretEnvironmentVariables: {
         NEXTAUTH_SECRET: sensitiveEnvironmentVariables.NEXTAUTH_SECRET.value,

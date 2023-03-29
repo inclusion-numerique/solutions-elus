@@ -1,0 +1,72 @@
+.cover {
+  background-size: cover;
+  background-position: center;
+  height: 55vh;
+
+  @media (min-width: 34em) {
+    height: 46vh;
+  }
+
+  @media (min-width: 48em) {
+    /*! media md */
+    height: 50vh;
+  }
+
+  @media (min-width: 62em) {
+    /* lg */
+    height: 44vh;
+  }
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-image: linear-gradient(rgb(0 0 0 / 30%), rgb(0 0 0 / 30%)),
+    url('/images/village.webp');
+}
+
+.withImageBackground {
+  position: relative;
+  background: var(--background-alt-grey);
+
+  &::before {
+    content: ' ';
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-size: cover;
+    background-position: center;
+    height: 55vh;
+    width: 100%;
+    background-image: linear-gradient(rgb(0 0 0 / 30%), rgb(0 0 0 / 30%)),
+      url('/images/village.webp');
+  }
+}
+
+.titleOnBackground {
+  text-align: center;
+  font-size: 48px;
+  line-height: 56px;
+  color: white;
+}
+
+.title {
+  font-size: 48px;
+  line-height: 56px;
+}
+
+.lead {
+  font-size: 18px;
+  line-height: 28px;
+}
+
+.asideCover {
+  position: absolute;
+  top: 0;
+  left: 57%;
+  background-size: cover;
+  background-position: right;
+  height: 100%;
+  width: 43%;
+  background-image: url('/images/village.webp');
+}

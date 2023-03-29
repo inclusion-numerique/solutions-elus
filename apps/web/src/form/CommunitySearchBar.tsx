@@ -3,16 +3,20 @@
 import { ChangeEventHandler, useDeferredValue, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Spinner } from '@sde/web/ui/Spinner'
-import { Etablissement, searchCommunity, SirenCommunitySearchResponse } from '@sde/web/siren/siren'
+import {
+  Etablissement,
+  searchCommunity,
+  SirenCommunitySearchResponse,
+} from '@sde/web/siren/siren'
 import { ShareProjectData } from '@sde/web/shareProject/project'
 import styles from './CommunitySearchBar.module.css'
 
 export const CommunitySearchBar = ({
-                                     onSelect,
-                                     disabled,
-                                     placeholder,
-                                     id,
-                                   }: {
+  onSelect,
+  disabled,
+  placeholder,
+  id,
+}: {
   id?: string
   disabled?: boolean
   placeholder?: string
@@ -49,21 +53,21 @@ export const CommunitySearchBar = ({
 
   return (
     <div
-      className='fr-search-bar'
+      className="fr-search-bar"
       style={{ flex: 1, position: 'relative' }}
-      id='header-search'
-      role='search'
+      id="header-search"
+      role="search"
     >
       <input
-        className='fr-input'
+        className="fr-input"
         placeholder={placeholder ?? 'Rechercher'}
-        type='search'
+        type="search"
         disabled={disabled}
         id={id}
         autoFocus
         onChange={onChange}
       />
-      <button className='fr-btn' title='Rechercher'>
+      <button className="fr-btn" title="Rechercher">
         Rechercher
       </button>
       {queryEnabled ? (
@@ -78,11 +82,11 @@ export const CommunitySearchBar = ({
             alignItems: 'center',
             borderRadius: '0 0 4px 4px',
           }}
-          className='fr-background-default--grey fr-card--shadow fr-py-2v'
+          className="fr-background-default--grey fr-card--shadow fr-py-2v"
         >
           {isLoading ? (
-            <div className='fr-mx-auto'>
-              <Spinner size='sm' />
+            <div className="fr-mx-auto">
+              <Spinner size="sm" />
             </div>
           ) : null}
           {error ? <p>{error.message}</p> : null}
@@ -97,7 +101,7 @@ export const CommunitySearchBar = ({
                   <div
                     onClick={() => onClick(result)}
                     key={result.id}
-                    className={`fr-py-2v fr-px-4v ${styles['search-result']}`}
+                    className={`fr-py-2v fr-px-4v ${styles.searchResult}`}
                     onKeyDown={(event) => {
                       if (event.key === 'Enter') {
                         onClick(result)
@@ -106,12 +110,12 @@ export const CommunitySearchBar = ({
                   >
                     <span style={{ flex: 1 }}>
                       <strong>{result.name}</strong>
-                      <span className='fr-my-0 fr-ml-2v fr-text--sm'>
+                      <span className="fr-my-0 fr-ml-2v fr-text--sm">
                         {result.zipcodes?.join(', ')}
                       </span>
                     </span>
 
-                    <span className='fr-badge fr-badge--sm fr-badge--blue-cumulus'>
+                    <span className="fr-badge fr-badge--sm fr-badge--blue-cumulus">
                       {result.scale}
                     </span>
                   </div>

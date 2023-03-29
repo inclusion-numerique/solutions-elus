@@ -10,21 +10,33 @@ import { setupDatabaseSecret } from '@sde/cli/commands/secrets/setupDatabaseSecr
 import { createTfVarsFileFromEnvironment } from '@sde/cli/commands/infrastructure/createTfVarsFileFromEnvironment'
 import { listProjectCategories } from '@sde/cli/commands/projects/listCategories'
 import { downloadDrupalProjects } from '@sde/cli/commands/projects/downloadDrupalProjects'
+import { convertDrupalProjectsToGristProjectFields } from '@sde/cli/commands/projects/convertDrupalProjectsToGristProjectFields'
+import { uploadGristProjectFields } from '@sde/cli/commands/projects/uploadGristProjectFields'
+import { downloadGristProjects } from '@sde/cli/commands/projects/downloadGristProjects'
 import { updateShowcases } from '@sde/cli/commands/projects/updateShowcases'
+import { checkDeploymentStatus } from '@sde/cli/commands/deployment/checkDeploymentStatus'
+import { getDatabasePasswordSecret } from '@sde/cli/commands/secrets/getDatabasePasswordSecret'
+import { addNextPublicVariablesToDotEnv } from '@sde/cli/commands/infrastructure/addNextPublicVariablesToDotEnv'
 
 const program = new Command()
 
 program.addCommand(listSecrets)
 program.addCommand(getSecretValue)
 program.addCommand(setupDatabaseSecret)
+program.addCommand(getDatabasePasswordSecret)
 program.addCommand(createDotEnvFromCdk)
 program.addCommand(createDotEnvFromSecrets)
+program.addCommand(addNextPublicVariablesToDotEnv)
 program.addCommand(createGithubDeployment)
 program.addCommand(updateGithubDeployment)
 program.addCommand(deactivateGithubDeployment)
 program.addCommand(createTfVarsFileFromEnvironment)
 program.addCommand(listProjectCategories)
 program.addCommand(downloadDrupalProjects)
+program.addCommand(convertDrupalProjectsToGristProjectFields)
+program.addCommand(uploadGristProjectFields)
+program.addCommand(downloadGristProjects)
 program.addCommand(updateShowcases)
+program.addCommand(checkDeploymentStatus)
 
 program.parse()

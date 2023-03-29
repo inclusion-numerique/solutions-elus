@@ -1,5 +1,4 @@
 // eslint-disable-next-line unicorn/prevent-abbreviations
-import 'tsconfig-paths/register'
 import { Argument, Command } from '@commander-js/extra-typings'
 import { resolve } from 'node:path'
 import { writeFile } from 'node:fs/promises'

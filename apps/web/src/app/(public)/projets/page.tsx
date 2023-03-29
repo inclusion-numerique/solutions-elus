@@ -1,24 +1,30 @@
-import styles from '@sde/web/app/(public)/styles.module.css'
-import { ProjectsListContainer } from '@sde/web/app/(public)/projets/ProjectsListContainer'
+import styles from '@sde/web/app/(public)/PublicLayout.module.css'
 import { getProjectsList } from '@sde/web/legacyProject/projectsList'
-import { Category } from '@sde/web/anctProjects'
-import { District } from '@sde/web/projethoteque/legacyProjects'
+import { District } from '@sde/web/anctProjects'
 import { parseArraySearchParam } from '@sde/web/utils/parseArraySearchParam'
+import { ProjectsListAside } from '@sde/web/app/(public)/projets/ProjectsListAside'
+import { ProjectSearchBar } from '@sde/web/app/(public)/projets/ProjectSearchBar'
+import { ProjectPopulationFilter } from '@sde/web/app/(public)/projets/ProjectPopulationFilter'
+import { ProjectRegionFilter } from '@sde/web/app/(public)/projets/ProjectRegionFilter'
+import ProjectCategoryFilter from '@sde/web/app/(public)/projets/ProjectCategoryFilter'
+import { ProjectsList } from '@sde/web/app/(public)/projets/ProjectsList'
+import { getProjectCategories } from '@sde/web/legacyProject/categories'
 
-// Need to SSR since search params are dynamic
+// Need to SSR since search params are dynamic. This avoids flickering on page load
 export const revalidate = 0
 
 const ProjectsPage = async ({
   searchParams,
 }: {
   searchParams?: {
-    thematiques?: Category | Category[]
+    thematiques?: string | string[]
     regions?: District | District[]
   }
 }) => {
   // Filtering and pagination is done in the frontend
   // We have only a small dataset of projects so this is way more performant
   const projects = await getProjectsList()
+  const projectCategories = await getProjectCategories()
 
   return (
     <>
@@ -44,15 +50,37 @@ const ProjectsPage = async ({
             boxShadow: '0 0 0 1px var(--border-default-grey)',
           }}
         >
-          <ProjectsListContainer
-            initialDistrictsFilter={parseArraySearchParam(
-              searchParams?.regions,
-            )}
-            initialCategoriesFilter={parseArraySearchParam(
-              searchParams?.thematiques,
-            )}
-            projects={projects}
-          />
+          <div className="fr-grid-row fr-p-0">
+            <div className="fr-col-12 fr-col-md-4 fr-p-0 fr-background-alt--grey">
+              <aside
+                className="fr-sidemenu fr-sidemenu--sticky fr-p-0"
+                style={{
+                  boxShadow: 'inset -1px 0 0 0 var(--border-default-grey)',
+                }}
+                aria-label="Menu latéral"
+              >
+                <ProjectsListAside />
+              </aside>
+            </div>
+            <div className="fr-col-12 fr-col-md-8">
+              <ProjectSearchBar />
+              <ProjectPopulationFilter />
+              <ProjectRegionFilter />
+              <ProjectCategoryFilter projectCategories={projectCategories} />
+              <div className="fr-px-2w fr-px-md-4w fr-pb-8v fr-mt-8v">
+                <hr />
+                <ProjectsList
+                  projects={projects}
+                  initialDistrictsFilter={parseArraySearchParam(
+                    searchParams?.regions,
+                  )}
+                  initialCategoriesFilter={parseArraySearchParam(
+                    searchParams?.thematiques,
+                  )}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>

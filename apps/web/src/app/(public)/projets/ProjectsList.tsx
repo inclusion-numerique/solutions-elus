@@ -1,54 +1,95 @@
 'use client'
 
-import styles from '@sde/web/app/(public)/projets/styles.module.css'
 import { ProjectCards } from '@sde/web/app/(public)/projets/ProjectCards'
-import { Spinner } from '@sde/web/ui/Spinner'
-import { useInView } from 'react-intersection-observer'
 import { ProjectListCta } from '@sde/web/app/(public)/projets/ProjectListCta'
 import { ProjectListItem } from '@sde/web/legacyProject/projectsList'
-import { useRef, useState } from 'react'
+import { useMemo } from 'react'
+import {
+  useCategoriesFilters,
+  useDistrictFilters,
+  usePopulationBracketFilters,
+  useProjectSearch,
+} from '@sde/web/legacyProject/projectFiltersStore'
+import Fuse from 'fuse.js'
+import { filterProjects } from '@sde/web/legacyProject/filterProjectList'
+import { District } from '@sde/web/anctProjects'
+import { useOnDiff } from '@sde/web/hooks/useOnDiff'
 
-const pageSize = 20
+export const ProjectsList = ({
+  projects,
+  initialDistrictsFilter,
+  initialCategoriesFilter,
+}: {
+  initialDistrictsFilter: District[]
+  initialCategoriesFilter: string[]
+  projects: ProjectListItem[]
+}) => {
+  const filtersString = [
+    ...initialDistrictsFilter,
+    ...initialCategoriesFilter,
+  ].join(',')
 
-export const ProjectsList = ({ projects }: { projects: ProjectListItem[] }) => {
-  const previousProjects = useRef(projects)
+  const initDistricts = useDistrictFilters(({ initialize }) => initialize)
+  const initCategories = useCategoriesFilters(({ initialize }) => initialize)
 
-  const [displayedProjects, setDisplayedProjects] = useState(
-    projects.slice(0, pageSize),
+  useOnDiff(filtersString, () => {
+    initDistricts(initialDistrictsFilter)
+    initCategories(initialCategoriesFilter)
+  })
+  const searchQuery = useProjectSearch(({ query }) => query)
+  const districts = useDistrictFilters(({ selected }) => selected)
+  const categories = useCategoriesFilters(({ selected }) => selected)
+  const populationBrackets = usePopulationBracketFilters(
+    ({ selected }) => selected,
   )
 
-  if (previousProjects.current !== projects) {
-    // Re-rendered, reset lists and pages
-    setDisplayedProjects(projects.slice(0, pageSize))
-    previousProjects.current = projects
-  }
+  // Memoize fuze instance to avoid re-indexing on each change
+  const fuse = useMemo(
+    () =>
+      new Fuse<ProjectListItem>(projects, {
+        includeScore: true,
+        keys: [
+          { name: 'title', weight: 2 },
+          'program.name',
+          'localization.label',
+          'localization.departmentName',
+          'localization.department',
+          'localization.regionName',
+          'categories',
+        ],
+        threshold: 0.4,
+      }),
+    [projects],
+  )
 
-  const hasNextPage = displayedProjects.length < projects.length
+  // Memoize search result to avoid re-searching on other filter changes
+  const searchResult = useMemo(() => {
+    if (searchQuery.trim() === '') {
+      return projects
+    }
 
-  const { ref: nextPageOnViewRef } = useInView({
-    onChange: (inView) => {
-      if (inView && hasNextPage) {
-        setDisplayedProjects([
-          ...displayedProjects,
-          ...projects.slice(
-            displayedProjects.length,
-            displayedProjects.length + pageSize,
-          ),
-        ])
-      }
-    },
+    const result = fuse
+      .search(searchQuery)
+      .sort((a, b) => (a.score ?? 0) - (b.score ?? 0))
+    return result.map(({ item }) => item)
+  }, [projects, fuse, searchQuery])
+
+  // Apply simple filters
+  const filteredProjects = filterProjects({
+    projects: searchResult,
+    districts,
+    categories,
+    populationBrackets,
   })
 
-  const totalCount = projects.length
+  const totalCount = filteredProjects.length
 
   if (totalCount === 0) {
     return (
       <>
-        <div className="fr-mt-4v">
-          <p className="fr-text--lead fr-text--bold">
-            Il n&apos;y a pas encore de projets pour votre recherche.
-          </p>
-        </div>
+        <p className="fr-text--lead fr-text--bold">
+          Il n&apos;y a pas encore de projets pour votre recherche.
+        </p>
         <ul className="fr-raw-list">
           <ProjectListCta />
         </ul>
@@ -58,39 +99,14 @@ export const ProjectsList = ({ projects }: { projects: ProjectListItem[] }) => {
 
   return (
     <>
-      <div className="fr-mt-4v">
-        <p className="fr-text--bold">
-          {totalCount === 1
-            ? `1 projet correspond à votre recherche`
-            : `${totalCount} projets correspondent à votre recherche`}
-        </p>
-      </div>
+      <p className="fr-text--bold fr-text--lg">
+        {totalCount === 1
+          ? `1 projet correspond à votre recherche`
+          : `${totalCount} projets correspondent à votre recherche`}
+      </p>
       <ul className="fr-raw-list fr-mt-2v">
-        <ProjectCards projects={displayedProjects} displayCta={!hasNextPage} />
+        <ProjectCards projects={filteredProjects} />
       </ul>
-      {hasNextPage ? (
-        <div
-          className="fr-mt-4v"
-          style={{
-            position: 'relative',
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        >
-          <Spinner />
-          <div
-            ref={nextPageOnViewRef}
-            style={{
-              width: '0',
-              height: '800px',
-              position: 'absolute',
-              top: '-800px',
-              left: 0,
-            }}
-          />
-        </div>
-      ) : null}
     </>
   )
 }

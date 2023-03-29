@@ -1,6 +1,7 @@
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearch"]
+  binaryTargets   = ["native", "debian-openssl-1.1.x"]
 }
 
 datasource db {
@@ -84,36 +85,104 @@ model ShareProjectFormSubmission {
 }
 
 model Community {
-  id       String    @id
-  name     String
-  text     String
-  scale    String
-  zipcodes String[]
+  id                 String                       @id
+  name               String
+  text               String
+  scale              String
+  zipcodes           String[]
   projectSubmissions ShareProjectFormSubmission[]
 }
 
 model Attachment {
-  key       String   @id
-  type      String
-  name      String
-  created   DateTime @default(now())
-  projectSubmissionId String   @db.Uuid
-  projectSubmission   ShareProjectFormSubmission  @relation(fields: [projectSubmissionId], references: [id])
+  key                 String                     @id
+  type                String
+  name                String
+  created             DateTime                   @default(now())
+  projectSubmissionId String                     @db.Uuid
+  projectSubmission   ShareProjectFormSubmission @relation(fields: [projectSubmissionId], references: [id])
 }
 
 model Project {
-  id               String   @id
+  id String @id @default(uuid()) @db.Uuid
+
+  // If imported from grist (maybe we'll have other sources of projects)
+  gristId Int? @unique
+
   // If showcase is set, the project will appear on home page shocases, ordered by showcase integer value
-  showcase         Int?
-  pageIndex        Int
-  itemIndexInPage  Int
-  imagePath        String
-  slug             String   @unique
-  imageAlt         String
-  district         String?
-  city             String?
-  title            String
-  program          String?
-  legacyCategories String[]
-  categories       String[]
+  showcase Int?
+
+  coverImage              String
+  coverImageAlt           String?
+  slug                    String       @unique
+  district                String?
+  city                    String?
+  title                   String
+  subtitle                String
+  localizationId          Int
+  localization            Localization @relation(fields: [localizationId], references: [gristId])
+  localizationDescription String?
+  goals                   String[]
+  characteristics         String[]
+  description             String
+  youtubeVideo            String?
+  budget                  Float?
+  funding                 String?
+  inaugurationDate        DateTime?
+
+  latitude   Float?
+  longitude  Float?
+  programId  Int?
+  program    Program? @relation(fields: [programId], references: [gristId])
+  categories String[]
+
+  localActor1Name  String?
+  localActor1Text  String?
+  localActor1Image String?
+  localActor2Name  String?
+  localActor2Text  String?
+  localActor2Image String?
+  partner1Name     String?
+  partner1Text     String?
+  partner1Image    String?
+  partner2Name     String?
+  partner2Text     String?
+  partner2Image    String?
+
+  createdBy String?
+  created   DateTime @default(now())
+  updatedBy String?
+  updated   DateTime @default(now())
+}
+
+model Localization {
+  id String @id @default(uuid()) @db.Uuid
+
+  // If imported from grist (maybe we'll have other sources of projects)
+  gristId Int @unique
+
+  label          String
+  insee          String?
+  echelon        String
+  department     String?
+  departmentName String?
+  region         String?
+  regionName     String?
+  population     Int?
+  siren          String
+  nature         String
+  ncc            String
+  Project        Project[]
+}
+
+model Program {
+  id String @id @default(uuid()) @db.Uuid
+
+  // If imported from grist (maybe we'll have other sources of projects)
+  gristId Int @unique
+
+  politique   String
+  name        String?
+  description String
+  territoire  String[]
+  projects    Project[]
 }

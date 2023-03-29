@@ -1,6 +1,5 @@
 import { create } from 'zustand'
-import { District } from '@sde/web/projethoteque/legacyProjects'
-import { Category } from '@sde/web/anctProjects'
+import { District, PopulationBracket } from '@sde/web/anctProjects'
 import { setsAreEqual } from '@sde/web/utils/setsAreEqual'
 
 type FiltersState<T> = {
@@ -36,4 +35,15 @@ const createFilterStore = <T = string>() =>
 
 export const useDistrictFilters = createFilterStore<District>()
 
-export const useCategoriesFilters = createFilterStore<Category>()
+export const useCategoriesFilters = createFilterStore<string>()
+
+export const usePopulationBracketFilters =
+  createFilterStore<PopulationBracket>()
+
+export const useProjectSearch = create<{
+  query: string
+  search: (query: string) => void
+}>((set) => ({
+  query: '',
+  search: (query: string) => set({ query }),
+}))

@@ -1,0 +1,8 @@
+.bloc {
+  border: var(--slim-grey-border);
+}
+
+.map {
+  height: 250px;
+  width: 100%;
+}

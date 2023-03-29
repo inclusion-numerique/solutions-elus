@@ -1,0 +1,22 @@
+.horizontalSeparator {
+  width: 50%;
+}
+
+.smallImage {
+  border-radius: 50%;
+}
+
+.quoteIcon {
+  color: var(--blue-france-main-525);
+}
+
+.nameContainer {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.name {
+  color: #3a3a3a;
+  margin-bottom: 0;
+}

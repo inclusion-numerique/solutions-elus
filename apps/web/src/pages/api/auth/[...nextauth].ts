@@ -5,6 +5,11 @@ import { ServerWebAppConfig } from '@sde/web/webAppConfig'
 import { sendVerificationRequest } from '@sde/web/auth/sendVerificationRequest'
 import { nextAuthAdapter } from '@sde/web/auth/nextAuthAdapter'
 
+const whitelistedSigninEmailDomains = [
+  '@anct.gouv.fr',
+  '@ecologie-territoires.gouv.fr',
+]
+
 export const authOptions: NextAuthOptions = {
   adapter: nextAuthAdapter,
   pages: {
@@ -20,8 +25,14 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    signIn: ({ user }) => !!user.email?.endsWith('@anct.gouv.fr'),
-
+    signIn: ({ user: { email } }) => {
+      if (!email) {
+        return false
+      }
+      return whitelistedSigninEmailDomains.some((domain) =>
+        email.endsWith(domain),
+      )
+    },
     session: ({ session, user }) => {
       session.user.id = user.id
       return session

@@ -12,7 +12,8 @@ type Serialized<T> = {
 // TODO handle nested arrays
 export const serialize = <T extends { [k: string]: unknown }>(
   object: T,
-): Serialized<T> => Object.fromEntries(
+): Serialized<T> =>
+  Object.fromEntries(
     Object.entries(object).map(([key, value]) => {
       if (value instanceof Date) {
         return [key, value.toISOString()]

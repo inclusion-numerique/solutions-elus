@@ -1,27 +1,10 @@
-import { initTRPC, TRPCError } from '@trpc/server'
-import { RpcContext } from '@sde/web/server/rpc/rpcContext'
-import { SessionUser } from '@sde/web/auth/sessionUser'
+import { initTRPC } from '@trpc/server'
 import { ShareProjectFormDataValidation } from '@sde/web/shareProject/project'
 import { prismaClient } from '@sde/web/prismaClient'
 import { v4 } from 'uuid'
-import z from 'zod'
-import { District } from '@sde/web/projethoteque/legacyProjects'
-import { scrapLegacyProjects } from '@sde/web/projethoteque/scrapLegacyProjects'
-import { Category } from '@sde/web/anctProjects'
+import { getProjectCategories } from '@sde/web/legacyProject/categories'
 
-const t = initTRPC.context<RpcContext>().create()
-
-const enforceUserIsLoggedIn = (
-  user: SessionUser | null,
-): user is SessionUser => {
-  if (!user) {
-    throw new TRPCError({
-      code: 'FORBIDDEN',
-      message: 'User is not authenticated',
-    })
-  }
-  return true
-}
+const t = initTRPC.create()
 
 export const appRouter = t.router({
   createProject: t.procedure
@@ -73,21 +56,6 @@ export const appRouter = t.router({
         return { project }
       },
     ),
-  findLegacyProject: t.procedure
-    .input(
-      z.object({
-        districts: z.array(z.string()),
-        categories: z.array(z.string()),
-        limit: z.number().min(1).max(20).optional(),
-        cursor: z.string().optional(),
-      }),
-    )
-    .query(async ({ input: { districts, categories, cursor, limit = 20 } }) => scrapLegacyProjects({
-        activeCategoriesFilters: categories as Category[],
-        activeDistrictsFilters: districts as District[],
-        limit,
-        cursor,
-      })),
 })
 // export type definition of API
 export type AppRouter = typeof appRouter

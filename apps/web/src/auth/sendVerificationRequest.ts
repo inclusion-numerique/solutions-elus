@@ -7,10 +7,10 @@ import { PublicWebAppConfig } from '@sde/web/webAppConfig'
 const debugMagicLink = true
 
 export const sendVerificationRequest = async ({
-                                                url,
-                                                provider,
-                                                identifier,
-                                              }: SendVerificationRequestParams) => {
+  url,
+  provider,
+  identifier,
+}: SendVerificationRequestParams) => {
   // For quicker dev UX, display url in console in dev environment
   if (debugMagicLink) {
     // eslint-disable-next-line no-console

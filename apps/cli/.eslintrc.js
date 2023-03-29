@@ -1,7 +1,8 @@
-// eslint-disable-next-line unicorn/prefer-module
 module.exports = {
   rules: {
-    // Process exit ok in cli apps
+    // __dirname is ok for now
+    'unicorn/prefer-module': 'off',
+    // Process exit ok in cli
     'unicorn/no-process-exit': 'off',
   },
 }

@@ -2,4 +2,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { getServerBaseUrl } from '@sde/web/utils/baseUrl'
 
-export const emailAssetUrl = (assetPath: string): string => `${getServerBaseUrl()}${assetPath}`
+export const emailAssetUrl = (assetPath: string): string =>
+  `${getServerBaseUrl()}${assetPath}`
