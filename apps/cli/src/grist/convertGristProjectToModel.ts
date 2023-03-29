@@ -40,7 +40,7 @@ export const convertGristProgramToModel = (programs: GristProgram[]) =>
     gristId: program.id,
     politique: program.fields.politique_publique?.trim(),
     name: program.fields.nom_programme?.trim(),
-    territoire: program.fields.territoire,
+    territoire: program.fields.territoire ?? [],
     description: program.fields.description,
   }))
 

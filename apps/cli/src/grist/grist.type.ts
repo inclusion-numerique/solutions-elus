@@ -95,7 +95,7 @@ const gristLocalisationFieldsValidation = z.object({
 const gristProgramFieldsValidation = z.object({
   nom_programme: z.string(),
   politique_publique: z.string(),
-  territoire: z.array(z.string()),
+  territoire: z.array(z.string()).nullable(),
   description: z.string(),
 })
 
