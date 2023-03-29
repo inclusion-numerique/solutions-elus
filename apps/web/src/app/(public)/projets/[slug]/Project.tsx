@@ -5,6 +5,7 @@ import { formatInteger } from '@sde/web/utils/formatInteger'
 import { dateAsDay } from '@sde/web/utils/dateAsDay'
 import { textToParagraphs } from '@sde/web/utils/textParser'
 import { getServerUrl } from '@sde/web/utils/baseUrl'
+import { YoutubeVideo } from '@sde/web/app/(public)/projets/[slug]/YoutubeVideo'
 import Header from './Header'
 import Localization from './Localization'
 import Blocs from './Blocs'
@@ -54,6 +55,12 @@ const Project = ({ project }: { project: ProjectItem }) => {
               {paragraph}
             </p>
           ))}
+
+          {project.youtubeVideo ? (
+            <div className="fr-mt-12v">
+              <YoutubeVideo url={project.youtubeVideo} />
+            </div>
+          ) : null}
 
           <SocialNetworks
             className="fr-hidden-lg fr-mt-12v"

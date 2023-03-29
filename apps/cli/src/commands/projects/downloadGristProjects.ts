@@ -10,7 +10,7 @@ import {
 } from '@sde/cli/grist/grist'
 import { isDefinedAndNotNull } from '@sde/web/utils/isDefinedAndNotNull'
 
-export const downloadGristProjectFields = new Command()
+export const downloadGristProjects = new Command()
   .command('projects:grist:download')
   .action(async () => {
     const [gristProjects, programs, thematiques] = await Promise.all([
@@ -88,7 +88,11 @@ export const downloadGristProjectFields = new Command()
       `- ${localisations.records.length} localisations (only relevant ones)`,
     )
 
+    output(`Downloading attachments...`)
     const attachments = await downloadAttachments(projectsToPublish)
+    output(`${attachments.size} Attachments have been downloaded`)
+
+    output(`Inserting data into database...`)
     await insertInDataBase(
       projectsToPublish,
       localisations.records,
@@ -96,5 +100,5 @@ export const downloadGristProjectFields = new Command()
       thematiques.records,
       attachments,
     )
-    output(`Grist data has been inserted into database`)
+    output(`Grist data has been inserted into database successfully`)
   })

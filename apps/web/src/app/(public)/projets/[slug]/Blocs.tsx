@@ -19,7 +19,7 @@ const Blocs = ({
   return (
     <div
       id="project-blocs"
-      className={`fr-grid-row fr-grid-row--gutters ${className}`}
+      className={`fr-grid-row fr-grid-row--gutters ${className} ${styles.blocs} `}
     >
       {hasGoals ? (
         <div className="fr-col-12 fr-col-lg-6 fr-py-0">
