@@ -124,6 +124,7 @@ model Project {
   goals                   String[]
   characteristics         String[]
   description             String
+  youtubeVideo            String?
   budget                  Float?
   funding                 String?
   inaugurationDate        DateTime?

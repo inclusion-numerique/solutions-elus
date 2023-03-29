@@ -52,6 +52,7 @@ export const getProject = (slug: string) =>
         },
       },
       slug: true,
+      youtubeVideo: true,
       localizationDescription: true,
       longitude: true,
       latitude: true,

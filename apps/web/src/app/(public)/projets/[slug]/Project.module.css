@@ -54,6 +54,12 @@
   color: var(--blue-france-sun-113-625);
 }
 
+.blocs {
+  @media (min-width: 62em) {
+    margin-top: 48px !important;
+  }
+}
+
 .bloc {
   border: var(--slim-grey-border);
 

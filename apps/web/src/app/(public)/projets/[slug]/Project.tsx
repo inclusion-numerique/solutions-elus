@@ -11,6 +11,7 @@ import Blocs from './Blocs'
 import Quotes from './Quotes'
 import styles from './Project.module.css'
 import SocialNetworks from './SocialNetworks'
+import { YoutubeVideo } from '@sde/web/app/(public)/projets/[slug]/YoutubeVideo'
 
 const Project = ({ project }: { project: ProjectItem }) => {
   const coverPicture = (
@@ -54,6 +55,12 @@ const Project = ({ project }: { project: ProjectItem }) => {
               {paragraph}
             </p>
           ))}
+
+          {project.youtubeVideo ? (
+            <div className="fr-mt-12v">
+              <YoutubeVideo url={project.youtubeVideo} />
+            </div>
+          ) : null}
 
           <SocialNetworks
             className="fr-hidden-lg fr-mt-12v"

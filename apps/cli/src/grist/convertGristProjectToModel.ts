@@ -44,6 +44,10 @@ export const convertGristProgramToModel = (programs: GristProgram[]) =>
     description: program.fields.description,
   }))
 
+// Remove special chars at begining of list that are destined to be in <li> tags
+const cleanupStringForList = (value: string) =>
+  value.replace(/^[*._~-]+/g, '').trim()
+
 export const convertGristProjectToModel = (
   projects: GristProject[],
   thematiques: GristThematique[],
@@ -73,8 +77,17 @@ export const convertGristProjectToModel = (
         .map((thematique) => thematique?.fields.nom?.trim())
         .filter((x) => x !== undefined) as string[]) || [],
     description: project.fields.Texte?.trim() ?? '',
-    goals: project.fields.Objectifs?.trim().split('\n') ?? [],
-    characteristics: project.fields.Specificites?.trim().split('\n') ?? [],
+    youtubeVideo: project.fields.video_youtube?.trim() || null,
+    goals:
+      project.fields.Objectifs?.trim()
+        .split('\n')
+        .map(cleanupStringForList)
+        .filter((value) => !!value) ?? [],
+    characteristics:
+      project.fields.Specificites?.trim()
+        .split('\n')
+        .map(cleanupStringForList)
+        .filter((value) => !!value) ?? [],
     funding: project.fields.Partenaires_et_cofinanceurs?.trim() ?? '',
     budget: project.fields.Budget,
     inaugurationDate: project.fields.Calendrier

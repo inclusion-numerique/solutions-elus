@@ -39,6 +39,7 @@ export const gristProjectFieldsValidation = z.object({
   Specificites: gristNullableString,
   Objectifs: gristNullableString,
   Texte: gristNullableString,
+  video_youtube: gristNullableString,
   Budget: z.number().int().nullable().optional(),
   // TODO Type this
   // e.g. Acteur_local_1_image: [ 'L', 4 ],
