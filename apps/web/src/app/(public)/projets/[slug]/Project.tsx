@@ -5,13 +5,13 @@ import { formatInteger } from '@sde/web/utils/formatInteger'
 import { dateAsDay } from '@sde/web/utils/dateAsDay'
 import { textToParagraphs } from '@sde/web/utils/textParser'
 import { getServerUrl } from '@sde/web/utils/baseUrl'
+import { YoutubeVideo } from '@sde/web/app/(public)/projets/[slug]/YoutubeVideo'
 import Header from './Header'
 import Localization from './Localization'
 import Blocs from './Blocs'
 import Quotes from './Quotes'
 import styles from './Project.module.css'
 import SocialNetworks from './SocialNetworks'
-import { YoutubeVideo } from '@sde/web/app/(public)/projets/[slug]/YoutubeVideo'
 
 const Project = ({ project }: { project: ProjectItem }) => {
   const coverPicture = (
