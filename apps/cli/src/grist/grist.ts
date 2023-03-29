@@ -5,6 +5,7 @@ import axios from 'axios'
 import FormData from 'form-data'
 import { output } from '@sde/cli/output'
 import { ServerWebAppConfig } from '@sde/web/webAppConfig'
+import { chunk } from 'lodash'
 import {
   convertGristLocalisationToModel,
   convertGristProgramToModel,
@@ -55,8 +56,8 @@ export const uploadAttachments = async (upload: FormData): Promise<number[]> =>
         }
 
         let body = ''
-        response.on('data', (chunk) => {
-          body += chunk
+        response.on('data', (dataChunk) => {
+          body += dataChunk
         })
         response.on('end', () => {
           resolve(JSON.parse(body) as number[])
@@ -186,7 +187,7 @@ export const downloadAttachement = async (id: number) => {
 
   response.data.pipe(fs.createWriteStream(resolve(attachmentsPath, fileName)))
 
-  return fileName
+  return { id, fileName }
 }
 
 export const downloadAttachments = async (projects: GristProject[]) => {
@@ -198,19 +199,28 @@ export const downloadAttachments = async (projects: GristProject[]) => {
       project.fields.Acteur_local_1_image,
       project.fields.Acteur_local_2_image,
     ])
-    .filter(Boolean)
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    .map((data) => data[1])
+    .flat()
+    .filter((id): id is number => Number.isInteger(id))
 
-  const fileNames = await Promise.all(
-    toDownload.map((id) => downloadAttachement(id)),
-  )
-  const fileNamesById: Record<number, string> = {}
-  for (const [index, id] of toDownload.entries()) {
-    fileNamesById[id] = fileNames[index]
+  // We are getting 429 errors from Grist, so we need to handle operations by batch
+  // Concurency limit is 10 but 5 is more conservative
+  const batches = chunk(toDownload, 5)
+
+  // Map of downloaded file names indexed by id
+  const fileNames = new Map<number, string>()
+  // Sequentially download batches
+  for (const batch of batches) {
+    // eslint-disable-next-line no-await-in-loop
+    const batchFiles = await Promise.all(
+      batch.map((id) => downloadAttachement(id)),
+    )
+
+    for (const { id, fileName } of batchFiles) {
+      fileNames.set(id, fileName)
+    }
   }
-  return fileNamesById
+
+  return fileNames
 }
 
 export const insertInDataBase = async (
@@ -218,7 +228,7 @@ export const insertInDataBase = async (
   localisations: GristLocalisation[],
   programs: GristProgram[],
   thematiques: GristThematique[],
-  attachments: Record<number, string>,
+  attachments: Map<number, string>,
 ) => {
   if (!prismaClient) {
     return

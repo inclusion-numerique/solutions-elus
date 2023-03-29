@@ -47,7 +47,7 @@ export const convertGristProgramToModel = (programs: GristProgram[]) =>
 export const convertGristProjectToModel = (
   projects: GristProject[],
   thematiques: GristThematique[],
-  attachments: Record<number, string>,
+  attachments: Map<number, string>,
 ) =>
   projects.map((project) => ({
     gristId: project.id,
@@ -58,7 +58,7 @@ export const convertGristProjectToModel = (
           .replace(/-(\d+)$/, '')
       : slug(project.fields.Titre?.trim() ?? ''),
     coverImage: project.fields.Visuel
-      ? attachments[project.fields.Visuel[1]]
+      ? attachments.get(project.fields.Visuel[1]) ?? '../village.webp'
       : '../village.webp',
     title: project.fields.Titre?.trim() ?? '',
     subtitle: project.fields.Sous_titre?.trim() ?? '',
@@ -83,23 +83,23 @@ export const convertGristProjectToModel = (
     localActor1Name: project.fields.Acteur_local_1_nom?.trim() ?? '',
     localActor1Text: project.fields.Acteur_local_1_texte?.trim() ?? '',
     localActor1Image: project.fields.Acteur_local_1_image
-      ? attachments[project.fields.Acteur_local_1_image[1]]
-      : '',
+      ? attachments.get(project.fields.Acteur_local_1_image[1]) ?? null
+      : null,
     localActor2Name: project.fields.Acteur_local_2_nom?.trim() ?? '',
     localActor2Text: project.fields.Acteur_local_2_texte?.trim() ?? '',
     localActor2Image: project.fields.Acteur_local_2_image
-      ? attachments[project.fields.Acteur_local_2_image[1]]
-      : '',
+      ? attachments.get(project.fields.Acteur_local_2_image[1]) ?? null
+      : null,
     partner1Name: project.fields.Partenaire_1_nom?.trim() ?? '',
     partner1Text: project.fields.Partenaire_1_texte?.trim() ?? '',
     partner1Image: project.fields.Partenaire_1_image
-      ? attachments[project.fields.Partenaire_1_image[1]]
-      : '',
+      ? attachments.get(project.fields.Partenaire_1_image[1]) ?? null
+      : null,
     partner2Name: project.fields.Partenaire_2_nom?.trim() ?? '',
     partner2Text: project.fields.Partenaire_2_texte?.trim() ?? '',
     partner2Image: project.fields.Partenaire_2_image
-      ? attachments[project.fields.Partenaire_2_image[1]]
-      : '',
+      ? attachments.get(project.fields.Partenaire_2_image[1]) ?? null
+      : null,
     createdBy: project.fields.Modifie_par?.trim() ?? '',
     created: project.fields.Cree_le
       ? new Date(project.fields.Cree_le * 1000)
