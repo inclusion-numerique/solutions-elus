@@ -1,9 +1,9 @@
 import { CSSProperties, ForwardedRef, forwardRef } from 'react'
 import { ProjectListItem } from '@sde/web/legacyProject/projectsList'
 import {
-  getProjectPath,
-  getProjectFilePath,
   getCityWithDepartment,
+  getProjectFilePath,
+  getProjectPath,
 } from '@sde/web/project/project'
 import Link from 'next/link'
 import styles from './ProjectCard.module.css'
@@ -28,12 +28,9 @@ export const ProjectCard = forwardRef(
     },
     ref: ForwardedRef<HTMLLIElement>,
   ) => {
-    const tags = [
-      localization.regionName,
-      localization.departmentName,
-      program?.name,
-      ...categories,
-    ].filter((tag): tag is string => !!tag)
+    const tags = [program?.name, ...categories].filter(
+      (tag): tag is string => !!tag,
+    )
 
     return (
       <li style={style} ref={ref}>
