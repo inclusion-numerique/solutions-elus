@@ -59,7 +59,8 @@ export class WebAppStack extends TerraformStack {
     const isMain = namespace === 'main'
 
     const { hostname, subdomain } = isMain
-      ? { hostname: mainDomain, subdomain: '' }
+      ? // ? { hostname: mainDomain, subdomain: '' }
+        { hostname: previewDomain, subdomain: '' }
       : createPreviewSubdomain(namespace, previewDomain)
 
     const environmentVariables = environmentVariablesFromList(
@@ -195,7 +196,8 @@ export class WebAppStack extends TerraformStack {
     })
 
     const rootZone = new DataScalewayDomainZone(this, 'dnsZone', {
-      domain: isMain ? mainDomain : previewDomain,
+      domain: previewDomain,
+      // domain: isMain ? mainDomain : previewDomain,
     })
 
     const webDnsRecordConfig: DomainRecordConfig = isMain
