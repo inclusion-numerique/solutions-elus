@@ -188,8 +188,8 @@ export class WebAppStack extends TerraformStack {
         DATABASE_URL: databaseUrl,
       },
       name: containerName,
-      minScale: isMain ? 2 : namespace === 'dev' ? 1 : 0,
-      maxScale: isMain ? 5 : 1,
+      minScale: 1,
+      maxScale: 1,
       cpuLimit: 1120, // mVPCU
       memoryLimit: 2048, // mB
       deploy: true,
