@@ -58,4 +58,10 @@ module.exports = {
     // Common abbreviations are fine (e.g. react ref)
     'unicorn/prevent-abbreviations': 'off',
   },
+  overrides: {
+    files: ['*.mdx', '*.stories.@(js|jsx|ts|tsx)'],
+    rules: {
+      '@typescript-eslint/await-thenable': 'off',
+    },
+  },
 }

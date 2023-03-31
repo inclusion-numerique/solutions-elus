@@ -11,6 +11,7 @@ const dotenvVariables = () => {
   }
   return parse(readFileSync(dotenvFile))
 }
+
 // See https://github.com/storybookjs/storybook/blob/111edc3929eb8afff1b58285b0b9c49dd493ae85/code/frameworks/nextjs/README.md
 module.exports = {
   stories: [
@@ -30,7 +31,9 @@ module.exports = {
     },
   },
   staticDirs: ['../../../apps/web/public'],
-
+  features: {
+    interactionsDebugger: true,
+  },
   docs: {
     docsPage: true,
     autodocs: true,

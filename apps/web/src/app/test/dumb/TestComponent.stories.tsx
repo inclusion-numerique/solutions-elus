@@ -1,14 +1,11 @@
 import React from 'react'
 
-import { userEvent, within } from '@storybook/testing-library'
-import { expect, jest } from '@storybook/jest'
-import '@testing-library/jest-dom/extend-expect'
+import { userEvent, within, waitFor } from '@storybook/testing-library'
+import { jest, expect } from '@storybook/jest'
 import { Meta } from '@storybook/react'
 import { useForm } from 'react-hook-form'
 import { ObjectFormData } from '@sde/web/pages/api/test/type'
-import { Simulate } from 'react-dom/test-utils'
 import TestComponent from './TestComponent'
-import submit = Simulate.submit
 
 export default {
   title: 'TestComponent',
@@ -20,29 +17,36 @@ const Template: (args: {
 }) => JSX.Element = (args: {
   onSubmit: (data: ObjectFormData) => void | Promise<void>
 }) => {
-  const form = useForm<ObjectFormData>()
+  const form = useForm<ObjectFormData>({
+    defaultValues: {
+      name: 'John Doe',
+    },
+  })
 
-  const onSubmit = form.handleSubmit(args.onSubmit)
-
-  return <TestComponent form={form} onSubmit={onSubmit} />
+  return <TestComponent form={form} onSubmit={(e) => onSubmit(e)} />
 }
 
 const onSubmit = jest.fn()
 
 export const FilledForm = Template.bind({
-  onSubmit: onSubmit,
+  onSubmit,
 })
 
 FilledForm.play = async ({ canvasElement }) => {
+  onSubmit.mockClear()
+
   const canvas = within(canvasElement)
-  await expect(canvas.getByLabelText('Name')).toBeInDocument()
 
-  await expect(canvas.getByLabelText('Name')).toBeInDocument('John Doe')
+  await expect(canvas.getByLabelText('Name')).toBeInTheDocument()
+  await expect(canvas.getByLabelText('Name')).toHaveValue('John Doe')
 
-  // 👇 Simulate interactions with the component
+  await userEvent.clear(canvas.getByLabelText('Name'))
   await userEvent.type(canvas.getByLabelText('Name'), 'My name is Slim')
 
   await userEvent.click(canvas.getByRole('button'))
 
-  expect(submit).toHaveBeenCalledTimes(1)
+  await waitFor(() => {
+    expect(onSubmit).toHaveBeenCalledTimes(1)
+    //expect(onSubmit).toBeCalledWith({ name: 'My name is Slim' })
+  })
 }

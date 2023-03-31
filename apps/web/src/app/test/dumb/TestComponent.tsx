@@ -5,11 +5,11 @@ import { ObjectFormData } from '@sde/web/pages/api/test/type'
 
 export type TestComponentProps = {
   form: UseFormReturn<ObjectFormData>
-  onSubmit: FormEventHandler<HTMLFormElement>
+  onSubmit: (data: ObjectFormData) => void
 }
 
 const TestComponent = ({ form, onSubmit }: TestComponentProps) => (
-  <form onSubmit={onSubmit}>
+  <form onSubmit={form.handleSubmit(onSubmit)}>
     <InputFormField
       data-testid="name-input"
       control={form.control}
