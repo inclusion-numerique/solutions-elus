@@ -28,6 +28,8 @@ import { RegistryNamespace } from '@sde/scaleway/registry-namespace'
 import { Cockpit } from '@sde/scaleway/cockpit'
 import { DataScalewayDomainZone } from '@sde/scaleway/data-scaleway-domain-zone'
 import { DataScalewayTemDomain } from '@sde/scaleway/data-scaleway-tem-domain'
+import { CockpitGrafanaUser } from '@sde/scaleway/cockpit-grafana-user'
+import { CockpitToken } from '@sde/scaleway/cockpit-token'
 
 export const projectStackVariables = [
   'SCW_DEFAULT_ORGANIZATION_ID',
@@ -36,6 +38,8 @@ export const projectStackVariables = [
   'DOCUMENTS_BUCKET',
   'WEB_APP_DOCKER_REGISTRY_NAME',
   'S3_HOST',
+  'COCKPIT_GRAPHANA_EDITORS',
+  'COCKPIT_GRAPHANA_VIEWERS',
 ] as const
 
 export const projectStackSensitiveVariables = [
@@ -136,6 +140,34 @@ export class ProjectStack extends TerraformStack {
       volumeSizeInGb: 15,
     })
 
+    const cockpit = new Cockpit(this, 'cockpit', {})
+    const cockpitEndpoints = cockpit.endpoints.get(0)
+
+    // https://registry.terraform.io/providers/scaleway/scaleway/latest/docs/resources/cockpit_grafana_user
+    const grafanaEditorLogins =
+      environmentVariables.COCKPIT_GRAPHANA_EDITORS.value.split(',')
+    const grafanaUserLogins =
+      environmentVariables.COCKPIT_GRAPHANA_VIEWERS.value.split(',')
+
+    for (const login of grafanaEditorLogins) {
+      new CockpitGrafanaUser(this, 'userA', {
+        role: 'editor',
+        login,
+      })
+    }
+    for (const login of grafanaUserLogins) {
+      new CockpitGrafanaUser(this, 'userA', {
+        role: 'viewer',
+        login,
+      })
+    }
+
+    // Create cockpit token for web app containers
+    // https://registry.terraform.io/providers/scaleway/scaleway/latest/docs/resources/cockpit_token
+    const cockpitToken = new CockpitToken(this, 'cockpitWebToken', {
+      name: 'Web App',
+    })
+
     const webContainers = new ContainerNamespace(this, 'webContainers', {
       name: containerNamespaceName,
       description: 'Web application containers',
@@ -147,6 +179,10 @@ export class ProjectStack extends TerraformStack {
         SENTRY_ORG: sentryOrg,
         SENTRY_PROJECT: sentryProject,
         SENTRY_URL: sentryUrl,
+        COCKPIT_METRICS_URL: cockpitEndpoints.metricsUrl,
+        COCKPIT_LOGS_URL: cockpitEndpoints.logsUrl,
+        COCKPIT_ALERT_MANAGER_URL: cockpitEndpoints.alertmanagerUrl,
+        COCKPIT_GRAFANA_URL: cockpitEndpoints.grafanaUrl,
         SMTP_PORT: smtpPort,
         SCW_DEFAULT_REGION: region,
         AWS_DEFAULT_REGION: region,
@@ -155,6 +191,7 @@ export class ProjectStack extends TerraformStack {
         TZ: 'utc',
       },
       secretEnvironmentVariables: {
+        COCKPIT_TOKEN: cockpitToken.secretKey,
         NEXTAUTH_SECRET: sensitiveEnvironmentVariables.NEXTAUTH_SECRET.value,
         SCW_ACCESS_KEY: sensitiveEnvironmentVariables.SCW_ACCESS_KEY.value,
         SCW_SECRET_KEY: sensitiveEnvironmentVariables.SCW_SECRET_KEY.value,
@@ -173,8 +210,6 @@ export class ProjectStack extends TerraformStack {
       name: environmentVariables.WEB_APP_DOCKER_REGISTRY_NAME.value,
       description: 'Built Web App docker images, ready to use in containers',
     })
-
-    const cockpit = new Cockpit(this, 'cockpit', {})
 
     // Main domain DNS Records
     new DomainRecord(this, 'main_ns0', {
