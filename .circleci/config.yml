@@ -346,7 +346,7 @@ jobs:
           name: 'Setup DSFR'
           command: pnpm --silent -F @sde/web setup:dsfr
       - run:
-          name: 'Build storybook and test components'
+          name: 'Build storybook and deploy on chromatic'
           command: pnpm --silent -F @sde/storybook chromatic
 
   test_e2e:
