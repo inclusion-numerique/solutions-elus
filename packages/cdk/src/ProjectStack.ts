@@ -145,14 +145,15 @@ export class ProjectStack extends TerraformStack {
 
     // https://registry.terraform.io/providers/scaleway/scaleway/latest/docs/resources/cockpit_grafana_user
 
-    for (const login of cockpitGrafanaEditors) {
-      new CockpitGrafanaUser(this, 'userA', {
+    for (const [index, login] of cockpitGrafanaEditors.entries()) {
+      new CockpitGrafanaUser(this, `grafanaEditor${index}`, {
         role: 'editor',
         login,
       })
     }
-    for (const login of cockpitGrafanaViewers) {
-      new CockpitGrafanaUser(this, 'userA', {
+
+    for (const [index, login] of cockpitGrafanaViewers.entries()) {
+      new CockpitGrafanaUser(this, `grafanaViewer${index}`, {
         role: 'viewer',
         login,
       })
