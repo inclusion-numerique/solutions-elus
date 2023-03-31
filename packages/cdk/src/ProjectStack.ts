@@ -146,17 +146,28 @@ export class ProjectStack extends TerraformStack {
     // https://registry.terraform.io/providers/scaleway/scaleway/latest/docs/resources/cockpit_grafana_user
 
     for (const [index, login] of cockpitGrafanaEditors.entries()) {
-      new CockpitGrafanaUser(this, `grafanaEditor${index}`, {
+      const user = new CockpitGrafanaUser(this, `grafanaEditor${index}`, {
         role: 'editor',
         login,
       })
+
+      output(
+        `grafanaEditorPassword_${index}` as keyof ProjectCdkOutput,
+        user.password,
+        'sensitive',
+      )
     }
 
     for (const [index, login] of cockpitGrafanaViewers.entries()) {
-      new CockpitGrafanaUser(this, `grafanaViewer${index}`, {
+      const user = new CockpitGrafanaUser(this, `grafanaViewer${index}`, {
         role: 'viewer',
         login,
       })
+      output(
+        `grafanaViewerPassword_${index}` as keyof ProjectCdkOutput,
+        user.password,
+        'sensitive',
+      )
     }
 
     // Create cockpit token for web app containers
