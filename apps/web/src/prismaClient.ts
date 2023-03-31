@@ -10,3 +10,7 @@ export const prismaClient = global.prismaClient ?? new PrismaClient()
 if (process.env.NODE_ENV !== 'production') {
   global.prismaClient = prismaClient
 }
+async function disconnectGracefullyOnSignalInterrupt() {
+  await prismaClient.$disconnect()
+}
+process.on('SIGINT', disconnectGracefullyOnSignalInterrupt)
