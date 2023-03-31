@@ -22,3 +22,9 @@ export const sentryOrg = process.env.SENTRY_ORG ?? ''
 export const sentryProject = process.env.SENTRY_PROJECT ?? ''
 export const sentryUrl = process.env.SENTRY_URL ?? ''
 export const smtpPort = process.env.SMTP_PORT ?? ''
+export const cockpitGrafanaEditors: string[] = (
+  process.env.COCKPIT_GRAPHANA_EDITORS ?? ''
+).split(',')
+export const cockpitGrafanaViewers: string[] = (
+  process.env.COCKPIT_GRAPHANA_VIEWERS ?? ''
+).split(',')

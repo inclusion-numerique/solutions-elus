@@ -8,6 +8,8 @@ import { RdbInstance } from '@sde/scaleway/rdb-instance'
 import { ContainerNamespace } from '@sde/scaleway/container-namespace'
 import {
   chromaticAppId,
+  cockpitGrafanaEditors,
+  cockpitGrafanaViewers,
   containerNamespaceName,
   databaseInstanceName,
   mainDomain,
@@ -38,8 +40,6 @@ export const projectStackVariables = [
   'DOCUMENTS_BUCKET',
   'WEB_APP_DOCKER_REGISTRY_NAME',
   'S3_HOST',
-  'COCKPIT_GRAPHANA_EDITORS',
-  'COCKPIT_GRAPHANA_VIEWERS',
 ] as const
 
 export const projectStackSensitiveVariables = [
@@ -144,23 +144,14 @@ export class ProjectStack extends TerraformStack {
     const cockpitEndpoints = cockpit.endpoints.get(0)
 
     // https://registry.terraform.io/providers/scaleway/scaleway/latest/docs/resources/cockpit_grafana_user
-    const grafanaEditorLogins =
-      environmentVariables.COCKPIT_GRAPHANA_EDITORS.value === 'none'
-        ? []
-        : environmentVariables.COCKPIT_GRAPHANA_EDITORS.value.split(',')
 
-    const grafanaUserLogins =
-      environmentVariables.COCKPIT_GRAPHANA_VIEWERS.value === 'none'
-        ? []
-        : environmentVariables.COCKPIT_GRAPHANA_VIEWERS.value.split(',')
-
-    for (const login of grafanaEditorLogins) {
+    for (const login of cockpitGrafanaEditors) {
       new CockpitGrafanaUser(this, 'userA', {
         role: 'editor',
         login,
       })
     }
-    for (const login of grafanaUserLogins) {
+    for (const login of cockpitGrafanaViewers) {
       new CockpitGrafanaUser(this, 'userA', {
         role: 'viewer',
         login,
