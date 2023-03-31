@@ -173,7 +173,7 @@ export class ProjectStack extends TerraformStack {
     // Create cockpit token for web app containers
     // https://registry.terraform.io/providers/scaleway/scaleway/latest/docs/resources/cockpit_token
     const cockpitToken = new CockpitToken(this, 'cockpitWebToken', {
-      name: 'Web App',
+      name: 'web-app',
     })
 
     const webContainers = new ContainerNamespace(this, 'webContainers', {
