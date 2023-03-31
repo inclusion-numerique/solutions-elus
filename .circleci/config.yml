@@ -107,9 +107,9 @@ workflows:
             - prepare_workspace_dependencies
             - prepare_web_prod_dependencies
 
-      #      - chromatic:
-      #          requires:
-      #            - prepare_workspace_dependencies
+      - chromatic:
+          requires:
+            - prepare_workspace_dependencies
 
       - test_e2e:
           requires:
@@ -119,7 +119,7 @@ workflows:
           requires:
             - lint
             - test
-            #  - chromatic
+            - chromatic
             - test_e2e
 
   project_infrastructure_deployment:
