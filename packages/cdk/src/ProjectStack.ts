@@ -145,9 +145,14 @@ export class ProjectStack extends TerraformStack {
 
     // https://registry.terraform.io/providers/scaleway/scaleway/latest/docs/resources/cockpit_grafana_user
     const grafanaEditorLogins =
-      environmentVariables.COCKPIT_GRAPHANA_EDITORS.value.split(',')
+      environmentVariables.COCKPIT_GRAPHANA_EDITORS.value === 'none'
+        ? []
+        : environmentVariables.COCKPIT_GRAPHANA_EDITORS.value.split(',')
+
     const grafanaUserLogins =
-      environmentVariables.COCKPIT_GRAPHANA_VIEWERS.value.split(',')
+      environmentVariables.COCKPIT_GRAPHANA_VIEWERS.value === 'none'
+        ? []
+        : environmentVariables.COCKPIT_GRAPHANA_VIEWERS.value.split(',')
 
     for (const login of grafanaEditorLogins) {
       new CockpitGrafanaUser(this, 'userA', {
