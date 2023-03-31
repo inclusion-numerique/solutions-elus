@@ -198,20 +198,19 @@ export class WebAppStack extends TerraformStack {
       domain: isMain ? mainDomain : previewDomain,
     })
 
-    const webDnsRecordConfig: DomainRecordConfig = isMain
-      ? // Main app is hosted on root domain name
-        {
-          type: 'ALIAS',
-          dnsZone: rootZone.domain,
-          name: '',
-          data: `${container.domainName}.`,
-          ttl: 60 * 5,
-        }
-      : // Preview apps are hosted on preview subdomains
-        {
+    const webDnsRecordConfig: DomainRecordConfig = subdomain
+      ? {
           type: 'CNAME',
           dnsZone: rootZone.domain,
           name: subdomain,
+          data: `${container.domainName}.`,
+          ttl: 60 * 5,
+        }
+      : {
+          // Root domain record cannot be CNAME
+          type: 'ALIAS',
+          dnsZone: rootZone.domain,
+          name: '',
           data: `${container.domainName}.`,
           ttl: 60 * 5,
         }
