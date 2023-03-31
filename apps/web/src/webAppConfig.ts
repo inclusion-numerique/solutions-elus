@@ -46,6 +46,12 @@ export const ServerWebAppConfig = {
     accessKey: process.env.SCW_ACCESS_KEY ?? '',
     secretKey: process.env.SCW_SECRET_KEY ?? '',
   },
+  Cockpit: {
+    metricsUrl: process.env.COCKPIT_METRICS_URL ?? '',
+    logsUrl: process.env.COCKPIT_LOGS_URL ?? '',
+    alertManagerUrl: process.env.COCKPIT_ALERT_MANAGER_URL ?? '',
+    grafanaUrl: process.env.COCKPIT_GRAFANA_URL ?? '',
+  },
 }
 
 /**
