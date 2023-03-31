@@ -174,6 +174,15 @@ export class ProjectStack extends TerraformStack {
     // https://registry.terraform.io/providers/scaleway/scaleway/latest/docs/resources/cockpit_token
     const cockpitToken = new CockpitToken(this, 'cockpitWebToken', {
       name: 'web-app',
+      scopes: {
+        queryLogs: true,
+        queryMetrics: true,
+        setupAlerts: false,
+        setupLogsRules: false,
+        setupMetricsRules: false,
+        writeLogs: true,
+        writeMetrics: true,
+      },
     })
 
     const webContainers = new ContainerNamespace(this, 'webContainers', {
