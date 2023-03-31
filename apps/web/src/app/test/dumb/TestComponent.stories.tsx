@@ -47,6 +47,6 @@ FilledForm.play = async ({ canvasElement }) => {
 
   await waitFor(() => {
     expect(onSubmit).toHaveBeenCalledTimes(1)
-    //expect(onSubmit).toBeCalledWith({ name: 'My name is Slim' })
+    expect(onSubmit).toBeCalledWith({ name: 'My name is Slim' })
   })
 }
