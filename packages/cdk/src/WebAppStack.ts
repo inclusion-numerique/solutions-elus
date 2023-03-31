@@ -59,8 +59,7 @@ export class WebAppStack extends TerraformStack {
     const isMain = namespace === 'main'
 
     const { hostname, subdomain } = isMain
-      ? // ? { hostname: mainDomain, subdomain: '' }
-        { hostname: previewDomain, subdomain: '' }
+      ? { hostname: mainDomain, subdomain: 'v2' }
       : createPreviewSubdomain(namespace, previewDomain)
 
     const environmentVariables = environmentVariablesFromList(
@@ -188,16 +187,15 @@ export class WebAppStack extends TerraformStack {
         DATABASE_URL: databaseUrl,
       },
       name: containerName,
-      minScale: 1,
-      maxScale: 1,
+      minScale: isMain ? 2 : namespace === 'dev' ? 1 : 0,
+      maxScale: isMain ? 5 : 1,
       cpuLimit: 1120, // mVPCU
       memoryLimit: 2048, // mB
       deploy: true,
     })
 
     const rootZone = new DataScalewayDomainZone(this, 'dnsZone', {
-      domain: previewDomain,
-      // domain: isMain ? mainDomain : previewDomain,
+      domain: isMain ? mainDomain : previewDomain,
     })
 
     const webDnsRecordConfig: DomainRecordConfig = isMain
