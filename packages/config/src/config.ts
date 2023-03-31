@@ -2,6 +2,7 @@
  * Project configuration constants
  * ⚠️ Never put any secret value or authentication token in this file (or in any version controlled file)
  */
+import { arrayFromEnvironmentVariable } from '@sde/config/arrayFromEnvironmentVariable'
 
 export const projectTitle = "Solutions d'élus"
 export const projectSlug = 'sde'
@@ -22,9 +23,10 @@ export const sentryOrg = process.env.SENTRY_ORG ?? ''
 export const sentryProject = process.env.SENTRY_PROJECT ?? ''
 export const sentryUrl = process.env.SENTRY_URL ?? ''
 export const smtpPort = process.env.SMTP_PORT ?? ''
-export const cockpitGrafanaEditors: string[] = (
-  process.env.COCKPIT_GRAPHANA_EDITORS ?? ''
-).split(',')
-export const cockpitGrafanaViewers: string[] = (
-  process.env.COCKPIT_GRAPHANA_VIEWERS ?? ''
-).split(',')
+
+export const cockpitGrafanaEditors = arrayFromEnvironmentVariable(
+  process.env.COCKPIT_GRAPHANA_EDITORS,
+)
+export const cockpitGrafanaViewers = arrayFromEnvironmentVariable(
+  process.env.COCKPIT_GRAPHANA_VIEWERS,
+)
