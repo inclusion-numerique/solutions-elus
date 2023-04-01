@@ -59,7 +59,7 @@ export class WebAppStack extends TerraformStack {
     const isMain = namespace === 'main'
 
     const { hostname, subdomain } = isMain
-      ? { hostname: `v2.${mainDomain}`, subdomain: 'v2' }
+      ? { hostname: mainDomain, subdomain: '' }
       : createPreviewSubdomain(namespace, previewDomain)
 
     const environmentVariables = environmentVariablesFromList(
