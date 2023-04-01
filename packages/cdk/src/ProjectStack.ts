@@ -234,14 +234,14 @@ export class ProjectStack extends TerraformStack {
       type: 'NS',
       name: '',
       data: 'ns0.dom.scw.cloud.',
-      ttl: 600,
+      ttl: 1800,
     })
     new DomainRecord(this, 'main_ns1', {
       dnsZone: mainDomainZone.domain,
       type: 'NS',
       name: '',
       data: 'ns1.dom.scw.cloud.',
-      ttl: 600,
+      ttl: 1800,
     })
     // Preview domain DNS Records
     new DomainRecord(this, 'preview_ns0', {
@@ -249,14 +249,14 @@ export class ProjectStack extends TerraformStack {
       type: 'NS',
       name: '',
       data: 'ns0.dom.scw.cloud.',
-      ttl: 600,
+      ttl: 1800,
     })
     new DomainRecord(this, 'preview_ns1', {
       dnsZone: previewDomainZone.domain,
       type: 'NS',
       name: '',
       data: 'ns1.dom.scw.cloud.',
-      ttl: 600,
+      ttl: 1800,
     })
 
     // Email domain DNS Records
