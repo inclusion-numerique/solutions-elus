@@ -3,17 +3,12 @@ import { prismaClient } from '@sde/web/prismaClient'
 import { output } from '@sde/cli/output'
 
 const showcases = [
-  // 'des-produits-locaux-pour-la-restauration-collective',
-  // 'la-martinique-une-association-de-recyclage-et-dautoreparation-soutenue-par-lanct',
-  // 'le-numerique-au-coeur-du-projet-social-le-ccas-damiens',
-  // 'tramayes-une-petite-ville-de-demain-energie-positive',
-  // 'reinvestir-les-friches-pour-limiter-letalement-urbain',
-  // 'renforcer-la-resilience-alimentaire-dune-petite-ville',
-
-  // Temp for full project grist table integration tests
-  'une-place-des-services-en-coeur-de-ville-epone',
-  'la-maison-des-patrimoines-une-pepiniere-dartisans-dart-et-dartistes',
-  'la-traverse-projet-dhabitat-social-et-ecologique-intergenerationnelle-creon',
+  'des-produits-locaux-pour-la-restauration-collective',
+  'la-martinique-une-association-de-recyclage-et-dautoreparation-soutenue-par-lanct',
+  'le-numerique-au-coeur-du-projet-social-le-ccas-damiens',
+  'tramayes-une-petite-ville-de-demain-energie-positive',
+  'reinvestir-les-friches-pour-limiter-letalement-urbain',
+  'renforcer-la-resilience-alimentaire-dune-petite-ville',
 ]
 
 export const updateShowcases = new Command()
