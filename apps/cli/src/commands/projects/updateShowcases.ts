@@ -29,7 +29,7 @@ export const updateShowcases = new Command()
           }),
         ),
       ])
-    } catch (err) {
+    } catch {
       output(
         `⚠️  Projects could not be configured for showcasing, ensure that those slugs exist :`,
       )
