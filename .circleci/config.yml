@@ -383,8 +383,6 @@ jobs:
           name: "Create terraform variables file from environment variables"
           command: |
             pnpm --silent cli terraform:vars-from-env web
-      - setup_remote_docker:
-          docker_layer_caching: true
       - install_terraform
       - run:
           name: 'Generate Prisma client for this platform'
