@@ -28,4 +28,4 @@ WORKDIR /app/web
 
 ENTRYPOINT ["dumb-init", "--"]
 
-CMD ["./../node_modules/.bin/next", "start"]
+CMD ["../node_modules/.bin/next", "start"]
