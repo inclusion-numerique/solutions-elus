@@ -76,8 +76,8 @@ export const gristProjectFieldsValidation = z.object({
   Partenaire_2_image: gristRelationshipValidation.nullable().optional(),
   Population: z.number().nullable(),
   Region: gristNullableString,
-  Lattitude: z.number().nullable(),
-  Longitude: z.number().nullable(),
+  Lattitude: z.number().min(-90).max(90).nullable(),
+  Longitude: z.number().min(-180).max(180).nullable(),
   A_publier_le: z.number().nullable(),
 })
 
