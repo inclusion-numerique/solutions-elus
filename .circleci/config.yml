@@ -62,6 +62,14 @@ parameters:
 workflows:
   version: 2
   web_app_deployment:
+    triggers: #use the triggers key to indicate a scheduled build
+      - schedule:
+          cron: "0 2 * * *"
+          filters:
+            branches:
+              only:
+                - main
+                - dev
     when:
       equal: [ web_app_deployment, << pipeline.parameters.trigger_workflow >> ]
     jobs:
