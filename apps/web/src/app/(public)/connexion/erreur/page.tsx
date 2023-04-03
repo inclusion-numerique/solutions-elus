@@ -35,7 +35,7 @@ const ErrorPage = async ({
                 </p>
                 <ul className="fr-btns-group">
                   <li>
-                    <Link href="/auth/signin" target="_self" className="fr-btn">
+                    <Link href="/auth/login" target="_self" className="fr-btn">
                       Retour
                     </Link>
                   </li>

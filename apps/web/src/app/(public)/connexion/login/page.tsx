@@ -31,7 +31,7 @@ const SigninPage = async ({
     <main role="main" id="content">
       <div className="fr-container fr-container--fluid fr-mb-md-14v">
         <div className="fr-grid-row fr-grid-row-gutters fr-grid-row--center">
-          <div className="fr-col-12 fr-col-md-8 fr-col-xl-6">
+          <div className="fr-col-12 fr-col-md-8 fr-col-xl-6 fr-mt-12v fr-mb-12v">
             <div className="fr-container fr-background-alt--grey fr-px-md-0 fr-pt-10v fr-pt-md-14v fr-pb-6v fr-pb-md-10v">
               <div className="fr-grid-row fr-grid-row-gutters fr-grid-row--center">
                 <div className="fr-col-12 fr-col-md-9 fr-col-lg-8">
@@ -43,11 +43,14 @@ const SigninPage = async ({
                   <div>
                     <EmailSigninForm />
                   </div>
-                  <hr />
-                  <h5>Espace réservé aux agents de l&apos;ANCT</h5>
+                  <hr className="fr-mt-6v" />
+                  <h5 className="fr-mt-6v">
+                    Espace réservé aux agents de l&apos;ANCT et du Ministère de
+                    la Transition écologique et de la Cohésion des territoires
+                  </h5>
                   <p>
-                    Veuillez vous assurer que vous utilisez votre adresse ANCT
-                    pour la connexion a ce service. <br />
+                    Veuillez vous assurer que vous utilisez votre adresse
+                    professionnelle pour la connexion a ce service. <br />
                     <br />
                     En cas de problèmes ou questions merci de contacter{' '}
                     <a href={`mailto:${PublicWebAppConfig.contactEmail}`}>
