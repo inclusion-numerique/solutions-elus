@@ -7,7 +7,7 @@
 .header {
   justify-content: center;
 
-  @media (min-width: 62em) {
+  @media (width >= 62em) {
     flex-wrap: nowrap;
   }
 }
@@ -55,7 +55,7 @@
 }
 
 .blocs {
-  @media (min-width: 62em) {
+  @media (width >= 62em) {
     margin-top: 48px !important;
   }
 }
@@ -63,7 +63,7 @@
 .bloc {
   border: var(--slim-grey-border);
 
-  @media (min-width: 62em) {
+  @media (width >= 62em) {
     height: 100%;
     padding: 32px !important;
   }
@@ -72,7 +72,7 @@
 .secondBloc {
     margin-top: 24px;
 
-    @media (min-width: 62em) {
+    @media (width >= 62em) {
         margin-top: 0 !important;
     }
 }
@@ -81,7 +81,7 @@
   display: flex;
   align-items: center;
 
-  @media (min-width: 62em) {
+  @media (width >= 62em) {
     margin-bottom: 32px !important;
   }
 

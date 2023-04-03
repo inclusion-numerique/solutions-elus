@@ -16,25 +16,25 @@
     "node": "^18.15"
   },
   "dependencies": {
-    "@storybook/addon-docs": "^7.0.0-beta.64",
-    "@storybook/addon-essentials": "^7.0.0-beta.64",
-    "@storybook/addon-interactions": "^7.0.0-beta.64",
-    "@storybook/addon-links": "^7.0.0-beta.64",
-    "@storybook/addons": "^7.0.0-beta.64",
-    "@storybook/blocks": "^7.0.0-beta.64",
-    "@storybook/nextjs": "^7.0.0-beta.64",
-    "@storybook/react": "^7.0.0-beta.64",
-    "@storybook/testing-library": "^0.0.14-next.1",
+    "@storybook/addon-docs": "^7.0.2",
+    "@storybook/addon-essentials": "^7.0.2",
+    "@storybook/addon-interactions": "^7.0.2",
+    "@storybook/addon-links": "^7.0.2",
+    "@storybook/addons": "^7.0.2",
+    "@storybook/blocks": "^7.0.2",
+    "@storybook/nextjs": "^7.0.2",
+    "@storybook/react": "^7.0.2",
+    "@storybook/testing-library": "^0.1.0",
     "chromatic": "^6.17.2",
     "dotenv": "^16.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "storybook": "^7.0.0-beta.64"
+    "storybook": "^7.0.2"
   },
   "devDependencies": {
-    "@types/node": "^18.15.5",
-    "eslint": "^8.36.0",
+    "@types/node": "^18.15.11",
+    "eslint": "^8.37.0",
     "jest": "^29.5.0",
-    "typescript": "^5.0.2"
+    "typescript": "^5.0.3"
   }
 }
