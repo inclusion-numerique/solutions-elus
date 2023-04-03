@@ -81,6 +81,7 @@
     "react-use-css-custom-property": "^0.1.1",
     "scroll-into-view-if-needed": "^3.0.6",
     "server-only": "^0.0.1",
+    "sharp": "^0.32.0",
     "smooth-scroll-into-view-if-needed": "^2.0.0",
     "superjson": "^1.12.2",
     "uglify-js": "^3.17.4",
