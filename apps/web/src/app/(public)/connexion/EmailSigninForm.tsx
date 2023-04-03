@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { InputFormField } from '@sde/web/form/InputFormField'
+import Cookies from 'js-cookie'
 
 const SigninFormValidation = z.object({
   email: z
@@ -19,12 +20,14 @@ export const EmailSigninForm = ({ error }: { error?: string }) => {
   })
 
   const onSubmit = ({ email }: SigninFormData) => {
-    signIn('email', { email })
+    // Set the email in a cookie for usage in Verify page as redirections resets memory
+    Cookies.set('email-signin', email, { sameSite: 'strict' })
+    return signIn('email', { email })
   }
-
+  const disabled =
+    form.formState.isSubmitting || form.formState.isSubmitSuccessful
   return (
     <form id="login-with-email" onSubmit={form.handleSubmit(onSubmit)}>
-      <h4>Se connecter avec votre email</h4>
       {error ? (
         <div className="fr-fieldset__element">
           <div className="fr-alert fr-alert--error fr-alert--sm">
@@ -37,11 +40,15 @@ export const EmailSigninForm = ({ error }: { error?: string }) => {
         path="email"
         label="Email"
         hint="Format attendu : nom@domaine.fr"
-        disabled={form.formState.isSubmitting}
+        disabled={disabled}
       />
       <ul className="fr-btns-group fr-btns-group--icon-left">
         <li>
-          <button type="submit" className="fr-btn fr-icon-user-setting-line">
+          <button
+            disabled={disabled}
+            type="submit"
+            className="fr-btn fr-icon-user-setting-line"
+          >
             Se connecter
           </button>
         </li>
