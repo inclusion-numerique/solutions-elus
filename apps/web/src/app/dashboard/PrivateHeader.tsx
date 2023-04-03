@@ -81,7 +81,7 @@ const PrivateHeader = ({ user }: { user: SessionUser }) => (
           <ul className="fr-links-group" data-fr-js-header-links="true">
             <li>
               <Link
-                href="/auth/signin"
+                href="/auth/login"
                 target="_self"
                 className="fr-btn fr-btn--icon-left fr-icon-account-line"
               >

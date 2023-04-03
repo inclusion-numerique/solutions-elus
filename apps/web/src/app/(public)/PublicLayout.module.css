@@ -3,16 +3,16 @@
   background-position: center;
   height: 55vh;
 
-  @media (min-width: 34em) {
+  @media (width >= 34em) {
     height: 46vh;
   }
 
-  @media (min-width: 48em) {
+  @media (width >= 48em) {
     /*! media md */
     height: 50vh;
   }
 
-  @media (min-width: 62em) {
+  @media (width >= 62em) {
     /* lg */
     height: 44vh;
   }

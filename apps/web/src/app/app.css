@@ -35,7 +35,7 @@ textarea {
   border-bottom: var(--slim-grey-border);
 }
 
-@media (min-width: 62em) {
+@media (width >= 62em) {
   /* lg */
   .fr-header{
     .fr-header__menu{

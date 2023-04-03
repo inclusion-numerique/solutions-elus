@@ -94,7 +94,7 @@ const PublicFooter = () => (
           <li className="fr-footer__bottom-item">
             <a
               className="fr-footer__bottom-link fr-link--icon-left fr-icon-user-setting-line"
-              href="/connexion/signin"
+              href="/connexion/login"
             >
               Espace ANCT
             </a>

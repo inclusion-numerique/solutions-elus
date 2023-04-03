@@ -1,20 +1,9 @@
 import { getServerUrl } from '@sde/web/utils/baseUrl'
-import { EmailSigninForm } from '@sde/web/app/(public)/connexion/EmailSigninForm'
 import { getSessionUser } from '@sde/web/auth/getSessionUser'
 import { redirect } from 'next/navigation'
-import { PublicWebAppConfig } from '@sde/web/webAppConfig'
 import { dashboardRootPath } from '@sde/web/dashboard/dashboard'
-
-const signinErrorMessage = (error?: string): string | undefined => {
-  if (!error) {
-    return error
-  }
-
-  if (error === 'OAuthAccountNotLinked') {
-    return 'Vous venez de vous connecter par un nouvelle méthode. Par sécurité, veuillez utiliser la méthode de connexion que vous avez utilisé initiallement.'
-  }
-  return 'Erreur de connexion, veuillez réessayer.'
-}
+import { Breadcrumbs } from '@sde/web/components/Breadcrumbs'
+import { SigninPanel } from '@sde/web/app/(public)/connexion/login/SigninPanel'
 
 const SigninPage = async ({
   searchParams: { error } = {},
@@ -28,39 +17,10 @@ const SigninPage = async ({
   }
 
   return (
-    <main role="main" id="content">
-      <div className="fr-container fr-container--fluid fr-mb-md-14v">
-        <div className="fr-grid-row fr-grid-row-gutters fr-grid-row--center">
-          <div className="fr-col-12 fr-col-md-8 fr-col-xl-6">
-            <div className="fr-container fr-background-alt--grey fr-px-md-0 fr-pt-10v fr-pt-md-14v fr-pb-6v fr-pb-md-10v">
-              <div className="fr-grid-row fr-grid-row-gutters fr-grid-row--center">
-                <div className="fr-col-12 fr-col-md-9 fr-col-lg-8">
-                  {error ? (
-                    <div className="fr-alert fr-alert--error fr-alert--sm fr-mb-6v">
-                      <p>{signinErrorMessage(error)}</p>
-                    </div>
-                  ) : null}
-                  <div>
-                    <EmailSigninForm />
-                  </div>
-                  <hr />
-                  <h5>Espace réservé aux agents de l&apos;ANCT</h5>
-                  <p>
-                    Veuillez vous assurer que vous utilisez votre adresse ANCT
-                    pour la connexion a ce service. <br />
-                    <br />
-                    En cas de problèmes ou questions merci de contacter{' '}
-                    <a href={`mailto:${PublicWebAppConfig.contactEmail}`}>
-                      {PublicWebAppConfig.contactEmail}
-                    </a>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
+    <>
+      <Breadcrumbs currentPage="Connexion" />
+      <SigninPanel error={error} />
+    </>
   )
 }
 

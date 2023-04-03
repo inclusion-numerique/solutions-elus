@@ -92,6 +92,13 @@ export const downloadGristProjects = new Command()
     const attachments = await downloadAttachments(projectsToPublish)
     output(`${attachments.size} Attachments have been downloaded`)
 
+    if (projectsToPublish.length < 100) {
+      output(
+        `Projects to publish count is unusually low (got ${projectsToPublish.length}). Cancelling import to avoid data loss.`,
+      )
+      process.exit(1)
+    }
+
     output(`Inserting data into database...`)
     await insertInDataBase(
       projectsToPublish,
