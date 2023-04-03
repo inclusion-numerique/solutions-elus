@@ -61,8 +61,8 @@ parameters:
 
 workflows:
   version: 2
-  web_app_deployment:
-    triggers: #use the triggers key to indicate a scheduled build
+  nightly_web_app_deployment:
+    triggers: # use the triggers key to indicate a scheduled build
       - schedule:
           cron: "0 2 * * *"
           filters:
@@ -70,6 +70,30 @@ workflows:
               only:
                 - main
                 - dev
+    when:
+      equal: [ web_app_deployment, << pipeline.parameters.trigger_workflow >> ]
+    jobs:
+      - prepare_workspace_dependencies
+      - prepare_web_prod_dependencies
+      - lint:
+          requires:
+            - prepare_workspace_dependencies
+      - test:
+          requires:
+            - prepare_workspace_dependencies
+      - build_web:
+          requires:
+            - prepare_workspace_dependencies
+            - prepare_web_prod_dependencies
+      - test_e2e:
+          requires:
+            - build_web
+      - deploy_web:
+          requires:
+            - lint
+            - test
+            - test_e2e
+  web_app_deployment:
     when:
       equal: [ web_app_deployment, << pipeline.parameters.trigger_workflow >> ]
     jobs:
