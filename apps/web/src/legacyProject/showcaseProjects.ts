@@ -14,6 +14,7 @@ export const getShowcaseProjects = () =>
         select: {
           label: true,
           department: true,
+          echelon: true,
         },
       },
       slug: true,

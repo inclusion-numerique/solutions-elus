@@ -10,10 +10,15 @@ export const populationIsInBracket = (
   { min, max }: PopulationBracketConditions,
 ) => (max ? population >= min && population <= max : population >= min)
 
-export const getCityWithDepartment = (localization: {
+export const getProjectLocalizationLabelWithDepartments = ({
+  department,
+  label,
+  echelon,
+}: {
   label: string
   department: string | null
+  echelon: string
 }) =>
-  `${localization.label}${
-    localization.department ? ` (${localization.department})` : ''
-  }`
+  echelon === 'region'
+    ? label
+    : `${label}${department ? ` (${department})` : ''}`
