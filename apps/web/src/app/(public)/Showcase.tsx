@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { useSwipeable } from 'react-swipeable'
 import { ShowcaseProject } from '@sde/web/legacyProject/showcaseProjects'
 import {
-  getCityWithDepartment,
+  getProjectLocalizationLabelWithDepartments,
   getProjectFilePath,
   getProjectPath,
 } from '@sde/web/project/project'
@@ -107,7 +107,7 @@ const ShowcaseCard = forwardRef<
           style={{ color: 'var(--text-mention-grey' }}
         >
           <span className="fr-mr-1w fr-icon--sm fr-icon-map-pin-2-line" />
-          {getCityWithDepartment(localization)}
+          {getProjectLocalizationLabelWithDepartments(localization)}
         </p>
         <h6 style={{ flexGrow: 1 }}>{title}</h6>
         <p className="fr-link fr-link--icon-right fr-icon-arrow-right-line fr-mt-4v">

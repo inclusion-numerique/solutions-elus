@@ -22,14 +22,17 @@ const Localization = ({
       <p className="fr-mt-6v fr-mb-0 fr-text--bold">
         {project.localization.label}
       </p>
-      {project.localization.departmentName &&
-      project.localization.department ? (
+      {/* No need to display departments for projects with region echelon */}
+      {project.localization.echelon !== 'region' &&
+      project.localization.departmentName ? (
         <p className="fr-mb-0 fr-text--bold">
           {project.localization.departmentName} (
           {project.localization.department})
         </p>
       ) : null}
-      {project.localization.regionName ? (
+      {/* Projects with region echelon have the same label as region name */}
+      {project.localization.echelon !== 'region' &&
+      project.localization.regionName ? (
         <p className="fr-mb-0 fr-text--bold">
           {project.localization.regionName.toUpperCase()}
         </p>
@@ -57,7 +60,7 @@ const Localization = ({
       {project.localization.regionName ? (
         <div className="fr-btns-group">
           <Link
-            className="fr-btn fr-mb-0"
+            className="fr-btn fr-mb-0 fr-mt-8v"
             href={`/projets?regions=${project.localization.regionName}`}
           >
             Voir les projets de la région
