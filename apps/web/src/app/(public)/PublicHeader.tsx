@@ -27,15 +27,6 @@ const PublicHeader = () => (
                     des territoires
                   </p>
                 </Link>
-                <picture>
-                  <img
-                    alt="Logo du Conseil National de la Refondation"
-                    src="/images/cnr_logo_horizontal.svg"
-                    className="fr-ml-2w fr-ml-md-6w fr-hidden-lg"
-                    height={54}
-                    style={{ verticalAlign: 'middle' }}
-                  />
-                </picture>
               </div>
               <div className="fr-header__navbar">
                 <button
@@ -62,12 +53,28 @@ const PublicHeader = () => (
               </Link>
             </div>
           </div>
-          <div className="fr-header__tools fr-hidden fr-unhidden-lg">
+          <div
+            className="fr-header__tools fr-hidden fr-unhidden-lg"
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+            }}
+          >
             <picture>
               <img
                 alt="Logo du Conseil National de la Refondation"
                 src="/images/cnr_logo_horizontal.svg"
                 className="fr-p-2v"
+              />
+            </picture>
+            <picture>
+              <img
+                alt="Logo de l'Agence Nationale de la Cohésion des Territoires"
+                src="/images/logo-anct.svg"
+                className="fr-p-2v fr-ml-4w"
+                height={80}
               />
             </picture>
           </div>
