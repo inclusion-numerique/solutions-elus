@@ -32,8 +32,7 @@
     "docker:build:web:debug": "DOCKER_BUILDKIT=0 docker build -t mec-web/mec-web-dev:debug -f docker/web/Dockerfile ."
   },
   "pnpm": {
-    "overrides": {
-    }
+    "overrides": {}
   },
   "optionalDependencies": {
     "turbo-linux-arm64": "^1.8.8"
