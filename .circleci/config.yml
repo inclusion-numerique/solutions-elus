@@ -380,7 +380,7 @@ jobs:
       - run:
           name: Download data
           command: |
-            DATABASE_URL=$CI_DATABASE_URL pnpm --silent cli projects:grist:download
+            DATABASE_URL=$CI_DATABASE_URL pnpm --silent cli projects:grist:download grist-output.json
       - run:
           name: Update showcase projects
           command: |

@@ -1,4 +1,4 @@
-import { Command } from '@commander-js/extra-typings'
+import { Argument, Command } from '@commander-js/extra-typings'
 import { output } from '@sde/cli/output'
 import {
   downloadAttachments,
@@ -9,10 +9,15 @@ import {
   listThematiques,
 } from '@sde/cli/grist/grist'
 import { isDefinedAndNotNull } from '@sde/web/utils/isDefinedAndNotNull'
+import { writeFile, mkdir } from 'node:fs/promises'
+import { existsSync } from 'node:fs'
+import { resolve } from 'node:path'
 
 export const downloadGristProjects = new Command()
   .command('projects:grist:download')
-  .action(async () => {
+  .addArgument(new Argument('[output]', 'output file'))
+  // .addOption(new Option('--from-output'))
+  .action(async (outputFileName) => {
     const [gristProjects, programs, thematiques] = await Promise.all([
       listProjectRecords(),
       listPrograms(),
@@ -99,13 +104,29 @@ export const downloadGristProjects = new Command()
       process.exit(1)
     }
 
-    output(`Inserting data into database...`)
-    await insertInDataBase(
+    const insertInput = [
       projectsToPublish,
       localisations.records,
       programs.records,
       thematiques.records,
       attachments,
-    )
+    ] as const
+
+    if (outputFileName) {
+      if (!existsSync('var')) {
+        await mkdir('var')
+      }
+      await writeFile(
+        resolve('var', outputFileName),
+        JSON.stringify(insertInput),
+      )
+    }
+    output('Debugging attachments')
+    for (const attachment of attachments.values()) {
+      output(`- ${attachment}`)
+    }
+
+    output(`Inserting data into database...`)
+    await insertInDataBase(...insertInput)
     output(`Grist data has been inserted into database successfully`)
   })
