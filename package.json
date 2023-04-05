@@ -33,7 +33,6 @@
   },
   "pnpm": {
     "overrides": {
-      "@storybook/instrumenter": "^7.0.0-rc.7"
     }
   },
   "optionalDependencies": {
