@@ -148,6 +148,7 @@ model Project {
   partner2Text     String?
   partner2Image    String?
 
+  published DateTime @default(now())
   createdBy String?
   created   DateTime @default(now())
   updatedBy String?

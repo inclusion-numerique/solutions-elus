@@ -117,4 +117,7 @@ export const convertGristProjectToModel = (
     created: project.fields.Cree_le
       ? new Date(project.fields.Cree_le * 1000)
       : new Date(),
+    published: project.fields.A_publier_le
+      ? new Date(project.fields.A_publier_le * 1000)
+      : new Date(),
   }))
