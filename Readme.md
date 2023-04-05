@@ -72,3 +72,4 @@ En phase de développement, vous pouvez exécuter les tests avec un _watcher_ qu
 ```bash
 pnpm test -- -- --watch
 ```
+❤️
