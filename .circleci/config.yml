@@ -44,7 +44,7 @@ parameters:
     default: sde-web-<< pipeline.git.branch >> | sed -e 's/\//-/g'
   build_version:
     type: string
-    default: $CIRCLE_SHA1
+    default: $CIRCLE_BUILD_NUM
   deploy_version:
     type: string
     default: latest
