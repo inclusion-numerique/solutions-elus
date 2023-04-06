@@ -1,10 +1,11 @@
 import React from 'react'
 
-import { userEvent, within, waitFor } from '@storybook/testing-library'
+import { userEvent, waitFor } from '@storybook/testing-library'
 import { jest, expect } from '@storybook/jest'
 import { Meta, StoryObj } from '@storybook/react'
 import { useForm } from 'react-hook-form'
 import { ObjectFormData } from '@sde/web/pages/api/test/type'
+import { withinDSFR } from '@sde/storybook/.storybook/utils'
 import { Mock } from 'jest-mock'
 import TestComponent, { TestComponentProps } from './TestComponent'
 
@@ -36,13 +37,14 @@ export const FilledForm: Story = {
   play: async ({ canvasElement }) => {
     onSubmit.mockClear()
 
-    const canvas = within(canvasElement)
+    const canvas = await withinDSFR(canvasElement)
 
-    await expect(canvas.getByLabelText('Name')).toBeInTheDocument()
-    await expect(canvas.getByLabelText('Name')).toHaveValue('John Doe')
+    const input = await canvas.findByTestId('name-input')
+    await expect(input).toBeInTheDocument()
+    await expect(input).toHaveValue('John Doe')
 
-    await userEvent.clear(canvas.getByLabelText('Name'))
-    await userEvent.type(canvas.getByLabelText('Name'), 'My name is Slim')
+    await userEvent.clear(input)
+    await userEvent.type(input, 'My name is Slim')
 
     await userEvent.click(canvas.getByRole('button'))
 

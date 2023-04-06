@@ -12,6 +12,7 @@ export function InputFormField<T extends FieldValues>({
   hint,
   disabled,
   multiple,
+  'data-testid': dataTestId,
 }: {
   control: Control<T>
   path: FieldPath<T>
@@ -21,6 +22,7 @@ export function InputFormField<T extends FieldValues>({
   type?: Exclude<HTMLInputTypeAttribute, 'checkbox'>
   placeholder?: string
   multiple?: boolean
+  ['data-testid']?: string
 }) {
   const id = `input-form-field__${path}`
 
@@ -44,6 +46,7 @@ export function InputFormField<T extends FieldValues>({
           </label>
 
           <input
+            data-testid={dataTestId}
             className="fr-input"
             aria-describedby={error ? `${id}__error` : undefined}
             disabled={disabled}
