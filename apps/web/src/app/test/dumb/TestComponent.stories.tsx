@@ -7,7 +7,6 @@ import { useForm } from 'react-hook-form'
 import { ObjectFormData } from '@sde/web/pages/api/test/type'
 import { Mock } from 'jest-mock'
 import TestComponent, { TestComponentProps } from './TestComponent'
-import '@testing-library/jest-dom/extend-expect'
 
 const meta: Meta<typeof TestComponent> = {
   title: 'TestComponent',
