@@ -2,9 +2,9 @@ import { initTRPC } from '@trpc/server'
 import { ShareProjectFormDataValidation } from '@sde/web/shareProject/project'
 import { prismaClient } from '@sde/web/prismaClient'
 import { v4 } from 'uuid'
-import { getProjectCategories } from '@sde/web/legacyProject/categories'
+import { createContext } from '@sde/web/server/rpc/rpcContext'
 
-const t = initTRPC.create()
+const t = initTRPC.context<typeof createContext>().create()
 
 export const appRouter = t.router({
   testReset: t.procedure.mutation(async ({ ctx }) => {
