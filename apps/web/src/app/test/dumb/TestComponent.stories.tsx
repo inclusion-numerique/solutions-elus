@@ -5,7 +5,7 @@ import { jest, expect } from '@storybook/jest'
 import { Meta, StoryObj } from '@storybook/react'
 import { useForm } from 'react-hook-form'
 import { ObjectFormData } from '@sde/web/pages/api/test/type'
-import { withinDSFR } from '@sde/storybook/.storybook/utils'
+import { withinDSFR } from '@sde/storybook/src/utils'
 import { Mock } from 'jest-mock'
 import TestComponent, { TestComponentProps } from './TestComponent'
 
