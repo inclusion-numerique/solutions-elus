@@ -1,15 +1,5 @@
-import React from 'react'
 import { useRef } from '@storybook/addons'
-
-export const parameters = {
-  actions: { argTypesRegex: '^on[A-Z].*' },
-  controls: {
-    matchers: {
-      color: /(background|color)$/i,
-      date: /Date$/,
-    },
-  },
-}
+import { Preview } from '@storybook/react'
 
 const loadDsfrJs = () => {
   const existing = document.querySelector('#dsfr-js')
@@ -52,15 +42,33 @@ const loadDsfrUtilityCss = () => {
   document.body.append(utilityLink)
 }
 
-export const decorators = [
-  (Story) => {
-    const isSetup = useRef(false)
-    if (!isSetup.current) {
-      loadDsfrJs()
-      loadDsfrCss()
-      loadDsfrUtilityCss()
-      isSetup.current = true
-    }
-    return <Story />
+const preview: Preview = {
+  parameters: {
+    actions: { argTypesRegex: '^on[A-Z].*' },
+    controls: {
+      matchers: {
+        color: /(background|color)$/i,
+        date: /Date$/,
+      },
+    },
+    docs: {
+      story: {
+        // inline: false,
+      },
+    },
   },
-]
+  decorators: [
+    (Story) => {
+      const isSetup = useRef(false)
+      if (!isSetup.current) {
+        loadDsfrJs()
+        loadDsfrCss()
+        loadDsfrUtilityCss()
+        isSetup.current = true
+      }
+      return <Story />
+    },
+  ],
+}
+
+export default preview

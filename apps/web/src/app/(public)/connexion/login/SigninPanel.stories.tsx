@@ -1,5 +1,5 @@
 import React from 'react'
-import { Meta } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react'
 import { SigninPanel } from '@sde/web/app/(public)/connexion/login/SigninPanel'
 
 const meta: Meta<typeof SigninPanel> = {
@@ -8,3 +8,14 @@ const meta: Meta<typeof SigninPanel> = {
 }
 
 export default meta
+
+type Story = StoryObj<typeof SigninPanel>
+
+export const Desktop: Story = {}
+export const Mobile: Story = {
+  parameters: {
+    viewport: {
+      defaultViewport: 'mobile1',
+    },
+  },
+}
