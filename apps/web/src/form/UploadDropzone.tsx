@@ -4,27 +4,18 @@
 
 import { Control, Controller, FieldValues } from 'react-hook-form'
 import { FieldPath } from 'react-hook-form/dist/types/path'
-import { ChangeEventHandler, HTMLInputTypeAttribute } from 'react'
+import { ChangeEventHandler } from 'react'
 import { DropEvent, FileRejection, useDropzone } from 'react-dropzone'
 
 export const DropzoneField = <T extends FieldValues>({
-  label,
   path,
   control,
-  placeholder,
-  type = 'text',
-  hint,
-  disabled,
   multiple,
   onDrop,
 }: {
   control: Control<T>
   path: FieldPath<T>
   disabled?: boolean
-  label?: string
-  hint?: string
-  type?: Exclude<HTMLInputTypeAttribute, 'checkbox'> | 'textarea'
-  placeholder?: string
   multiple?: boolean
   onDrop: OnDropCallback
 }) => {
@@ -68,13 +59,7 @@ const Dropzone = ({
   onDrop: OnDropCallback
   onChange: ChangeEventHandler<HTMLInputElement>
 }) => {
-  const {
-    getRootProps,
-    getInputProps,
-    isDragActive,
-    isDragAccept,
-    isDragReject,
-  } = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
     multiple,
     onDrop,
     ...rest,

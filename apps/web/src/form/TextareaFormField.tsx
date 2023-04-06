@@ -1,26 +1,24 @@
-import { HTMLInputTypeAttribute } from 'react'
+'use client'
+
 import { Control, Controller, FieldValues } from 'react-hook-form'
 import { FieldPath } from 'react-hook-form/dist/types/path'
+import TextareaAutosize from 'react-textarea-autosize'
 
 // View design options here https://www.systeme-de-design.gouv.fr/elements-d-interface/composants/champ-de-saisie
-export function InputFormField<T extends FieldValues>({
+export function TextareaFormField<T extends FieldValues>({
   label,
   path,
   control,
   placeholder,
-  type = 'text',
   hint,
   disabled,
-  multiple,
 }: {
   control: Control<T>
   path: FieldPath<T>
   disabled?: boolean
   label?: string
   hint?: string
-  type?: Exclude<HTMLInputTypeAttribute, 'checkbox'>
   placeholder?: string
-  multiple?: boolean
 }) {
   const id = `input-form-field__${path}`
 
@@ -29,9 +27,8 @@ export function InputFormField<T extends FieldValues>({
       control={control}
       name={path}
       render={({
-        field: { onChange, onBlur, value, name, ref },
-        fieldState: { invalid, isTouched, isDirty, error },
-        formState,
+        field: { onChange, onBlur, value, ref },
+        fieldState: { invalid, isTouched, error },
       }) => (
         <div
           className={`fr-input-group ${error ? 'fr-input-group--error' : ''} ${
@@ -42,19 +39,17 @@ export function InputFormField<T extends FieldValues>({
             {label}
             {hint ? <span className="fr-hint-text">{hint}</span> : null}
           </label>
-
-          <input
+          <TextareaAutosize
             className="fr-input"
             aria-describedby={error ? `${id}__error` : undefined}
             disabled={disabled}
-            type={type}
             id={id}
             placeholder={placeholder}
+            minRows={2}
             onBlur={onBlur}
             onChange={onChange}
             value={value ?? ''}
             ref={ref}
-            multiple={multiple}
           />
           {error ? (
             <p id={`${id}__error`} className="fr-error-text">

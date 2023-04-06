@@ -18,7 +18,7 @@ export function CommunitySearchFormField<T extends FieldValues>({
   disabled?: boolean
   label?: string
   hint?: string
-  type?: Exclude<HTMLInputTypeAttribute, 'checkbox'> | 'textarea'
+  type?: Exclude<HTMLInputTypeAttribute, 'checkbox'>
   placeholder?: string
 }) {
   const id = `input-form-field__${path}`

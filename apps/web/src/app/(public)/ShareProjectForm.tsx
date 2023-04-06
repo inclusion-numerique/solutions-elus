@@ -15,6 +15,7 @@ import AttachmentUploader from '@sde/web/attachments/AttachmentUploader'
 import { generateReference } from '@sde/web/shareProject/generateReference'
 import { RadioFormField } from '@sde/web/form/RadioFormField'
 import { CommunitySearchFormField } from '@sde/web/form/CommunitySearchFormField'
+import { TextareaFormField } from '@sde/web/form/TextareaFormField'
 
 const projectCategories = [
   'Accès aux soins',
@@ -136,37 +137,33 @@ const ShareProjectForm = () => {
               path="solution"
               type="text"
             />
-            <InputFormField
+            <TextareaFormField
               label="Pouvez-vous décrire votre projet en quelques lignes ?"
               hint="Maximum 2000 caractères"
               disabled={fieldsDisabled}
               control={control}
               path="description"
-              type="textarea"
             />
-            <InputFormField
+            <TextareaFormField
               label="Quelles ont été les dates clefs ?"
               hint="Maximum 500 caractères"
               disabled={fieldsDisabled}
               control={control}
               path="dates"
-              type="textarea"
             />
-            <InputFormField
+            <TextareaFormField
               label="Qui sont les partenaires du projet ?"
               hint="Maximum 500 caractères"
               disabled={fieldsDisabled}
               control={control}
               path="partners"
-              type="textarea"
             />
-            <InputFormField
+            <TextareaFormField
               label="Pouvez-vous décrire les modalités et aspects techniques du projet ?"
               hint="Maximum 100 caractères"
               disabled={fieldsDisabled}
               control={control}
               path="tech"
-              type="textarea"
             />
             <p>Souhaitez-vous ajouter des pièces jointes ?</p>
             <Controller
