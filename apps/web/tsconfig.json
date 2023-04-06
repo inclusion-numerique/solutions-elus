@@ -7,7 +7,12 @@
       }
     ],
     "strictNullChecks": true,
-    "module": "esnext"
+    "module": "esnext",
+    "paths": {
+      "@sde/cli/*": ["../../apps/cli/src/*"],
+      "@sde/web/*": ["../../apps/web/src/*"],
+    },
+
   },
   "include": [
     "next-env.d.ts",
