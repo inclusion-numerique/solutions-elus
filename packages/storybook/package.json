@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint .storybook",
     "tsc": "tsc --noEmit",
-    "test": "jest --passWithNoTests",
+    "test": "test-storybook",
     "dev": "storybook dev -p 6006 --no-open",
     "build-storybook": "storybook build",
     "with-env": "dotenv -e ../../.env --",
@@ -26,6 +26,7 @@
     "@storybook/instrumenter": "^7.0.2",
     "@storybook/nextjs": "^7.0.2",
     "@storybook/react": "^7.0.2",
+    "@storybook/test-runner": "^0.10.0",
     "@storybook/testing-library": "^0.1.0",
     "chromatic": "^6.17.3",
     "dotenv": "^16.0.3",
