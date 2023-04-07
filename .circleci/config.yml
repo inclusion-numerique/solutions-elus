@@ -106,6 +106,9 @@ workflows:
       - test:
           requires:
             - prepare_workspace_dependencies
+      - test_components:
+          requires:
+            - prepare_workspace_dependencies
       - build_web:
           requires:
             - prepare_workspace_dependencies
@@ -123,6 +126,7 @@ workflows:
           requires:
             - lint
             - test
+            - test_components
             - chromatic
             - test_e2e
 
@@ -286,6 +290,7 @@ jobs:
           name: 'Prisma generate'
           command: pnpm --silent -F @sde/web prisma:generate
       - add_secrets_to_dotenv_file
+      - add_dotenv_vars_to_bash_env
       - setup_docker_web_env
       - setup_next_public_env
       - run:
@@ -366,10 +371,7 @@ jobs:
           name: 'Prisma generate'
           command: pnpm --silent -F @sde/web prisma:generate
       - add_secrets_to_dotenv_file
-      - run:
-          name: 'Add .env vars to bash env'
-          command: |
-            grep -v -e '^[[:space:]]*$' -e '^#' .env | awk '{print "export " $0}' >> $BASH_ENV
+      - add_dotenv_vars_to_bash_env
       - run:
           name: 'Run Cypress component testing'
           command: pnpm --silent -F @sde/web cy run --component --record
@@ -436,6 +438,7 @@ jobs:
           name: 'Prisma generate'
           command: pnpm --silent -F @sde/web prisma:generate
       - add_secrets_to_dotenv_file
+      - add_dotenv_vars_to_bash_env
       - setup_docker_web_env
       - run:
           name: 'Setup and export database password'
@@ -470,10 +473,7 @@ jobs:
           name: 'Create .env file from deployment outputs'
           command: |
             pnpm --silent cli dotenv:from-cdk web
-      - run:
-          name: 'Add .env vars to bash env'
-          command: |
-            grep -v -e '^[[:space:]]*$' -e '^#' .env | awk '{print "export " $0}' >> $BASH_ENV
+      - add_dotenv_vars_to_bash_env
       - run:
           name: Set deployment status to migration
           command: pnpm --silent cli github:deployment:update $DEPLOYMENT_ID in_progress -d 'Executing database migrations' -l https://app.circleci.com/pipelines/workflows/$CIRCLE_WORKFLOW_ID
@@ -633,12 +633,18 @@ commands:
           command: |
             pnpm --silent cli dotenv:add-next-public $NAMESPACE
 
+  add_dotenv_vars_to_bash_env:
+    steps:
+      - run:
+          name: 'Add .env vars to bash env'
+          command: |
+            grep -v -e '^[[:space:]]*$' -e '^#' .env | awk '{print "export " $0}' >> $BASH_ENV
+
   setup_docker_web_env:
     steps:
       - run:
           name: "Set docker env vars"
           command: |
-            source .env
             echo "export WEB_APP_DOCKER_REGISTRY='$WEB_APP_DOCKER_REGISTRY'" >> ${BASH_ENV}
             echo "export BRANCH='<< pipeline.git.branch >>'" >> ${BASH_ENV}
             echo "export NAMESPACE=$(echo '<< pipeline.git.branch >>' | sed -e 's/\//-/g')" >> ${BASH_ENV}
