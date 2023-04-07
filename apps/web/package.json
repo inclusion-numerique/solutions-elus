@@ -70,7 +70,7 @@
     "maplibre-gl": "^2.4.0",
     "nanoid": "^3.3.6",
     "next": "^13.3.0",
-    "next-auth": "^4.21.1",
+    "next-auth": "4.20.1",
     "node-html-parser": "^6.1.5",
     "nodemailer": "^6.9.1",
     "prisma": "^4.12.0",
