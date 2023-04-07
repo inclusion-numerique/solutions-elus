@@ -196,6 +196,7 @@ jobs:
             - ./packages/lint/node_modules
             - ./packages/storybook/node_modules
             - ./packages/test/node_modules
+            - /home/circleci/.cache/Cypress
 
   prepare_web_prod_dependencies:
     executor: node
