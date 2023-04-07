@@ -23,6 +23,7 @@ module.exports = {
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
     '@storybook/addon-jest',
+    '@storybook/addon-a11y'
   ],
   framework: {
     name: '@storybook/nextjs',

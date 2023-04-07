@@ -665,6 +665,9 @@ importers:
         specifier: ^7.0.2
         version: 7.0.2
     devDependencies:
+      '@storybook/addon-a11y':
+        specifier: ^7.0.2
+        version: 7.0.2(react-dom@18.2.0)(react@18.2.0)
       '@types/node':
         specifier: ^18.15.11
         version: 18.15.11
@@ -3232,7 +3235,7 @@ packages:
     dependencies:
       '@babel/generator': 7.21.3
       '@babel/template': 7.20.7
-      '@babel/types': 7.21.3
+      '@babel/types': 7.21.4
       '@cdktf/commons': 0.15.5
       '@cdktf/hcl2json': 0.15.5
       '@cdktf/provider-generator': 0.15.5
@@ -3711,7 +3714,6 @@ packages:
       react: '>=16.8.0'
     dependencies:
       react: 18.2.0
-    dev: false
 
   /@esbuild/android-arm64@0.17.15:
     resolution: {integrity: sha512-0kOB6Y7Br3KDVgHeg8PRcvfLkq+AccreK///B4Z6fNZGr/tNHX0z2VywCc7PTeWp+bPvjA5WMvNXltHw5QjAIA==}
@@ -4484,7 +4486,6 @@ packages:
 
   /@juggle/resize-observer@3.4.0:
     resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
-    dev: false
 
   /@kurkle/color@0.3.2:
     resolution: {integrity: sha512-fuscdXJ9G1qb7W8VdHi+IwRqij3lBkosAm4ydQtEmbY58OzHXqQhvlxqEkoz0yssNVn38bcpRWgA9PP+OGoisw==}
@@ -5549,6 +5550,34 @@ packages:
       lodash.values: 4.3.0
     dev: false
 
+  /@storybook/addon-a11y@7.0.2(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-PCJaLdp/3MypMYQufLIaKL4gzZjDgU8fTW45O7feXwiUZzFUVZamBwBw5BHcHAPsDOr5CmebGvJ9+l2gByWL/g==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-dom:
+        optional: true
+    dependencies:
+      '@storybook/addon-highlight': 7.0.2
+      '@storybook/channels': 7.0.2
+      '@storybook/client-logger': 7.0.2
+      '@storybook/components': 7.0.2(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/core-events': 7.0.2
+      '@storybook/global': 5.0.0
+      '@storybook/manager-api': 7.0.2(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/preview-api': 7.0.2
+      '@storybook/theming': 7.0.2(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/types': 7.0.2
+      axe-core: 4.6.3
+      lodash: 4.17.21
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-resize-detector: 7.1.2(react-dom@18.2.0)(react@18.2.0)
+    dev: true
+
   /@storybook/addon-actions@7.0.2(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-rcj39u9MrmzsrDWYt1zsoVxrogZ1Amrv9xkEofEY/QKUr2R3xpHhTALveY9BKIlG1GoE8zLlLoP2k4nz3sNNwQ==}
     peerDependencies:
@@ -5703,7 +5732,6 @@ packages:
       '@storybook/core-events': 7.0.2
       '@storybook/global': 5.0.0
       '@storybook/preview-api': 7.0.2
-    dev: false
 
   /@storybook/addon-interactions@7.0.2(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-vPWnyGND4s9nVp+U21N/jE00dCRsHcKU68SoL4OiIZioTTRbLvrTG9eAdBkZXsVPpFHq8gndma3nXfplOSSckg==}
@@ -6144,7 +6172,6 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       use-resize-observer: 9.1.0(react-dom@18.2.0)(react@18.2.0)
       util-deprecate: 1.0.2
-    dev: false
 
   /@storybook/core-client@7.0.2:
     resolution: {integrity: sha512-tr6Uv41YD2O0xiUrtgujiY1QxuznhbyUI0BRsSh49e8cx3QoW7FgPy7IVZHgb17DXKZ/wY/hgdyTTB87H6IbLA==}
@@ -6339,7 +6366,6 @@ packages:
       store2: 2.14.2
       telejson: 7.0.4
       ts-dedent: 2.2.0
-    dev: false
 
   /@storybook/manager@7.0.2:
     resolution: {integrity: sha512-jsFsFKG0rPNYfuRm/WSXGMBy8vnALyFWU330ObDmfU0JID3SeLlVqAOZT1GlwI6vupYpWodsN6qPZKRmC8onRw==}
@@ -6595,7 +6621,6 @@ packages:
       qs: 6.11.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: false
 
   /@storybook/store@7.0.2:
     resolution: {integrity: sha512-I4c/BJNL5KAs7S5bRCy1LeBSG3uqNTuXZdDQ5aYNLpnYNSGHV2l5EVJDYkk7mRQ6iayQavESRG1yVPshUWtqcQ==}
@@ -6685,7 +6710,6 @@ packages:
       memoizerific: 1.11.3
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: false
 
   /@storybook/types@7.0.2:
     resolution: {integrity: sha512-0OCt/kAexa8MCcljxA+yZxGMn0n2U2Ync0KxotItqNbKBKVkaLQUls0+IXTWSCpC/QJvNZ049jxUHHanNi/96w==}
@@ -17927,7 +17951,6 @@ packages:
       lodash: 4.17.21
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: false
 
   /react-swipeable@7.0.0(react@18.2.0):
     resolution: {integrity: sha512-NI7KGfQ6gwNFN0Hor3vytYW3iRfMMaivGEuxcADOOfBCx/kqwXE8IfHFxEcxSUkxCYf38COLKYd9EMYZghqaUA==}
@@ -18929,7 +18952,6 @@ packages:
 
   /store2@2.14.2:
     resolution: {integrity: sha512-siT1RiqlfQnGqgT/YzXVUNsom9S0H1OX+dpdGN1xkyYATo4I6sep5NmsRD/40s3IIOvlCq6akxkqG82urIZW1w==}
-    dev: false
 
   /storybook@7.0.2:
     resolution: {integrity: sha512-/XBLhT9Vb14yNBcA9rlW15y+C6IsCA3kx5PKvK9kL10sKCi8invcY94UfCSisXe8HqsO3u6peumo2xpYucKMjw==}
@@ -20177,7 +20199,6 @@ packages:
       '@juggle/resize-observer': 3.4.0
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: false
 
   /use-sync-external-store@1.2.0(react@18.2.0):
     resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
