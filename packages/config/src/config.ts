@@ -2,13 +2,15 @@
  * Project configuration constants
  * ⚠️ Never put any secret value or authentication token in this file (or in any version controlled file)
  */
-import { arrayFromEnvironmentVariable } from '@sde/config/arrayFromEnvironmentVariable'
+import { arrayFromEnvironmentVariable } from './arrayFromEnvironmentVariable'
 
 export const projectTitle = "Solutions d'élus"
 export const projectSlug = 'solutionsdelus'
 export const mainLiveUrl = 'https://solutionsdelus.gouv.fr'
 export const repositoryUrl =
   'https://github.com/inclusion-numerique/solutions-elus'
+
+export const cypressProjectId = '1bd26b'
 
 export const databaseInstanceName = process.env.DATABASE_INSTANCE_NAME ?? ''
 export const containerNamespaceName = process.env.CONTAINER_NAMESPACE_NAME ?? ''

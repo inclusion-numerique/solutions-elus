@@ -78,6 +78,9 @@ workflows:
       - test:
           requires:
             - prepare_workspace_dependencies
+      - test_components:
+          requires:
+            - prepare_workspace_dependencies
       - build_web:
           requires:
             - prepare_workspace_dependencies
@@ -89,6 +92,7 @@ workflows:
           requires:
             - lint
             - test
+            - test_components
             - test_e2e
   web_app_deployment:
     when:
@@ -349,6 +353,27 @@ jobs:
           name: 'Build storybook and deploy on chromatic'
           command: pnpm --silent -F @sde/storybook chromatic
 
+  test_components:
+    executor: node-e2e
+    resource_class: large
+    parallelism: 1
+    steps:
+      - checkout
+      - install_pnpm
+      - install_dependencies
+      - create_dotenv_file
+      - run:
+          name: 'Prisma generate'
+          command: pnpm --silent -F @sde/web prisma:generate
+      - add_secrets_to_dotenv_file
+      - run:
+          name: 'Add .env vars to bash env'
+          command: |
+            grep -v -e '^[[:space:]]*$' -e '^#' .env | awk '{print "export " $0}' >> $BASH_ENV
+      - run:
+          name: 'Run Cypress component testing'
+          command: pnpm --silent -F @sde/web cy run --component --record
+
   test_e2e:
     executor: node-e2e
     resource_class: large
@@ -357,8 +382,6 @@ jobs:
       - checkout
       - install_pnpm
       - install_dependencies
-      - setup_remote_docker:
-          docker_layer_caching: true
       - create_dotenv_file
       - run:
           name: 'Prisma generate'

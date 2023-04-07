@@ -108,6 +108,9 @@ importers:
       '@aws-sdk/s3-request-presigner':
         specifier: ^3.306.0
         version: 3.306.0
+      '@codegouvfr/react-dsfr':
+        specifier: ^0.46.1
+        version: 0.46.1(react@18.2.0)
       '@gouvfr/dsfr':
         specifier: ^1.9.0
         version: 1.9.0
@@ -1750,11 +1753,6 @@ packages:
     dependencies:
       '@babel/highlight': 7.18.6
 
-  /@babel/compat-data@7.21.0:
-    resolution: {integrity: sha512-gMuZsmsgxk/ENC3O/fRw5QY8A9/uxQbbCEypnLIiYYc/qVJtEV7ouxC3EllIIwNzMqAQee5tanFabWsUOutS7g==}
-    engines: {node: '>=6.9.0'}
-    dev: false
-
   /@babel/compat-data@7.21.4:
     resolution: {integrity: sha512-/DYyDpeCfaVinT40FPGdkkb+lYSKvsVuMjDAG7jPOWWiM1ibOaB9CXJAlc4d1QpP/U2q2P9jbrSlClKSErd55g==}
     engines: {node: '>=6.9.0'}
@@ -1817,20 +1815,6 @@ packages:
     dependencies:
       '@babel/helper-explode-assignable-expression': 7.18.6
       '@babel/types': 7.21.4
-    dev: false
-
-  /@babel/helper-compilation-targets@7.20.7(@babel/core@7.21.3):
-    resolution: {integrity: sha512-4tGORmfQcrc+bvrjb5y3dG9Mx1IOZjsHqQVUz7XCNHO+iTmqxWnVg3KRygjGmpRLJGdQSKuvFinbIb0CnZwHAQ==}
-    engines: {node: '>=6.9.0'}
-    peerDependencies:
-      '@babel/core': ^7.0.0
-    dependencies:
-      '@babel/compat-data': 7.21.4
-      '@babel/core': 7.21.3
-      '@babel/helper-validator-option': 7.21.0
-      browserslist: 4.21.5
-      lru-cache: 5.1.1
-      semver: 6.3.0
     dev: false
 
   /@babel/helper-compilation-targets@7.21.4(@babel/core@7.21.3):
@@ -2188,9 +2172,9 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
-      '@babel/compat-data': 7.21.0
+      '@babel/compat-data': 7.21.4
       '@babel/core': 7.21.3
-      '@babel/helper-compilation-targets': 7.20.7(@babel/core@7.21.3)
+      '@babel/helper-compilation-targets': 7.21.4(@babel/core@7.21.3)
       '@babel/helper-plugin-utils': 7.20.2
       '@babel/plugin-syntax-object-rest-spread': 7.8.3(@babel/core@7.21.3)
       '@babel/plugin-transform-parameters': 7.21.3(@babel/core@7.21.3)
@@ -2741,7 +2725,7 @@ packages:
       '@babel/helper-module-imports': 7.18.6
       '@babel/helper-plugin-utils': 7.20.2
       '@babel/plugin-syntax-jsx': 7.18.6(@babel/core@7.21.3)
-      '@babel/types': 7.21.3
+      '@babel/types': 7.21.4
     dev: false
 
   /@babel/plugin-transform-react-pure-annotations@7.18.6(@babel/core@7.21.3):
@@ -2886,9 +2870,9 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
-      '@babel/compat-data': 7.21.0
+      '@babel/compat-data': 7.21.4
       '@babel/core': 7.21.3
-      '@babel/helper-compilation-targets': 7.20.7(@babel/core@7.21.3)
+      '@babel/helper-compilation-targets': 7.21.4(@babel/core@7.21.3)
       '@babel/helper-plugin-utils': 7.20.2
       '@babel/helper-validator-option': 7.21.0
       '@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression': 7.18.6(@babel/core@7.21.3)
@@ -2956,7 +2940,7 @@ packages:
       '@babel/plugin-transform-unicode-escapes': 7.18.10(@babel/core@7.21.3)
       '@babel/plugin-transform-unicode-regex': 7.18.6(@babel/core@7.21.3)
       '@babel/preset-modules': 0.1.5(@babel/core@7.21.3)
-      '@babel/types': 7.21.3
+      '@babel/types': 7.21.4
       babel-plugin-polyfill-corejs2: 0.3.3(@babel/core@7.21.3)
       babel-plugin-polyfill-corejs3: 0.6.0(@babel/core@7.21.3)
       babel-plugin-polyfill-regenerator: 0.4.1(@babel/core@7.21.3)
@@ -3155,15 +3139,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@babel/types@7.21.3:
-    resolution: {integrity: sha512-sBGdETxC+/M4o/zKC0sl6sjWv62WFR/uzxrJ6uYyMLZOUlPnwzw0tKgVHOXxaAd5l2g8pEDM5RZ495GPQI77kg==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/helper-string-parser': 7.19.4
-      '@babel/helper-validator-identifier': 7.19.1
-      to-fast-properties: 2.0.0
-    dev: false
-
   /@babel/types@7.21.4:
     resolution: {integrity: sha512-rU2oY501qDxE8Pyo7i/Orqma4ziCOrby0/9mvbDUGEfvZjb279Nk9k19e2fiCxHbRRpY2ZyrgW1eq22mvmOIzA==}
     engines: {node: '>=6.9.0'}
@@ -3284,6 +3259,16 @@ packages:
       - debug
       - encoding
       - supports-color
+    dev: false
+
+  /@codegouvfr/react-dsfr@0.46.1(react@18.2.0):
+    resolution: {integrity: sha512-3OkF7oVKMHdjduD33GFM9gfZwEzkRe4xGefAjM0maGtzeNPBUhJHPEyA+GmDb8C2SLJ/6ExsJLaPGT6hcNEnzw==}
+    hasBin: true
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+      tsafe: 1.6.0
     dev: false
 
   /@colors/colors@1.5.0:
@@ -19747,6 +19732,10 @@ packages:
         optional: true
     dependencies:
       typescript: 5.0.3
+    dev: false
+
+  /tsafe@1.6.0:
+    resolution: {integrity: sha512-wlUeRBnyN3EN2chXznpLm7vBEvJLEOziDU+MN6NRlD99AkwmXgtChNQhp+V97VyRa3Bp05IaL4Cocsc7JlyEUg==}
     dev: false
 
   /tsconfig-paths-webpack-plugin@3.5.2:
