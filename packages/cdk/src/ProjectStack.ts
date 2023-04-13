@@ -40,6 +40,7 @@ export const projectStackVariables = [
   'DOCUMENTS_BUCKET',
   'WEB_APP_DOCKER_REGISTRY_NAME',
   'S3_HOST',
+  'SMTP_SERVER',
 ] as const
 
 export const projectStackSensitiveVariables = [
@@ -48,7 +49,6 @@ export const projectStackSensitiveVariables = [
   'SCW_SECRET_KEY',
   'SENTRY_AUTH_TOKEN',
   'SMTP_PASSWORD',
-  'SMTP_SERVER',
   'SMTP_USERNAME',
   'GRIST_API_KEY',
 ] as const
@@ -201,6 +201,7 @@ export class ProjectStack extends TerraformStack {
         COCKPIT_ALERT_MANAGER_URL: cockpitEndpoints.alertmanagerUrl,
         COCKPIT_GRAFANA_URL: cockpitEndpoints.grafanaUrl,
         SMTP_PORT: smtpPort,
+        SMTP_SERVER: environmentVariables.SMTP_SERVER.value,
         SCW_DEFAULT_REGION: region,
         AWS_DEFAULT_REGION: region,
         S3_HOST: environmentVariables.S3_HOST.value,
@@ -218,7 +219,6 @@ export class ProjectStack extends TerraformStack {
         SENTRY_AUTH_TOKEN:
           sensitiveEnvironmentVariables.SENTRY_AUTH_TOKEN.value,
         SMTP_PASSWORD: sensitiveEnvironmentVariables.SMTP_PASSWORD.value,
-        SMTP_SERVER: sensitiveEnvironmentVariables.SMTP_SERVER.value,
         SMTP_USERNAME: sensitiveEnvironmentVariables.SMTP_USERNAME.value,
       },
     })
