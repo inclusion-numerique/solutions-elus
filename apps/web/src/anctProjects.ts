@@ -4,7 +4,8 @@ export const categoryProjectsLink = (category: string) =>
   `/projets?thematiques=${category}`
 
 export const populationBracketsConditions = {
-  'Moins de 1500 habitants': { min: 0, max: 1500 },
+  'Moins de 500 habitants': { min: 0, max: 500 },
+  'De 500 à 1500 habitants': { min: 500, max: 1500 },
   'De 1500 à 5000 habitants': { min: 1500, max: 5000 },
   'De 5000 à 15 000 habitants': { min: 5000, max: 15_000 },
   'Plus de 15 000 habitants': { min: 15_000, max: null },
