@@ -204,7 +204,7 @@ const ShareProjectForm = () => {
                 type="submit"
                 disabled={createProject.isLoading}
               >
-                Enregistrer le projet
+                Soumettre le projet
               </button>
             </div>
           </form>
