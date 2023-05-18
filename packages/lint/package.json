@@ -9,12 +9,12 @@
     "tsc": "tsc --noEmit"
   },
   "engines": {
-    "node": "^18.15"
+    "node": "^18.16"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.21.3",
     "@next/eslint-plugin-next": "^13.2.4",
-    "@types/node": "^18.15.11",
+    "@types/node": "^18.16.13",
     "@typescript-eslint/eslint-plugin": "^5.57.0",
     "@typescript-eslint/parser": "^5.57.0",
     "eslint": "^8.37.0",
