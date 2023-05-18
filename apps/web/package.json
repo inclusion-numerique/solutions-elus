@@ -27,7 +27,7 @@
     "prisma": "pnpm --silent with-env prisma"
   },
   "engines": {
-    "node": "^18.15"
+    "node": "^18.16"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.304.0",
@@ -96,7 +96,7 @@
     "@types/file-saver": "^2.0.5",
     "@types/js-cookie": "^3.0.3",
     "@types/mime-types": "^2.1.1",
-    "@types/node": "^18.15.11",
+    "@types/node": "^18.16.13",
     "@types/nodemailer": "^6.4.7",
     "@types/nprogress": "^0.2.0",
     "@types/react": "^18.0.32",
