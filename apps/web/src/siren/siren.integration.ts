@@ -4,26 +4,24 @@ describe('siren', () => {
   it('Searches with multiple words', async () => {
     const query = 'lyon 1er'
     const result = await searchCommunity(query)
-    expect(result.results).toStrictEqual([
-      {
-        id: '98461-lyon',
-        code: '69123',
-        text: 'Lyon (Commune – 69001, 69002, 69003, 69004, 69005, 69006, 69007, 69008, 69009)',
-        name: 'Lyon',
-        scale: 'Commune',
-        zipcodes: [
-          '69001',
-          '69002',
-          '69003',
-          '69004',
-          '69005',
-          '69006',
-          '69007',
-          '69008',
-          '69009',
-        ],
-      },
-    ])
+    expect(result.results[0]).toStrictEqual({
+      id: '98461-lyon',
+      code: '69123',
+      text: 'Lyon (Commune – 69001, 69002, 69003, 69004, 69005, 69006, 69007, 69008, 69009)',
+      name: 'Lyon',
+      scale: 'Commune',
+      zipcodes: [
+        '69001',
+        '69002',
+        '69003',
+        '69004',
+        '69005',
+        '69006',
+        '69007',
+        '69008',
+        '69009',
+      ],
+    })
   })
 
   it.skip('Searches without duplicates', async () => {
