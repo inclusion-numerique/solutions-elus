@@ -60,7 +60,7 @@ type Localization = {
 }
 
 const getCollectiviteUrl = async (localization: Localization) => {
-  const res = await fetch(`https://api.collectivite.fr/api/commune/search/${localization.label}`)
+  const res = await fetch(`https://api.collectivite.fr/api/commune/search/${encodeURIComponent(localization.label)}`)
   const data = await res.json()
 
   const sameName = data.filter((item: Collectivite) => item.city === localization.label)
