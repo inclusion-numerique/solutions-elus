@@ -42,12 +42,44 @@ export async function generateMetadata({
   }
 }
 
+type Collectivite = {
+  city: string;
+  zip_code: string;
+  slug: string;
+  slug_alias: string;
+  region: string;
+}
+
+type Localization = {
+  label: string;
+  department: string | null;
+  departmentName: string | null;
+  regionName: string | null;
+  population: number | null;
+  echelon: string;
+}
+
+const getCollectiviteUrl = async (localization: Localization) => {
+  const res = await fetch(`https://api.collectivite.fr/api/commune/search/${localization.label}`)
+  const data = await res.json()
+
+  const communes = data.filter((item: Collectivite) => item.city === localization.label)
+  if (communes.length === 0) return ''
+
+  const slug = communes.find((item: Collectivite) => 
+    item.zip_code.startsWith(localization.department || '')
+  )?.slug
+
+  return `https://collectivite.fr/${slug}`;
+};
+
 const ProjectPage = async ({ params }: { params: { slug: string } }) => {
   const project = await getProject(params.slug)
   if (!project) {
     notFound()
     return {}
   }
+  const collectiviteUrl = await getCollectiviteUrl(project.localization)
 
   return (
     <div className="fr-container">
@@ -89,7 +121,7 @@ const ProjectPage = async ({ params }: { params: { slug: string } }) => {
       >
         Retour à la liste des projets
       </Link>
-      <Project project={project} />
+      <Project project={project} collectiviteUrl={collectiviteUrl} />
     </div>
   )
 }

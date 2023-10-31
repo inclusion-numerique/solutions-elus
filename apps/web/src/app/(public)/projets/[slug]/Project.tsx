@@ -13,7 +13,7 @@ import Quotes from './Quotes'
 import styles from './Project.module.css'
 import SocialNetworks from './SocialNetworks'
 
-const Project = ({ project }: { project: ProjectItem }) => {
+const Project = ({ project, collectiviteUrl }: { project: ProjectItem, collectiviteUrl?: string }) => {
   const coverPicture = (
     <picture>
       <img
@@ -66,7 +66,7 @@ const Project = ({ project }: { project: ProjectItem }) => {
             className="fr-hidden-lg fr-mt-12v"
             url={getServerUrl(getProjectPath(project))}
           />
-          <Localization project={project} className="fr-hidden-lg fr-mt-12v" />
+          <Localization project={project} collectiviteUrl={collectiviteUrl} className="fr-hidden-lg fr-mt-12v" />
           <Blocs className="fr-mt-6v" project={project} />
           {project.funding ? (
             <>
@@ -146,7 +146,7 @@ const Project = ({ project }: { project: ProjectItem }) => {
             className="fr-mt-8v"
             url={getServerUrl(getProjectPath(project))}
           />
-          <Localization className="fr-mt-8v" project={project} />
+          <Localization className="fr-mt-8v" project={project} collectiviteUrl={collectiviteUrl} />
         </div>
       </div>
     </>
