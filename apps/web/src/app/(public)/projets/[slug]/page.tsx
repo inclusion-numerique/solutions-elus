@@ -63,7 +63,7 @@ const getCollectiviteUrl = async (localization: Localization) => {
   const res = await fetch(`https://api.collectivite.fr/api/commune/search/${encodeURIComponent(localization.label)}`)
   const data = await res.json()
 
-  const sameName = data.filter((item: Collectivite) => item.city === localization.label)
+  const sameName = data.filter((item: Collectivite) => item.city.toLowerCase() === localization.label.toLowerCase())
   const target = sameName.find((item: Collectivite) => 
     item.zip_code ? item.zip_code.startsWith(localization.department || '') : true
   )
