@@ -63,10 +63,8 @@ const getCollectiviteUrl = async (localization: Localization) => {
   const res = await fetch(`https://api.collectivite.fr/api/commune/search/${localization.label}`)
   const data = await res.json()
 
-  const communes = data.filter((item: Collectivite) => item.city === localization.label)
-  if (communes.length === 0) return ''
-
-  const slug = communes.find((item: Collectivite) => 
+  const sameName = data.filter((item: Collectivite) => item.city === localization.label)
+  const slug = sameName.find((item: Collectivite) => 
     item.zip_code.startsWith(localization.department || '')
   )?.slug
 
@@ -79,7 +77,9 @@ const ProjectPage = async ({ params }: { params: { slug: string } }) => {
     notFound()
     return {}
   }
-  const collectiviteUrl = await getCollectiviteUrl(project.localization)
+  const collectiviteUrl = project.localization.echelon === 'commune' ?
+    await getCollectiviteUrl(project.localization) :
+    ""
 
   return (
     <div className="fr-container">
