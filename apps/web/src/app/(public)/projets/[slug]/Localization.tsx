@@ -19,9 +19,17 @@ const Localization = ({
     ) : null}
     <div className={`fr-p-6v ${styles.bloc}`}>
       <h2 className="fr-mb-0 fr-text-title--blue-france">Le territoire</h2>
-      <p className="fr-mt-6v fr-mb-0 fr-text--bold">
-        {project.localization.label}
-      </p>
+      {project.localization.echelon === 'commune' ?
+        (<a href={`https://collectivite.fr/${project.localization.label}`} target="_blank">
+          <p className="fr-mt-6v fr-mb-0 fr-text--bold">
+            {project.localization.label}
+          </p>
+        </a>) : (
+          <p className="fr-mt-6v fr-mb-0 fr-text--bold">
+            {project.localization.label}
+          </p>
+        )
+      }
       {/* No need to display departments for projects with region echelon */}
       {project.localization.echelon !== 'region' &&
       project.localization.departmentName ? (

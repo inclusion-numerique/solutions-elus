@@ -20,6 +20,7 @@ export const convertGristLocalisationToModel = (
       : undefined
 
     return {
+      id: String(localisation.id),
       gristId: localisation.id,
       label: localisation.fields.lib_groupement?.trim(),
       insee: localisation.fields.insee_geo?.trim(),
@@ -37,6 +38,7 @@ export const convertGristLocalisationToModel = (
 
 export const convertGristProgramToModel = (programs: GristProgram[]) =>
   programs.map((program) => ({
+    id: String(program.id),
     gristId: program.id,
     politique: program.fields.politique_publique?.trim(),
     name: program.fields.nom_programme?.trim(),
@@ -54,6 +56,7 @@ export const convertGristProjectToModel = (
   attachments: Map<number, string>,
 ) =>
   projects.map((project) => ({
+    id: String(project.id),
     gristId: project.id,
     slug: project.fields.drupal_url
       ? project.fields.drupal_url
