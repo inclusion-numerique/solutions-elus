@@ -8,9 +8,11 @@ import styles from './Localization.module.css'
 
 const Localization = ({
   project,
+  collectiviteUrl,
   className,
 }: {
   project: ProjectItem
+  collectiviteUrl?: string;
   className?: string
 }) => (
   <div className={className ?? ''}>
@@ -19,9 +21,19 @@ const Localization = ({
     ) : null}
     <div className={`fr-p-6v ${styles.bloc}`}>
       <h2 className="fr-mb-0 fr-text-title--blue-france">Le territoire</h2>
-      <p className="fr-mt-6v fr-mb-0 fr-text--bold">
-        {project.localization.label}
-      </p>
+      {project.localization.echelon === 'commune' ?
+        (
+          <p className="fr-mt-6v fr-mb-0 fr-text--bold">
+            <a href={collectiviteUrl} target="_blank">
+              {project.localization.label}
+            </a>
+          </p>
+        ) : (
+          <p className="fr-mt-6v fr-mb-0 fr-text--bold">
+            {project.localization.label}
+          </p>
+        )
+      }
       {/* No need to display departments for projects with region echelon */}
       {project.localization.echelon !== 'region' &&
       project.localization.departmentName ? (

@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "pnpm --silent with-env next dev",
     "build": "pnpm --silent with-env next build",
+    "postbuild": "next-sitemap",
     "modclean": "modclean -Pr",
     "modclean:root": "modclean -Pr -p ./../..",
     "start": "next start",
@@ -64,8 +65,9 @@
     "js-file-downloader": "^1.1.24",
     "maplibre-gl": "^2.4.0",
     "nanoid": "^3.3.6",
-    "next": "^13.2.4",
+    "next": "^14.0.1",
     "next-auth": "^4.21.1",
+    "next-sitemap": "^4.2.3",
     "node-html-parser": "^6.1.5",
     "nodemailer": "^6.9.1",
     "prisma": "^4.12.0",
