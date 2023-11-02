@@ -1,7 +1,7 @@
 'use client'
 
 import { ChangeEventHandler, useDeferredValue, useState } from 'react'
-import { useQuery, keepPreviousData } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { Spinner } from '@sde/web/ui/Spinner'
 import {
   Etablissement,
@@ -34,7 +34,7 @@ export const CommunitySearchBar = ({
       queryKey: ['community', deferredQuery],
       queryFn: () => searchCommunity(deferredQuery),
       enabled: queryEnabled,
-      placeholderData: keepPreviousData,
+      keepPreviousData: true,
     })
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
