@@ -67,7 +67,7 @@ const getCollectiviteUrl = async (localization: Localization) => {
   const target = sameName.find((item: Collectivite) => 
     item.zip_code ? item.zip_code.startsWith(localization.department || '') : true
   )
-  const slug = target.slug || target.city
+  const slug = target.slug_alias || target.slug || ""
 
   return `https://collectivite.fr/${slug}`;
 };
