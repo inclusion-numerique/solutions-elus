@@ -105,8 +105,8 @@ export default async function HomePage() {
             </div>
             {categories.map((category) => (
               <div key={category} className="fr-col-12 fr-col-md-6 fr-col-lg-4">
-                <div className="fr-tile fr-tile--horizontal fr-enlarge-link">
-                  <div className="fr-tile__body fr-m-4v">
+                <div className="fr-tile fr-tile--horizontal fr-tile--sm fr-enlarge-link">
+                  <div className="fr-tile__body">
                     <h4 className="fr-tile__title fr-mb-0">
                       <Link href={categoryProjectsLink(category)}>
                         {category}

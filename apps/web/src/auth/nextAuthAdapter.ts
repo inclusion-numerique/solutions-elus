@@ -26,7 +26,7 @@ export const nextAuthAdapter: Adapter = {
   // Better handle case of missing session when deleting. It should not crash auth process.
   deleteSession: async (sessionToken) => {
     try {
-      await prismaAdapter.deleteSession(sessionToken)
+      prismaAdapter.deleteSession && await prismaAdapter.deleteSession(sessionToken)
     } catch (error) {
       // See https://www.prisma.io/docs/reference/api-reference/error-reference#p2025
       if (
@@ -43,5 +43,5 @@ export const nextAuthAdapter: Adapter = {
   },
   // Custom link acount
   linkAccount: (account) =>
-    prismaAdapter.linkAccount(removeNonStandardFields(account)),
+  prismaAdapter.linkAccount && prismaAdapter.linkAccount(removeNonStandardFields(account)),
 }
