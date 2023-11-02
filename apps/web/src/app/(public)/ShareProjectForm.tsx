@@ -56,7 +56,7 @@ const ShareProjectForm = () => {
     }
   }
 
-  const fieldsDisabled = createProject.isLoading
+  const fieldsDisabled = createProject.isPending
 
   return (
     <div
@@ -202,7 +202,7 @@ const ShareProjectForm = () => {
               <button
                 className="fr-btn fr-mt-8v fr-icon-checkbox-circle-line"
                 type="submit"
-                disabled={createProject.isLoading}
+                disabled={createProject.isPending}
               >
                 Soumettre le projet
               </button>

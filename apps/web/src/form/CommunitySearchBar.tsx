@@ -1,7 +1,7 @@
 'use client'
 
 import { ChangeEventHandler, useDeferredValue, useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, keepPreviousData } from '@tanstack/react-query'
 import { Spinner } from '@sde/web/ui/Spinner'
 import {
   Etablissement,
@@ -30,10 +30,12 @@ export const CommunitySearchBar = ({
   const { data, isLoading, error } = useQuery<
     SirenCommunitySearchResponse,
     Error
-  >(['community', deferredQuery], () => searchCommunity(deferredQuery), {
-    enabled: queryEnabled,
-    keepPreviousData: true,
-  })
+    >({
+      queryKey: ['community', deferredQuery],
+      queryFn: () => searchCommunity(deferredQuery),
+      enabled: queryEnabled,
+      placeholderData: keepPreviousData,
+    })
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     setSearchQuery(event.target.value)
