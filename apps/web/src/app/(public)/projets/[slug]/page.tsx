@@ -42,12 +42,44 @@ export async function generateMetadata({
   }
 }
 
+type Collectivite = {
+  city: string;
+  zip_code: string;
+  slug: string;
+  slug_alias: string;
+  region: string;
+}
+
+type Localization = {
+  label: string;
+  department: string | null;
+  departmentName: string | null;
+  regionName: string | null;
+  population: number | null;
+  echelon: string;
+}
+
+const getCollectiviteUrl = async (localization: Localization) => {
+  const res = await fetch(`https://api.collectivite.fr/api/commune/search/${encodeURIComponent(localization.label)}`)
+  const data = await res.json()
+
+  const sameName = data.filter((item: Collectivite) => item.city.toLowerCase() === localization.label.toLowerCase())
+  const target = sameName.find((item: Collectivite) => 
+    item.zip_code ? item.zip_code.startsWith(localization.department || '') : true
+  )
+  const slug = target.slug_alias || target.slug || ""
+
+  return `https://collectivite.fr/${slug}`;
+};
+
 const ProjectPage = async ({ params }: { params: { slug: string } }) => {
   const project = await getProject(params.slug)
   if (!project) {
     notFound()
     return {}
   }
+  const collectiviteUrl = project.localization.echelon === 'commune' ?
+    await getCollectiviteUrl(project.localization) : ""
 
   return (
     <div className="fr-container">
@@ -67,7 +99,7 @@ const ProjectPage = async ({ params }: { params: { slug: string } }) => {
           <ol className="fr-breadcrumb__list">
             <li>
               <Link className="fr-breadcrumb__link" href="/">
-                Accueil
+                Solutions d&apos;élus
               </Link>
             </li>
             <li>
@@ -89,7 +121,7 @@ const ProjectPage = async ({ params }: { params: { slug: string } }) => {
       >
         Retour à la liste des projets
       </Link>
-      <Project project={project} />
+      <Project project={project} collectiviteUrl={collectiviteUrl} />
     </div>
   )
 }

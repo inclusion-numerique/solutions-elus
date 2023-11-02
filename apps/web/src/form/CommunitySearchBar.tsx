@@ -30,10 +30,12 @@ export const CommunitySearchBar = ({
   const { data, isLoading, error } = useQuery<
     SirenCommunitySearchResponse,
     Error
-  >(['community', deferredQuery], () => searchCommunity(deferredQuery), {
-    enabled: queryEnabled,
-    keepPreviousData: true,
-  })
+    >({
+      queryKey: ['community', deferredQuery],
+      queryFn: () => searchCommunity(deferredQuery),
+      enabled: queryEnabled,
+      keepPreviousData: true,
+    })
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     setSearchQuery(event.target.value)
