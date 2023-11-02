@@ -126,7 +126,7 @@ const PublicFooter = () => (
           <li className="fr-footer__bottom-item">
             <a
               className="fr-footer__bottom-link"
-              href="https://github.com/inclusion-numerique/projets-territoires"
+              href="https://github.com/inclusion-numerique/solutions-elus"
               target="_blank"
               rel="noreferrer"
               title="Code source"
