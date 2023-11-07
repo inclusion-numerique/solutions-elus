@@ -17,6 +17,7 @@
     "paths": {
       "@sde/cli/*": ["apps/cli/src/*"],
       "@sde/web/*": ["apps/web/src/*"],
+      "@sde/cms/*": ["apps/cms/src/*"],
       "@sde/cdk/*": ["packages/cdk/src/*"],
       "@sde/config/*": ["packages/config/src/*"],
       "@sde/e2e/*": ["packages/e2e/src/*"],
