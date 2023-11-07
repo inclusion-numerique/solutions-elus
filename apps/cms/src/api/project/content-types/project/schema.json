@@ -1,0 +1,62 @@
+{
+  "kind": "collectionType",
+  "collectionName": "projects",
+  "info": {
+    "singularName": "project",
+    "pluralName": "projects",
+    "displayName": "Projet",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "community": {
+      "type": "json",
+      "required": true
+    },
+    "domain": {
+      "type": "enumeration",
+      "enum": [
+        "Accès au numérique",
+        "Accès aux soins",
+        "Attractivité et revitalisation",
+        "Démocratie",
+        "Développement économique",
+        "Economie, Industrie et Commerce",
+        "Éducation et jeunesse",
+        "Infrastructures locales",
+        "Logement et cadre de vie",
+        "Participation citoyenne",
+        "Services au public",
+        "Solidarités",
+        "Soutien aux associations",
+        "Tranquilité publique",
+        "Transition écologique",
+        "Transport et mobilités"
+      ],
+      "required": true
+    },
+    "solution": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "blocks"
+    },
+    "description2": {
+      "type": "richtext"
+    },
+    "person": {
+      "type": "component",
+      "repeatable": false,
+      "component": "projet.personne",
+      "required": true
+    }
+  }
+}

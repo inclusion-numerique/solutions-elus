@@ -90,6 +90,7 @@ workflows:
             - lint
             - test
             - test_e2e
+
   web_app_deployment:
     when:
       equal: [ web_app_deployment, << pipeline.parameters.trigger_workflow >> ]
@@ -121,6 +122,26 @@ workflows:
             - test
             #  - chromatic
             - test_e2e
+  cms_deployment:
+   when:
+      equal: [ cms_deployment, << pipeline.parameters.trigger_workflow >> ]
+    jobs:
+      - prepare_workspace_dependencies
+      - prepare_cms_prod_dependencies
+      - lint:
+          requires:
+            - prepare_workspace_dependencies
+      - test:
+          requires:
+            - prepare_workspace_dependencies
+      - build_cms:
+          requires:
+            - prepare_workspace_dependencies
+            - prepare_cms_prod_dependencies
+      - deploy_cms:
+          requires:
+            - lint
+            - test
 
   project_infrastructure_deployment:
     # This workflow exclusively runs on the infra branch
@@ -181,6 +202,7 @@ jobs:
             - ./node_modules
             - ./apps/web/node_modules
             - ./apps/cli/node_modules
+            - ./apps/cms/node_modules
             - ./packages/cdk/node_modules
             - ./packages/config/node_modules
             - ./packages/e2e/node_modules
@@ -468,6 +490,30 @@ jobs:
           command: pnpm --silent cli github:deployment:update $DEPLOYMENT_ID failure -d 'Deploy failed' -l https://app.circleci.com/pipelines/workflows/$CIRCLE_WORKFLOW_ID
           when: on_fail
 
+  # @todo validate flow
+  prepare_cms_prod_dependencies:
+    executor: node
+    resource_class: large
+    steps:
+      - checkout
+      - skip/skip_unchanged:
+          paths: pnpm-lock.yaml
+      - install_pnpm
+      - run:
+          name: 'Install dependencies'
+          command: |
+            pnpm install -F @sde/cms --prod --node-linker=hoisted --frozen-lockfile
+      - save_cache:
+          key: << pipeline.parameters.cache_version >>-web-prod-{{ checksum "<< pipeline.parameters.lockfile >>" }}
+          paths:
+            - ./node_modules
+            - ./apps/cms/node_modules
+  
+  deploy_cms:
+    executor: node
+    resource_class: large
+    # @todo
+
   compute_project_infrastructure_diff:
     executor: node
     resource_class: large
@@ -488,7 +534,6 @@ jobs:
           name: 'Compute diff'
           command: |
             pnpm --silent -F @sde/cdk cdktf diff project --var-file .tfvars.json
-            
 
   project_infrastructure_deployment:
     executor: node

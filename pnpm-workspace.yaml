@@ -1,6 +1,7 @@
 packages:
   - apps/cli
   - apps/web
+  - apps/cms
   - packages/cdk
   - packages/config
   - packages/e2e
