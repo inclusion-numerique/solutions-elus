@@ -39,7 +39,7 @@ const Quote = ({
         &nbsp;&raquo;
       </p>
       <div className={styles.nameContainer}>
-        {image ? (
+        {image && (
           <Image
             width={68}
             height={68}
@@ -47,7 +47,7 @@ const Quote = ({
             src={getProjectFilePath(image)}
             alt={`Profil de ${name}`}
           />
-        ) : null}
+        )}
         <p className={`fr-text--md fr-mb-0 fr-text--bold ${styles.name}`}>
           {name}
         </p>

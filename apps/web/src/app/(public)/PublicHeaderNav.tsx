@@ -1,13 +1,12 @@
 'use client'
 
 import Link from 'next/link'
-import * as navigation from 'next/navigation'
+import { usePathname } from 'next/navigation'
 
 export const PublicHeaderNav = () => {
-  const pathname =
-    // TODO This is an error in typings of next/navigation in 13.2, remove this casting when next fix this
-    (navigation as unknown as { usePathname: () => string }).usePathname() ??
-    '/'
+  const pathname = usePathname() || '/'
+  const projectsPaths = ['/projets', '/region', '/thematique', '/population']
+  const isProject = projectsPaths.map((path) => pathname.startsWith(path)).includes(true)
 
   return (
     <ul className="fr-nav__list">
@@ -32,7 +31,7 @@ export const PublicHeaderNav = () => {
       <li className="fr-nav__item">
         <Link
           className="fr-nav__link"
-          aria-current={pathname === '/projets' ? 'page' : undefined}
+          aria-current={isProject ? 'page' : undefined}
           href="/projets"
         >
           Voir les projets

@@ -32,7 +32,7 @@ export function Breadcrumbs({
           {hideRoot ? null : (
             <li>
               <Link className="fr-breadcrumb__link" href="/">
-                Accueil
+                Solution d&apos;élus
               </Link>
             </li>
           )}

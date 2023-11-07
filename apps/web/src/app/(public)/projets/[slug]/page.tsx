@@ -75,9 +75,9 @@ const getCollectiviteUrl = async (localization: Localization) => {
 const ProjectPage = async ({ params }: { params: { slug: string } }) => {
   const project = await getProject(params.slug)
   if (!project) {
-    notFound()
-    return {}
+    return notFound()
   }
+  
   const collectiviteUrl = project.localization.echelon === 'commune' ?
     await getCollectiviteUrl(project.localization) : ""
 
