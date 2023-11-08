@@ -50,17 +50,17 @@ const Project = ({ project, collectiviteUrl }: { project: ProjectItem, collectiv
           {textToParagraphs(project.description).map((paragraph, index) => (
             <p
               key={paragraph}
-              className={`fr-text--lg ${index === 0 ? 'fr-mt-12v' : ''}`}
+              className={`fr-text--lg ${index === 0 && 'fr-mt-12v'}`}
             >
               {paragraph}
             </p>
           ))}
 
-          {project.youtubeVideo ? (
+          {project.youtubeVideo && (
             <div className="fr-mt-12v">
               <YoutubeVideo url={project.youtubeVideo} />
             </div>
-          ) : null}
+          )}
 
           <SocialNetworks
             className="fr-hidden-lg fr-mt-12v"
@@ -68,7 +68,7 @@ const Project = ({ project, collectiviteUrl }: { project: ProjectItem, collectiv
           />
           <Localization project={project} collectiviteUrl={collectiviteUrl} className="fr-hidden-lg fr-mt-12v" />
           <Blocs className="fr-mt-6v" project={project} />
-          {project.funding ? (
+          {project.funding && (
             <>
               <h2 className="fr-text-title--blue-france fr-mt-12v">
                 Partenaires/cofinanceurs
@@ -76,35 +76,35 @@ const Project = ({ project, collectiviteUrl }: { project: ProjectItem, collectiv
               <p className="fr-text--lg">
                 {textToParagraphs(project.funding).map((paragraph, index) => (
                   <>
-                    {index === 0 ? null : <br key={`br_${paragraph}`} />}
+                    {index !== 0 && <br key={`br_${paragraph}`} />}
                     <span key={paragraph}>{paragraph}</span>
                   </>
                 ))}
               </p>
             </>
-          ) : null}
-          {project.budget || project.inaugurationDate ? (
+          )}
+          {(project.budget || project.inaugurationDate) && (
             <>
               <div className={`${styles.metaInfos} fr-mt-12v`}>
-                {project.budget ? (
+                {project.budget && (
                   <div style={{ flex: 1 }}>
                     <p>Budget alloué au projet</p>
                     <p className={styles.metaInfoValue}>
                       {formatInteger(project.budget)}&nbsp;€
                     </p>
                   </div>
-                ) : null}
-                {project.inaugurationDate ? (
+                )}
+                {project.inaugurationDate && (
                   <div style={{ flex: 1 }}>
                     <p>Date d&lsquo;inauguration</p>
                     <p className={styles.metaInfoValue}>
                       {dateAsDay(project.inaugurationDate)}
                     </p>
                   </div>
-                ) : null}
+                )}
               </div>
             </>
-          ) : null}
+          )}
           <Quotes project={project} />
           {project.program && (
             <>
@@ -121,21 +121,6 @@ const Project = ({ project, collectiviteUrl }: { project: ProjectItem, collectiv
               <hr className="fr-mt-12v" />
             </>
           )}
-          <h2 className="fr-text-title--blue-france fr-mt-8v">
-            L’Agence nationale de la cohésion des territoires
-          </h2>
-          <p className="fr-text--lg">
-            L’Agence nationale de la cohésion des territoires (ANCT) est un
-            nouveau partenaire pour les collectivités locales : elle conçoit et
-            anime des programmes d’appui nationaux pour mettre en œuvre les
-            politiques publiques, dont Action Cœur de Ville fait partie.
-          </p>
-          <p className="fr-text--lg">
-            Dans ce cadre, elle est chargée de la mise en œuvre opérationnelle
-            du programme et de son évaluation, du pilotage du centre de
-            ressources collaboratif ainsi que de l’organisation des séminaires
-            nationaux.
-          </p>
         </div>
         <div
           className="fr-hidden fr-unhidden-lg fr-col-4 fr-col-offset-1 fr-pt-12v"

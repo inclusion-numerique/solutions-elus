@@ -12,6 +12,8 @@ export const getProjectsList = () =>
       categories: true,
       id: true,
       title: true,
+      slug: true,
+      subtitle: true,
       localization: {
         select: {
           label: true,
@@ -27,7 +29,6 @@ export const getProjectsList = () =>
       longitude: true,
       coverImage: true,
       coverImageAlt: true,
-      slug: true,
     },
     orderBy: [
       {

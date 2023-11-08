@@ -1,5 +1,6 @@
 "use client"
 
+import { useMemo } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { getProjectFilePath } from "@sde/web/project/project";
@@ -19,7 +20,7 @@ export const Projects = ({ filter, slug, projects }: ProjectsProps) => {
   const populationParams = searchParams?.getAll("population") || [""]
   const thematiqueParams = searchParams?.getAll("thematique") || [""]
 
-  const filteredProjects = projects.filter(({ localization, categories }) => {
+  const filteredProjects = useMemo(() => projects.filter(({ localization, categories }) => {
     const range = populations.find(({ slug }) => slug === populationParams[0])?.range || [0, Number.POSITIVE_INFINITY]
     const region = regions.find(({ slug }) => slug === regionParams[0])?.name || ""
     const thematique = thematiques.find(({ slug }) => slug === thematiqueParams[0])?.name || ""
@@ -71,9 +72,9 @@ export const Projects = ({ filter, slug, projects }: ProjectsProps) => {
       }
       return false
     }
-
-    return false 
-  })
+    return false
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }), [filter, slug])
 
   return (
     <div className="fr-container fr-py-20v fr-pt-30v">        
@@ -128,9 +129,7 @@ export const Projects = ({ filter, slug, projects }: ProjectsProps) => {
                   <Link href={`/projets/${project.slug}`}>{project.title}</Link>
                 </h3>
                 <p className="fr-card__desc">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Quisque ac libero viverra, aliquam libero sed, aliquam nisl. Sed euismod, nisl quis tincidunt ultricies, nunc nisl aliquet nunc,
-                  quis pharetra mauris diam ut nunc.
+                  {project.subtitle}
                 </p>
                 <div className="fr-card__end">
                   <ul className="fr-tags-group">
