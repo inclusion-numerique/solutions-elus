@@ -1,11 +1,11 @@
-import { Metadata } from 'next'
+import { Metadata, ResolvingMetadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import React from 'react'
 import { getProject } from '@sde/web/legacyProject/projectsList'
 import { prismaClient } from '@sde/web/prismaClient'
 import { getServerUrl } from '@sde/web/utils/baseUrl'
-import { getProjectPath } from '@sde/web/project/project'
+import { getProjectFilePath, getProjectPath } from '@sde/web/project/project'
 import Project from './Project'
 import { AnctCard } from './AnctCard'
 
@@ -17,27 +17,37 @@ export const generateStaticParams = (): Promise<{ slug: string }[]> =>
     select: { slug: true },
   })
 
-export async function generateMetadata({
-  params,
-}: {
+type MetadataProps = {
   params: { slug: string }
-}): Promise<Metadata> {
+  searchParams: { [key: string]: string | string[] | undefined }
+}
+
+export async function generateMetadata(
+    { params }: MetadataProps,
+    parent: ResolvingMetadata
+  ): Promise<Metadata> {
   const project = await getProject(params.slug)
   if (!project) {
     notFound()
-    return {}
   }
+
+  const parentMetadata = await parent
+  const previousImages = parentMetadata?.openGraph?.images || []
+  
   return {
+    title: project.title,
+    description: project.subtitle || project.description.slice(160),
     openGraph: {
-      type: 'website',
+      type: 'article',
       url: getServerUrl(getProjectPath(project)),
       title: project.title,
-      description: project.subtitle,
+      description: project.subtitle || project.description.slice(160),
       images: [
         {
-          url: getServerUrl(project.coverImage),
-          alt: project.coverImageAlt || undefined,
+          url: getProjectFilePath(project.coverImage),
+          alt: project.coverImageAlt || project.title,
         },
+        ...previousImages,
       ],
     },
   }
