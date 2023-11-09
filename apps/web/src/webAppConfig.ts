@@ -1,4 +1,4 @@
-import { mainLiveUrl, projectTitle, repositoryUrl } from '@sde/config/config'
+import { mainLiveUrl, projectTitle, projectDescription, repositoryUrl } from '@sde/config/config'
 
 const NodeEnvironment = process.env.NODE_ENV
 
@@ -61,6 +61,7 @@ export const ServerWebAppConfig = {
 export const PublicWebAppConfig = {
   contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL,
   projectTitle,
+  projectDescription,
   mainLiveUrl,
   repository: repositoryUrl,
   disableLinkPrefetch:

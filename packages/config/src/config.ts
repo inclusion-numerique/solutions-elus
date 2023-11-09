@@ -5,6 +5,7 @@
 import { arrayFromEnvironmentVariable } from '@sde/config/arrayFromEnvironmentVariable'
 
 export const projectTitle = "Solutions d'élus"
+export const projectDescription = "Ensemble, partageons les solutions des territoires. Retrouvez ici les projets et réalisations des collectivités."
 export const projectSlug = 'solutionsdelus'
 export const mainLiveUrl = 'https://solutionsdelus.gouv.fr'
 export const repositoryUrl =
