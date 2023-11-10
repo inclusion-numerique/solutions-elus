@@ -131,7 +131,9 @@ const Project = ({ project, collectiviteUrl }: { project: ProjectItem, collectiv
             className="fr-mt-8v"
             url={getServerUrl(getProjectPath(project))}
           />
-          <Localization className="fr-mt-8v" project={project} collectiviteUrl={collectiviteUrl} />
+          <div style={{ position: 'sticky', top: 0 }}>
+            <Localization className="fr-mt-8v" project={project} collectiviteUrl={collectiviteUrl} />
+          </div>
         </div>
       </div>
     </>
