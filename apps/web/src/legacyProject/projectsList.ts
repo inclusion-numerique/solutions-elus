@@ -14,6 +14,7 @@ export const getProjectsList = () =>
       title: true,
       slug: true,
       subtitle: true,
+      description: true,
       localization: {
         select: {
           label: true,

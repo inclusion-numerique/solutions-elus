@@ -96,25 +96,25 @@ export const metadata: Metadata = {
   icons: [
     {
       rel: "icon",
-      url: new URL("/favicon/favicon.ico", getServerBaseUrl()),
+      url: "/favicon/favicon.ico",
       sizes: "any",
       type: "image/x-icon",
     },
     {
       rel: "icon",
-      url: new URL("/favicon/favicon.svg", getServerBaseUrl()),
+      url: "/favicon/favicon.svg",
       sizes: "any",
       type: "image/svg+xml",
     },
     {
       rel: "shortcut icon",
-      url: new URL("/favicon/favicon.ico", getServerBaseUrl()),
+      url: "/favicon/favicon.ico",
       sizes: "any",
       type: "image/x-icon",
     },
     {
       rel: "apple-touch-icon",
-      url: new URL("/favicon/apple-touch-icon.png", getServerBaseUrl()),
+      url: "/favicon/apple-touch-icon.png",
       sizes: "180x180",
       type: "image/png",
     },

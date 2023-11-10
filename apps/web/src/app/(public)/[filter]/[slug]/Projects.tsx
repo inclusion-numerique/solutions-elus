@@ -2,19 +2,23 @@
 
 import { useMemo } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { getProjectFilePath } from "@sde/web/project/project";
 import { ProjectListItem } from "@sde/web/legacyProject/projectsList";
 import { regions, populations, thematiques, ContentType, FilterType } from "../data";
 import { ProjectListCta } from "../../projets/ProjectListCta";
 
 type ProjectsProps = {
-  filter: FilterType
-  slug: ContentType
+  filter?: FilterType
+  slug?: ContentType
   projects: ProjectListItem[]
 }
 
+const pageSize = 10
+
 export const Projects = ({ filter, slug, projects }: ProjectsProps) => {
+  const router = useRouter()
+  const pathname = usePathname()
   const searchParams = useSearchParams()
   const regionParams = searchParams?.getAll("region") || [""]
   const populationParams = searchParams?.getAll("population") || [""]
@@ -25,7 +29,11 @@ export const Projects = ({ filter, slug, projects }: ProjectsProps) => {
     const region = regions.find(({ slug }) => slug === regionParams[0])?.name || ""
     const thematique = thematiques.find(({ slug }) => slug === thematiqueParams[0])?.name || ""
 
-    if (filter?.slug === "region") {
+    if (!filter && !slug) {
+      return true
+    }
+
+    if (filter?.slug === "region" && slug) {
       if (localization.regionName === slug.name) {
         if (localization.population) {
           if (thematique) {
@@ -41,7 +49,7 @@ export const Projects = ({ filter, slug, projects }: ProjectsProps) => {
       return false
     }
 
-    if (filter?.slug === "population") {
+    if (filter?.slug === "population" && slug) {
       if (localization.population && slug.range && localization.population >= slug.range[0] && localization.population <= slug.range[1]) {
         if (localization.regionName && region) {
           if (thematique) {
@@ -57,7 +65,7 @@ export const Projects = ({ filter, slug, projects }: ProjectsProps) => {
       return false
     }
 
-    if (filter?.slug === "thematique") {
+    if (filter?.slug === "thematique" && slug) {
       if (categories.includes(slug.name)) {
         if (localization.regionName && region) {
           if (localization.population) {
@@ -72,13 +80,40 @@ export const Projects = ({ filter, slug, projects }: ProjectsProps) => {
       }
       return false
     }
+
     return false
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }), [filter, slug])
+  
+  const total = filteredProjects.length
+  const pageCount = Math.ceil(total / pageSize)
+
+  const pageParams = searchParams?.get("page") ? Number(searchParams?.get("page")) : 1
+  const page = pageParams > pageCount ? pageCount : pageParams
+  if (pageParams > pageCount) {
+    const params = new URLSearchParams(searchParams?.toString())
+    params.set("page", pageCount.toString())
+    router.push(`${pathname}?${params.toString()}`)
+  }
+  if (pageParams < 1) {
+    const params = new URLSearchParams(searchParams?.toString())
+    params.delete("page")
+    router.push(`${pathname}?${params.toString()}`)
+  }
+
+  const paginatedProjects = useMemo(() => (
+    filteredProjects.slice((page - 1) * pageSize, page * pageSize)
+  ), [filteredProjects, page])
+
+  const handlePageChange = (newPage?: number) => {
+    const params = new URLSearchParams(searchParams?.toString())
+    newPage ? params.set("page", newPage.toString()) : params.delete("page")
+    router.push(`${pathname}?${params.toString()}`)
+  }
 
   return (
     <div className="fr-container fr-py-20v fr-pt-30v">        
-      {filteredProjects.length === 0 ? (
+      {total === 0 ? (
         <>
           <p className="fr-text--lead fr-text--bold">
             Il n&apos;y a pas encore de projets pour votre recherche.
@@ -89,12 +124,12 @@ export const Projects = ({ filter, slug, projects }: ProjectsProps) => {
         </>
       ) : (
         <p className="fr-text--bold fr-text--lg">
-          {filteredProjects.length === 1
+          {total === 1
             ? "1 projet correspond à votre recherche"
-            : `${filteredProjects.length} projets correspondent à votre recherche`}
+            : `${total} projets correspondent à votre recherche`}
         </p>
       )}
-      {filteredProjects.map((project, index) => (
+      {total > 0 && paginatedProjects.map((project, index) => (
         <div key={project.slug} className={`fr-pb-${index === (projects.length - 1) ? 0 : 5}v`}>
           <div className="fr-card fr-enlarge-link fr-card--horizontal fr-card--horizontal-half">
             <div className="fr-card__header">
@@ -118,18 +153,22 @@ export const Projects = ({ filter, slug, projects }: ProjectsProps) => {
                 <div className="fr-card__start fr-mb-6v">
                   <p className="fr-hint-text fr-mb-0" style={{ color: 'var(--text-mention-grey' }}>
                     <span className="fr-mr-1w fr-icon--sm fr-icon-map-pin-2-line" />
-                    {project.localization.echelon === 'region' ? (
-                      project.localization.label
-                    ) : (
-                      `${project.localization.label} (${project.localization.department})`
-                    )}
+                    {project.localization.echelon === 'region'
+                      ? (project.localization.label )
+                      : (`${project.localization.label} (${project.localization.department})`)
+                    }
                   </p>
                 </div>
                 <h3 className="fr-card__title">
                   <Link href={`/projets/${project.slug}`}>{project.title}</Link>
                 </h3>
                 <p className="fr-card__desc">
-                  {project.subtitle}
+                  {
+                    (project.subtitle.length > 80 && project.subtitle)
+                    || (project.description.length > 240
+                      ? `${project.description.slice(0, 240)}...`
+                      : project.description)
+                  }
                 </p>
                 <div className="fr-card__end">
                   <ul className="fr-tags-group">
@@ -145,6 +184,111 @@ export const Projects = ({ filter, slug, projects }: ProjectsProps) => {
           </div>
         </div>
       ))}
+      {pageCount > 1 && (
+        <div className="fr-grid-row fr-grid-row--center">
+          <nav role="navigation" className="fr-pagination fr-mt-10v" aria-label="pagination">
+            <ul className="fr-pagination__list">
+              <li>
+                <button
+                  className="fr-pagination__link fr-pagination__link--first"
+                  aria-disabled={page === 1}
+                  disabled={page === 1}
+                  role="link"
+                  onClick={() => handlePageChange()}
+                >
+                  Première page
+                </button>
+              </li>
+              <li>
+                <button
+                  className="fr-pagination__link fr-pagination__link--prev fr-pagination__link--lg-label"
+                  aria-disabled={page === 1}
+                  disabled={page === 1}
+                  role="link"
+                  onClick={() => handlePageChange(page - 1 === 1 ? undefined : page - 1)}
+                >
+                  Page précédente
+                </button>
+              </li>
+              {Array.from({length: pageCount}).map((_, index) => {
+                const current = index + 1
+                if (
+                  current > 2
+                  && current < pageCount - 1
+                  && Math.abs(current - page) > 2
+                  // && Math.abs(current - page) < pageCount - 2
+                ) {
+                  if (page - 3 === current || page + 3 === current) return (
+                    <li key={`page-${current}`}>
+                      <button
+                        className="fr-pagination__link"
+                        aria-hidden="true"
+                        role="link"
+                        aria-disabled
+                        disabled
+                      >
+                        …
+                      </button>
+                    </li>
+                  )
+                  return null
+                }
+                return (
+                // eslint-disable-next-line react/no-array-index-key
+                <li key={`page-${current}`}>
+                  <button
+                    className="fr-pagination__link"
+                    aria-current={current === page ? 'page' : undefined}
+                    title={`Page ${current}`}
+                    role="link"
+                    onClick={() => handlePageChange(current === 1 ? undefined : current)}
+                  >
+                    {current}
+                  </button>
+                </li>
+              )})}
+              <li>
+                <button
+                  className="fr-pagination__link fr-pagination__link--next fr-pagination__link--lg-label"
+                  aria-disabled={page === pageCount}
+                  disabled={page === pageCount}
+                  role="link"
+                  onClick={() => handlePageChange(page + 1)}
+                >
+                  Page suivante
+                </button>
+              </li>
+              <li>
+                <button
+                  className="fr-pagination__link fr-pagination__link--last"
+                  aria-disabled={page === pageCount}
+                  disabled={page === pageCount}
+                  role="link"
+                  onClick={() => handlePageChange(pageCount)}
+                >
+                  Dernière page
+                </button>
+              </li>
+
+              {/* <li className="fr-pagination__item">
+                <button
+                  type="button"
+                  className="fr-btn fr-btn--secondary fr-btn--icon-left"
+                  onClick={() => {
+                    window.scrollTo(0, 0)
+                    setOffset(offset - pageSize)
+                  }}
+                  disabled={offset === 0}
+                >
+                  <span className="fr-fi-arrow-left-line" aria-hidden="true" />
+                  Précédent
+                </button>
+              </li> */}
+
+            </ul>
+          </nav>
+        </div>
+      )}
     </div>
   )
 };

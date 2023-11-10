@@ -7,11 +7,11 @@ import { regions, populations, thematiques } from '../data';
 // ------------------------------------------------------------
 
 type FormProps = {
-  filter: {
+  filter?: {
     name: string
     slug: "region" | "population" | "thematique"
   }
-  slug: {
+  slug?: {
     name: string
     slug: string
     range?: number[]
@@ -39,20 +39,22 @@ export const Form = ({ filter, slug }: FormProps) => {
   }
 
   const [selected, setSelected] = useState({
-    region: filter.slug === 'region' ? slug.slug : params.region,
-    population: filter.slug === 'population' ? slug.slug : params.population,
-    thematique: filter.slug === 'thematique' ? slug.slug : params.thematique,
+    region: filter?.slug === 'region' ? slug?.slug : params.region,
+    population: filter?.slug === 'population' ? slug?.slug : params.population,
+    thematique: filter?.slug === 'thematique' ? slug?.slug : params.thematique,
   })
 
   const handleSearch = () => {
-    const main = selected[filter.slug]
+    const main = filter ? selected[filter.slug] : undefined
+ // const main = selected.region || selected.population || selected.thematique
+ // const main = "bretagne" || "moins-de-500-habitants" || "acces-aux-soins"
 
     const searchParams = new URLSearchParams()
-    selected.region && searchParams.append('region', selected.region)
-    selected.population && searchParams.append('population', selected.population)
-    selected.thematique && searchParams.append('thematique', selected.thematique)
+    selected.region && searchParams.set('region', selected.region)
+    selected.population && searchParams.set('population', selected.population)
+    selected.thematique && searchParams.set('thematique', selected.thematique)
 
-    if (main) {
+    if (main && filter) {
       searchParams.delete(filter.slug)
       router.push(`/${filter.slug}/${main}?${searchParams.toString()}`, { scroll: false })
     }
@@ -84,7 +86,7 @@ export const Form = ({ filter, slug }: FormProps) => {
 
   const handleReset = () => {
     setSelected({ region: "", population: "", thematique: "" })
-    router.push("/projets", { scroll: false })
+    router.push('/projets', { scroll: false })
   }
 
   return (

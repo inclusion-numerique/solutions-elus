@@ -22,19 +22,19 @@ export const AnctCard = () => {
       </div>
       <div className="fr-card__body">
         <div className="fr-card__content">
-          <h2 className="fr-card__title fr-text-title--blue-france">
+          <h2 className="fr-card__title fr-mb-4v">
             <a href="https://agence-cohesion-territoires.gouv.fr/" target="_blank">
               L’Agence Nationale de la Cohésion des Territoires
             </a>
           </h2>
           <div className="fr-card__desc">
-            <p className="fr-text--lg">
+            <p className="">
               L’Agence Nationale de la Cohésion des Territoires (ANCT) est un
               nouveau partenaire pour les collectivités locales : elle conçoit et
               anime des programmes d’appui nationaux pour mettre en œuvre les
               politiques publiques, dont Action Cœur de Ville fait partie.
             </p>
-            <p className="fr-text--lg">
+            <p className="">
               Dans ce cadre, elle est chargée de la mise en œuvre opérationnelle
               du programme et de son évaluation, du pilotage du centre de
               ressources collaboratif ainsi que de l’organisation des séminaires
