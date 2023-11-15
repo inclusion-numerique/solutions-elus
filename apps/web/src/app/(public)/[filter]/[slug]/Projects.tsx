@@ -24,64 +24,65 @@ export const Projects = ({ filter, slug, projects, pageSize = 10 }: ProjectsProp
   const populationParams = searchParams?.getAll("population") || [""]
   const thematiqueParams = searchParams?.getAll("thematique") || [""]
 
+  // eslint-disable-next-line arrow-body-style
   const filteredProjects = useMemo(() => projects.filter(({ localization, categories }) => {
-    const range = populations.find(({ slug }) => slug === populationParams[0])?.range || [0, Number.POSITIVE_INFINITY]
-    const region = regions.find(({ slug }) => slug === regionParams[0])?.name || ""
-    const thematique = thematiques.find(({ slug }) => slug === thematiqueParams[0])?.name || ""
+    // const range = populations.find(({ slug }) => slug === populationParams[0])?.range || [0, Number.POSITIVE_INFINITY]
+    // const region = regions.find(({ slug }) => slug === regionParams[0])?.name || ""
+    // const thematique = thematiques.find(({ slug }) => slug === thematiqueParams[0])?.name || ""
 
-    if (!filter && !slug) {
-      return true
-    }
+    // if (!filter && !slug) {
+    //   return true
+    // }
 
-    if (filter?.slug === "region" && slug) {
-      if (localization.regionName === slug.name) {
-        if (localization.population) {
-          if (thematique) {
-            return categories.includes(thematique) && localization.population >= range[0] && localization.population <= range[1]
-          }
-          return localization.population >= range[0] && localization.population <= range[1]
-        }
-        if (thematique) {
-          return categories.includes(thematique)
-        }
-        return true
-      }
-      return false
-    }
+    // if (filter?.slug === "region" && slug) {
+    //   if (localization.regionName === slug.name) {
+    //     if (localization.population) {
+    //       if (thematique) {
+    //         return categories.includes(thematique) && localization.population >= range[0] && localization.population <= range[1]
+    //       }
+    //       return localization.population >= range[0] && localization.population <= range[1]
+    //     }
+    //     if (thematique) {
+    //       return categories.includes(thematique)
+    //     }
+    //     return true
+    //   }
+    //   return false
+    // }
 
-    if (filter?.slug === "population" && slug) {
-      if (localization.population && slug.range && localization.population >= slug.range[0] && localization.population <= slug.range[1]) {
-        if (localization.regionName && region) {
-          if (thematique) {
-            return categories.includes(thematique) && localization.regionName === region
-          }
-          return localization.regionName === region
-        }
-        if (thematique) {
-          return categories.includes(thematique)
-        }
-        return true
-      }
-      return false
-    }
+    // if (filter?.slug === "population" && slug) {
+    //   if (localization.population && slug.range && localization.population >= slug.range[0] && localization.population <= slug.range[1]) {
+    //     if (localization.regionName && region) {
+    //       if (thematique) {
+    //         return categories.includes(thematique) && localization.regionName === region
+    //       }
+    //       return localization.regionName === region
+    //     }
+    //     if (thematique) {
+    //       return categories.includes(thematique)
+    //     }
+    //     return true
+    //   }
+    //   return false
+    // }
 
-    if (filter?.slug === "thematique" && slug) {
-      if (categories.includes(slug.name)) {
-        if (localization.regionName && region) {
-          if (localization.population) {
-            return categories.includes(slug.name) && localization.population >= range[0] && localization.population <= range[1] && localization.regionName === region
-          }
-          return categories.includes(slug.name) && localization.regionName === region
-        }
-        if (localization.population) {
-          return categories.includes(slug.name) && localization.population >= range[0] && localization.population <= range[1]
-        }
-        return true
-      }
-      return false
-    }
+    // if (filter?.slug === "thematique" && slug) {
+    //   if (categories.includes(slug.name)) {
+    //     if (localization.regionName && region) {
+    //       if (localization.population) {
+    //         return categories.includes(slug.name) && localization.population >= range[0] && localization.population <= range[1] && localization.regionName === region
+    //       }
+    //       return categories.includes(slug.name) && localization.regionName === region
+    //     }
+    //     if (localization.population) {
+    //       return categories.includes(slug.name) && localization.population >= range[0] && localization.population <= range[1]
+    //     }
+    //     return true
+    //   }
+    //   return false
+    // }
 
-    return false
+    return true
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }), [filter, slug])
   

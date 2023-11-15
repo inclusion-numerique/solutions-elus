@@ -56,7 +56,6 @@ const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ['@sde/emails'],
   experimental: {
-    windowHistorySupport: true,
     // See https://beta.nextjs.org/docs/api-reference/next.config.js#servercomponentsexternalpackages
     serverComponentsExternalPackages: [
       'nanoid',
