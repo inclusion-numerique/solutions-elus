@@ -32,7 +32,7 @@ const FilterSlugPage = async ({ params }: { params: StaticParams }) => {
     return notFound()
   }
 
-  const projects = await getProjectsList()
+  // const projects = await getProjectsList()
 
   return (
     <>
@@ -99,7 +99,7 @@ const FilterSlugPage = async ({ params }: { params: StaticParams }) => {
         <Form filter={filter} slug={slug} />
 
       </div>
-      <Projects filter={filter} slug={slug} projects={projects} />
+      {/* <Projects filter={filter} slug={slug} projects={projects} /> */}
       <ShareSearchCTA />
       <div className="fr-container">
         <Paragraph />

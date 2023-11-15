@@ -57,28 +57,33 @@ export const Form = ({ filter, slug }: FormProps) => {
     if (main && filter) {
       searchParams.delete(filter.slug)
       router.push(`/${filter.slug}/${main}?${searchParams.toString()}`, { scroll: false })
+      // window.history.pushState({}, '', `http://localhost:3000/${filter.slug}/${main}?${searchParams.toString()}`)
     }
 
     if (!main && (selected.region || selected.population || selected.thematique)) {
       if (selected.region) {
         searchParams.delete('region')
         router.push(`/region/${selected.region}?${searchParams.toString()}`, { scroll: false })
+        // window.history.pushState({}, '', `http://localhost:3000/region/${selected.region}`)
         return
       }
       if (selected.population) {
         searchParams.delete('population')
         router.push(`/population/${selected.population}?${searchParams.toString()}`, { scroll: false })
+        // window.history.pushState({}, '', `http://localhost:3000/population/${selected.population}?${searchParams.toString()}`)
         return
       }
       if (selected.thematique) {
         searchParams.delete('thematique')
         router.push(`/thematique/${selected.thematique}?${searchParams.toString()}`, { scroll: false })
+        // window.history.pushState({}, '', `http://localhost:3000/thematique/${selected.thematique}?${searchParams.toString()}`)
         return
       }
     }
 
     if (!selected.region && !selected.population && !selected.thematique) {
       router.push('/projets', { scroll: false })
+      // window.history.pushState({}, '', '/projets')
     }
 
     // selected[filter.slug] && searchParams.delete(filter.slug)
@@ -87,6 +92,7 @@ export const Form = ({ filter, slug }: FormProps) => {
   const handleReset = () => {
     setSelected({ region: "", population: "", thematique: "" })
     router.push('/projets', { scroll: false })
+    // window.history.pushState({}, '', '/projets')
   }
 
   return (
