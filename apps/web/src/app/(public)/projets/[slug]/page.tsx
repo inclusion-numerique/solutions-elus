@@ -44,7 +44,7 @@ export async function generateMetadata(
       description: project.subtitle || project.description.slice(160),
       images: [
         {
-          url: getProjectFilePath(project.coverImage),
+          url: getServerUrl(getProjectFilePath(project.coverImage)),
           alt: project.coverImageAlt || project.title,
         },
         ...previousImages,
