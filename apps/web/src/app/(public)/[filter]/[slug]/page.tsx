@@ -38,7 +38,7 @@ const FilterSlugPage = async ({ params }: { params: StaticParams }) => {
     <>
       <div className={`${styles.withImageBackground}`}>
         <div
-          className="fr-container fr-py-10v fr-px-0"
+          className="fr-container fr-py-8v fr-py-md-4v fr-px-0 fr-px-md-8w"
           style={{ position: 'relative' }}
         >
           <nav

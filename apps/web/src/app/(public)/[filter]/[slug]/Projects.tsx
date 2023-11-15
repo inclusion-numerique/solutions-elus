@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { getProjectFilePath } from "@sde/web/project/project";
@@ -12,14 +12,14 @@ type ProjectsProps = {
   filter?: FilterType
   slug?: ContentType
   projects: ProjectListItem[]
+  pageSize?: number
 }
 
-const pageSize = 10
-
-export const Projects = ({ filter, slug, projects }: ProjectsProps) => {
+export const Projects = ({ filter, slug, projects, pageSize = 10 }: ProjectsProps) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+
   const regionParams = searchParams?.getAll("region") || [""]
   const populationParams = searchParams?.getAll("population") || [""]
   const thematiqueParams = searchParams?.getAll("thematique") || [""]
@@ -88,21 +88,27 @@ export const Projects = ({ filter, slug, projects }: ProjectsProps) => {
   const total = filteredProjects.length
   const pageCount = Math.ceil(total / pageSize)
 
-  const pageParams = searchParams?.get("page") ? Number(searchParams?.get("page")) : 1
+  const pageParams = Number(searchParams?.get("page")) || 1
   const page = pageParams > pageCount ? pageCount : pageParams
-  if (pageParams > pageCount) {
-    const params = new URLSearchParams(searchParams?.toString())
-    params.set("page", pageCount.toString())
-    router.push(`${pathname}?${params.toString()}`)
-  }
-  if (pageParams < 1) {
-    const params = new URLSearchParams(searchParams?.toString())
-    params.delete("page")
-    router.push(`${pathname}?${params.toString()}`)
-  }
+
+  useEffect(() => {
+    if (pageParams < 1) {
+      const params = new URLSearchParams(searchParams?.toString())
+      params.delete("page")
+      router.push(`${pathname}?${params.toString()}`)
+    }
+    if (pageParams > 1 && pageParams > pageCount) {
+      const params = new URLSearchParams(searchParams?.toString())
+      const lastPage = pageCount > 0 ? pageCount : 1
+      lastPage === 1 ? params.delete("page") : params.set("page", lastPage.toString())
+      router.push(`${pathname}?${params.toString()}`)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  } , [pageParams])
 
   const paginatedProjects = useMemo(() => (
     filteredProjects.slice((page - 1) * pageSize, page * pageSize)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   ), [filteredProjects, page])
 
   const handlePageChange = (newPage?: number) => {
@@ -111,24 +117,26 @@ export const Projects = ({ filter, slug, projects }: ProjectsProps) => {
     router.push(`${pathname}?${params.toString()}`)
   }
 
-  return (
-    <div className="fr-container fr-py-20v fr-pt-30v">        
-      {total === 0 ? (
-        <>
-          <p className="fr-text--lead fr-text--bold">
-            Il n&apos;y a pas encore de projets pour votre recherche.
-          </p>
-          <ul className="fr-raw-list">
-            <ProjectListCta />
-          </ul>
-        </>
-      ) : (
-        <p className="fr-text--bold fr-text--lg">
-          {total === 1
-            ? "1 projet correspond à votre recherche"
-            : `${total} projets correspondent à votre recherche`}
+  if (total === 0 || pageCount === 0) {
+    return (
+      <div className="fr-container fr-py-20v fr-pt-30v">        
+        <p className="fr-text--lead fr-text--bold">
+          Il n&apos;y a pas encore de projets pour votre recherche.
         </p>
-      )}
+        <ul className="fr-raw-list">
+          <ProjectListCta />
+        </ul>
+      </div>
+    )
+  }
+
+  return (
+    <div className="fr-container fr-py-20v fr-pt-30v">
+      <p className="fr-text--bold fr-text--lg">
+        {total === 1
+          ? "1 projet correspond à votre recherche"
+          : `${total} projets correspondent à votre recherche`}
+      </p>
       {total > 0 && paginatedProjects.map((project, index) => (
         <div key={project.slug} className={`fr-pb-${index === (projects.length - 1) ? 0 : 5}v`}>
           <div className="fr-card fr-enlarge-link fr-card--horizontal fr-card--horizontal-half">
@@ -269,22 +277,6 @@ export const Projects = ({ filter, slug, projects }: ProjectsProps) => {
                   Dernière page
                 </button>
               </li>
-
-              {/* <li className="fr-pagination__item">
-                <button
-                  type="button"
-                  className="fr-btn fr-btn--secondary fr-btn--icon-left"
-                  onClick={() => {
-                    window.scrollTo(0, 0)
-                    setOffset(offset - pageSize)
-                  }}
-                  disabled={offset === 0}
-                >
-                  <span className="fr-fi-arrow-left-line" aria-hidden="true" />
-                  Précédent
-                </button>
-              </li> */}
-
             </ul>
           </nav>
         </div>
