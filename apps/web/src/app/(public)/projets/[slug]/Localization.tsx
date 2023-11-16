@@ -5,6 +5,7 @@ import { formatInteger } from '@sde/web/utils/formatInteger'
 import { textToParagraphs } from '@sde/web/utils/textParser'
 import Map from './Map'
 import styles from './Localization.module.css'
+import { regions } from '../../[filter]/data'
 
 const Localization = ({
   project,
@@ -73,7 +74,7 @@ const Localization = ({
         <div className="fr-btns-group">
           <Link
             className="fr-btn fr-mb-0 fr-mt-8v"
-            href={`/projets?regions=${project.localization.regionName}`}
+            href={`/region/${regions.find(region => region.name === project.localization.regionName)?.slug}`}
           >
             Voir les projets de la région
           </Link>

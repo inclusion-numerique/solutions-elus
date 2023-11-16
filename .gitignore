@@ -50,6 +50,11 @@ next-env.d.ts
 .vscode
 .idea
 
+# sitemap
+/apps/web/public/robots.txt
+/apps/web/public/sitemap.xml
+/apps/web/public/sitemap-*.xml
+
 storybook-static
 
 # Temporary only
