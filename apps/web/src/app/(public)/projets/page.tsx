@@ -24,31 +24,37 @@ const ProjectsPage = async ({
     thematiques?: string | string[]
     regions?: District | District[]
   }
-}) => (
-  <>
-    <div className={`${styles.withImageBackground}`}>
-      <div
-        className="fr-container fr-py-25v"
-        style={{ position: 'relative' }}
-      >
-        <div className="fr-grid-row fr-grid-row--center">
-          <div className="fr-col-12 fr-col-md-10 fr-col-lg-8">
-            <h1
-              className={`fr-display--xs fr-mb-0 ${styles.titleOnBackground}`}
-            >
-              Retrouvez ici les projets et réalisations des collectivités
-            </h1>
+}) => {
+  // Filtering and pagination is done in the frontend
+  // We have only a small dataset of projects so this is way more performant
+  const projects = await getProjectsList()
+
+  return (
+    <>
+      <div className={`${styles.withImageBackground}`}>
+        <div
+          className="fr-container fr-py-25v"
+          style={{ position: 'relative' }}
+        >
+          <div className="fr-grid-row fr-grid-row--center">
+            <div className="fr-col-12 fr-col-md-10 fr-col-lg-8">
+              <h1
+                className={`fr-display--xs fr-mb-0 ${styles.titleOnBackground}`}
+              >
+                Retrouvez ici les projets et réalisations des collectivités
+              </h1>
+            </div>
           </div>
         </div>
+        <Form />
       </div>
-      <Form />
-    </div>
-    {/* <Projects projects={projects} /> */}
-    <ShareSearchCTA />
-    <div className="fr-container">
-      <Paragraph />
-    </div>
-  </>
-)
+      <Projects projects={projects} />
+      <ShareSearchCTA />
+      <div className="fr-container">
+        <Paragraph />
+      </div>
+    </>
+  )
+}
 
 export default ProjectsPage

@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import styles from '@sde/web/app/(public)/PublicLayout.module.css'
@@ -32,7 +33,7 @@ const FilterSlugPage = async ({ params }: { params: StaticParams }) => {
     return notFound()
   }
 
-  // const projects = await getProjectsList()
+  const projects = await getProjectsList()
 
   return (
     <>
@@ -99,7 +100,9 @@ const FilterSlugPage = async ({ params }: { params: StaticParams }) => {
         <Form filter={filter} slug={slug} />
 
       </div>
-      {/* <Projects filter={filter} slug={slug} projects={projects} /> */}
+      <Suspense fallback={<p>Loading feed...</p>}>
+        <Projects filter={filter} slug={slug} projects={projects} />
+      </Suspense>
       <ShareSearchCTA />
       <div className="fr-container">
         <Paragraph />
