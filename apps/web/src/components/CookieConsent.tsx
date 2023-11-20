@@ -215,7 +215,8 @@ export const CookieModal = ({cookieConsent, setCookieConsent}: CookieModalProps)
                         </div>
                       </div>
                       <p id="analytics-desc" className="fr-consent-service__desc">
-                        Description optionnelle de la finalité.
+                        Nous utilisons des cookies d&apos;analyse d&apos;audience pour nous aider à 
+                        comprendre comment les visiteurs interagissent avec ce site web.
                       </p>
                       <div className="fr-consent-service__collapse">
                         <button className="fr-consent-service__collapse-btn" aria-expanded="false" aria-describedby="analytics-legend" aria-controls="analytics-collapse">
@@ -273,8 +274,11 @@ export const CookieModal = ({cookieConsent, setCookieConsent}: CookieModalProps)
                                 </label>
                               </div>
                             </div>
-                            <p id="analytics-matomo-desc" className="fr-consent-service__desc">
-                              Description optionnelle du service.
+                            <p id="service-matomo-desc" className="fr-consent-service__desc">
+                              Matomo est un outil d&apos;analyse d&apos;audience que nous utilisons pour 
+                              comprendre comment les visiteurs utilisent notre site web. Les cookies de 
+                              Matomo nous aident à améliorer l&apos;expérience utilisateur en analysant 
+                              les performances et l&apos;utilisation de notre site.
                             </p>
                           </fieldset>
                         </div>
