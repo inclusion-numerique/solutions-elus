@@ -121,21 +121,6 @@ const Project = ({ project, collectiviteUrl }: { project: ProjectItem, collectiv
               <hr className="fr-mt-12v" />
             </>
           )}
-          <h2 className="fr-text-title--blue-france fr-mt-8v">
-            L’Agence nationale de la cohésion des territoires
-          </h2>
-          <p className="fr-text--lg">
-            L’Agence nationale de la cohésion des territoires (ANCT) est un
-            nouveau partenaire pour les collectivités locales : elle conçoit et
-            anime des programmes d’appui nationaux pour mettre en œuvre les
-            politiques publiques, dont Action Cœur de Ville fait partie.
-          </p>
-          <p className="fr-text--lg">
-            Dans ce cadre, elle est chargée de la mise en œuvre opérationnelle
-            du programme et de son évaluation, du pilotage du centre de
-            ressources collaboratif ainsi que de l’organisation des séminaires
-            nationaux.
-          </p>
         </div>
         <div
           className="fr-hidden fr-unhidden-lg fr-col-4 fr-col-offset-1 fr-pt-12v"

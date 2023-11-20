@@ -7,6 +7,7 @@ import { prismaClient } from '@sde/web/prismaClient'
 import { getServerUrl } from '@sde/web/utils/baseUrl'
 import { getProjectPath } from '@sde/web/project/project'
 import Project from './Project'
+import { AnctCard } from './AnctCard'
 
 export const dynamic = 'force-static'
 
@@ -123,6 +124,7 @@ const ProjectPage = async ({ params }: { params: { slug: string } }) => {
         Retour à la liste des projets
       </Link>
       <Project project={project} collectiviteUrl={collectiviteUrl} />
+      <AnctCard />
     </div>
   )
 }
