@@ -1,5 +1,5 @@
 import { getProjectFilePath } from '@sde/web/project/project'
-import Image from 'next/image'
+import Image from 'next/legacy/image'
 import React from 'react'
 import { textToParagraphs } from '@sde/web/utils/textParser'
 import styles from './Quote.module.css'

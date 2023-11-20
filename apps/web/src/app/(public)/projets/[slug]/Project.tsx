@@ -13,7 +13,7 @@ import Quotes from './Quotes'
 import styles from './Project.module.css'
 import SocialNetworks from './SocialNetworks'
 
-const Project = ({ project, collectiviteUrl }: { project: ProjectItem, collectiviteUrl?: string }) => {
+const Project = ({ project, collectiviteUrl }: { project: ProjectItem, collectiviteUrl: string | null }) => {
   const coverPicture = (
     <picture>
       <img

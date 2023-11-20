@@ -12,7 +12,7 @@ const Localization = ({
   className,
 }: {
   project: ProjectItem
-  collectiviteUrl?: string;
+  collectiviteUrl: string | null
   className?: string
 }) => (
   <div className={className ?? ''}>
@@ -21,7 +21,7 @@ const Localization = ({
     ) : null}
     <div className={`fr-p-6v ${styles.bloc}`}>
       <h2 className="fr-mb-0 fr-text-title--blue-france">Le territoire</h2>
-      {project.localization.echelon === 'commune' ?
+      {(project.localization.echelon === 'commune' && collectiviteUrl) ?
         (
           <p className="fr-mt-6v fr-mb-0 fr-text--bold">
             <a href={collectiviteUrl} target="_blank">
