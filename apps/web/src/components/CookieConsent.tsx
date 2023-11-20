@@ -53,12 +53,12 @@ export const CookieConsent = () => {
           </div>
           <ul className="fr-consent-banner__buttons fr-btns-group fr-btns-group--right fr-btns-group--inline-reverse fr-btns-group--inline-sm">
             <li>
-              <button className="fr-btn" title="Autoriser tous les cookies" onClick={() => setCookieConsent(fullConsent) as void}>
+              <button className="fr-btn" title="Autoriser tous les cookies" onClick={() => {setCookieConsent(fullConsent)}}>
                 Tout accepter
               </button>
             </li>
             <li>
-              <button className="fr-btn" title="Refuser tous les cookies" onClick={() => setCookieConsent({...defaultConsent, isSet: true }) as void}>
+              <button className="fr-btn" title="Refuser tous les cookies" onClick={() => {setCookieConsent({...defaultConsent, isSet: true })}}>
                 Tout refuser
               </button>
             </li>
