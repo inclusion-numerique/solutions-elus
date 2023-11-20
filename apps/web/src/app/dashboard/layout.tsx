@@ -8,13 +8,11 @@ const PrivateLayout = async ({ children, ...props }: PropsWithChildren) => {
   const user = await getSessionUser()
 
   if (!user) {
-    return redirect('/auth/login')
+    return redirect('/connexion/login')
   }
 
   return (
-    <div
-      style={{ display: 'flex', flexDirection: 'column', minHeight: '100%' }}
-    >
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100%' }}>
       <PrivateHeader user={user} />
       <div className="fr-container" style={{ flex: 1 }}>
         <div>{children}</div>

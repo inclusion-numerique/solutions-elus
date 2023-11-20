@@ -1,14 +1,14 @@
+import { dashboardRootPath } from '@sde/web/dashboard/dashboard'
 import { prismaClient } from '@sde/web/prismaClient'
-import { shareProjectSubmissionsCsvFilename } from '@sde/web/shareProject/shareProjectSubmissionsDownload'
+import { getLeadSubmissionsCsvFilename } from '@sde/web/shareProject/shareProjectSubmissionsDownload'
 import Link from 'next/link'
 
-const ShareProjectSubmissionsPage = async () => {
-  const projectsCount = await prismaClient.shareProjectFormSubmission.count()
-  const downloadFilename = shareProjectSubmissionsCsvFilename()
+const GetLeadSubmissionsPage = async () => {
+  const leadsCount = await prismaClient.getLeadFormSubmission.count()
+  const downloadFilename = getLeadSubmissionsCsvFilename()
 
-  const projects = await prismaClient.shareProjectFormSubmission.findMany({
+  const leads = await prismaClient.getLeadFormSubmission.findMany({
     include: {
-      attachments: true,
       community: true,
     },
     orderBy: { created: 'desc' },
@@ -17,7 +17,14 @@ const ShareProjectSubmissionsPage = async () => {
   return (
     <>
       <div className="fr-grid-row fr-pt-8v">
-        <h2>Solutions d&apos;élus</h2>
+        <div className="fr-col-12">
+          <Link
+            href={dashboardRootPath}
+            className="fr-link fr-link--icon-left fr-icon-arrow-left-line"
+          >
+            Retour
+          </Link>
+        </div>
       </div>
       <div className="fr-grid-row fr-mt-2v fr-grid-row--gutters">
         <div className="fr-col-12 fr-col-md-6">
@@ -26,13 +33,13 @@ const ShareProjectSubmissionsPage = async () => {
               <div className="fr-card__content">
                 <h4 className="fr-card__title">
                   <span className="fr-icon-folder-2-fill fr-mr-2v" />
-                  Projets
+                  Contacts
                 </h4>
                 <div className="fr-card__desc fr-pt-4v">
-                  <p>{projectsCount} projets ont été enregistrés.</p>
+                  <p>{leadsCount} contacts ont été enregistrés.</p>
                   <a
                     className="fr-btn fr-btn--icon-left fr-icon-download-line"
-                    href="/api/projects/download"
+                    href="/api/contacts/download"
                     download={downloadFilename}
                   >
                     Télécharger au format CSV
@@ -57,24 +64,22 @@ const ShareProjectSubmissionsPage = async () => {
                 <tr>
                   <th>Date</th>
                   <th>Collectivité</th>
-                  <th>Solution</th>
                   <th>Nom</th>
-                  <th>Qualité</th>
+                  <th>Téléphone</th>
                   <th>Email</th>
                   {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
                   <th />
                 </tr>
               </thead>
               <tbody className="fr-table">
-                {projects.map(
+                {leads.map(
                   ({
                     id,
                     created,
                     name,
                     community,
                     email,
-                    quality,
-                    solution,
+                    phone,
                     reference,
                   }) => (
                     <tr key={id}>
@@ -83,9 +88,8 @@ const ShareProjectSubmissionsPage = async () => {
                         {created.toLocaleTimeString()}
                       </td>
                       <td>{community.name}</td>
-                      <td>{solution}</td>
                       <td>{name}</td>
-                      <td>{quality}</td>
+                      <td>{phone || null}</td>
                       <td>
                         <a
                           href={`mailto:${email}`}
@@ -98,7 +102,7 @@ const ShareProjectSubmissionsPage = async () => {
                         <Link
                           prefetch={false}
                           className="fr-btn fr-btn--icon-left fr-btn--secondary fr-btn--sm fr-icon-eye-line"
-                          href={`/dashboard/${reference}`}
+                          href={`/dashboard/contacts/${reference}`}
                         >
                           Détails
                         </Link>
@@ -114,4 +118,4 @@ const ShareProjectSubmissionsPage = async () => {
     </>
   )
 }
-export default ShareProjectSubmissionsPage
+export default GetLeadSubmissionsPage

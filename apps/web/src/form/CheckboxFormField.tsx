@@ -1,49 +1,50 @@
-/* eslint react/jsx-props-no-spreading: 0 */
-import { FieldErrorsImpl, FieldValues, UseFormRegister } from 'react-hook-form'
+import { Control, Controller, FieldValues } from 'react-hook-form'
 import { FieldPath } from 'react-hook-form/dist/types/path'
 
 // View design options here https://www.systeme-de-design.gouv.fr/elements-d-interface/composants/case-a-cocher/
 export function CheckboxFormField<T extends FieldValues>({
   label,
-  errors,
-  register,
   path,
-  placeholder,
+  control,
   hint,
   disabled,
 }: {
-  register: UseFormRegister<T>
-  errors: Partial<FieldErrorsImpl<T>>
+  control: Control<T>
   path: FieldPath<T>
   disabled?: boolean
   label?: string
   hint?: string
-  placeholder?: string
 }) {
-  // We do not use language errors as record object, we cast to string
-  const error = 'TODO'
   const id = `checkbox-form-field__${path}`
-  const registerProps = register(path)
 
   return (
-    <div
-      className={`fr-checkbox-group ${
-        error ? 'fr-checkbox-group--error' : ''
-      } ${disabled ? 'fr-checkbox-group--disabled' : ''}`}
-    >
-      <input
-        className="fr-input fr-input--error"
-        aria-describedby="text-input-error-desc-error"
-        type="checkbox"
-        id={id}
-        placeholder={placeholder}
-        {...registerProps}
-      />
-      <label className="fr-label" htmlFor={id}>
-        {label}
-        {hint ? <span className="fr-hint-text">{hint}</span> : null}
-      </label>
-      {error ? <p className="fr-error-text">{error}</p> : null}
-    </div>
+    <Controller
+      control={control}
+      name={path}
+      render={({
+        field: { onChange, onBlur, value, name, ref },
+        fieldState: { invalid, isTouched, isDirty, error },
+        formState,
+      }) => (
+        <div className={`fr-checkbox-group${error ? ' fr-checkbox-group--error' : ''}${disabled ? ' fr-checkbox-group--disabled' : ''}${(isTouched && !invalid) ? ' fr-checkbox-group--valid' : ''}`}>
+          <input
+            className={`fr-input${error ? ' fr-input--error' : ''}`}
+            aria-describedby={error ? `${id}__error` : undefined}
+            type="checkbox"
+            id={id}
+            disabled={disabled}
+            onBlur={onBlur}
+            onChange={onChange}
+            name={name}
+            ref={ref}
+          />
+          <label className="fr-label" htmlFor={id}>
+            {label}
+            {hint ? <span className="fr-hint-text">{hint}</span> : null}
+          </label>
+          {error ? (<p id={`${id}__error`} className="fr-error-text">{error.message}</p>) : null}
+        </div>
+      )}
+    />
   )
 }

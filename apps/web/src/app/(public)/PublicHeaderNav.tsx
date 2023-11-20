@@ -1,13 +1,10 @@
 'use client'
 
 import Link from 'next/link'
-import * as navigation from 'next/navigation'
+import { usePathname } from 'next/navigation'
 
 export const PublicHeaderNav = () => {
-  const pathname =
-    // TODO This is an error in typings of next/navigation in 13.2, remove this casting when next fix this
-    (navigation as unknown as { usePathname: () => string }).usePathname() ??
-    '/'
+  const pathname = usePathname()
 
   return (
     <ul className="fr-nav__list">
@@ -36,6 +33,15 @@ export const PublicHeaderNav = () => {
           href="/projets"
         >
           Voir les projets
+        </Link>
+      </li>
+      <li className="fr-nav__item">
+        <Link
+          className="fr-nav__link"
+          aria-current={pathname === '/salon-des-maires' ? 'page' : undefined}
+          href="/salon-des-maires"
+        >
+          Salon des maires
         </Link>
       </li>
     </ul>
