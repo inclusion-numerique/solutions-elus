@@ -46,9 +46,8 @@ export const CookieConsent = () => {
             <p className="fr-text--sm">
               Bienvenue ! Nous utilisons des cookies pour améliorer votre expérience et les services disponibles
               sur ce site. Pour en savoir plus, visitez la page <a href="/confidentialite">Confidentialité</a>. 
-              Vous pouvez, à tout moment, avoir le contrôle sur les cookies que vous souhaitez activer.
-              <br/>
-              <b>{JSON.stringify(cookieConsent)}</b>
+              Vous pouvez, à tout moment, avoir le contrôle sur les cookies que vous souhaitez activer en 
+              cliquant sur <a href="#gestion-des-cookies">Gestion des cookies</a> en bas de page.
             </p>
           </div>
           <ul className="fr-consent-banner__buttons fr-btns-group fr-btns-group--right fr-btns-group--inline-reverse fr-btns-group--inline-sm">
