@@ -51,7 +51,6 @@ const RootLayout = ({ children }: PropsWithChildren) => {
           />
         ))}
         <Dsfr nonce={nonce} />
-        <Matomo nonce={nonce} />
       </head>
       <body>
         <EnvInformation />
