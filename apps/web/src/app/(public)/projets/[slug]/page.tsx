@@ -41,6 +41,9 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
       ...project.categories,
       ...previousKeywords,
     ],
+    alternates: {
+      canonical: `${PublicWebAppConfig.mainLiveUrl}${getProjectPath(project)}`,
+    },
     openGraph: {
       type: 'article',
       url: `${PublicWebAppConfig.mainLiveUrl}${getProjectPath(project)}`,
