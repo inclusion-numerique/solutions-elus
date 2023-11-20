@@ -31,7 +31,6 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
   const program = project.program?.name
   const parentMetadata = await parent
   const previousKeywords = parentMetadata.keywords || []
-  const previousImages = parentMetadata.openGraph?.images || []
 
   return {
     title: project.title,
@@ -46,8 +45,10 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
     },
     openGraph: {
       type: 'article',
+      locale: 'fr_FR',
       url: `${PublicWebAppConfig.mainLiveUrl}${getProjectPath(project)}`,
-      title: project.title,
+      siteName: PublicWebAppConfig.projectTitle,
+      title: `${project.title} | ${PublicWebAppConfig.projectTitle}`,
       description: project.subtitle,
       tags: [...project.categories, ...program ? [program] : []],
       publishedTime: project.inaugurationDate ? project.inaugurationDate.toISOString() : project.created.toISOString(),
@@ -56,20 +57,22 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
           url: `${PublicWebAppConfig.mainLiveUrl}${getProjectFilePath(project.coverImage)}`,
           alt: project.coverImageAlt || project.title,
         },
-        ...previousImages,
       ],
     },
     twitter: {
       card: 'summary_large_image',
       title: project.title,
       description: project.subtitle,
+      site: "@ANCTerritoires",
+      siteId: "2527819680",
+      creator: "@ANCTerritoires",
+      creatorId: "2527819680",
       images: [
         {
           url: `${PublicWebAppConfig.mainLiveUrl}${getProjectFilePath(project.coverImage)}`,
           alt: project.coverImageAlt || project.title,
         },
-        ...previousImages,
-      ]
+      ],
     },
   }
 }

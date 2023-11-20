@@ -1,10 +1,10 @@
 import '@sde/web/app/app.css'
 import { PropsWithChildren } from 'react'
 import { Metadata, Viewport } from 'next'
-import { Matomo } from '@sde/web/app/Matomo'
 import { PublicWebAppConfig, ServerWebAppConfig } from '@sde/web/webAppConfig'
 import { Dsfr } from '@sde/web/app/Dsfr'
 import { EnvInformation } from './EnvInformation'
+import { PreloadResources } from './PreloadResources'
 
 export const metadata: Metadata = {
   metadataBase: new URL(PublicWebAppConfig.mainLiveUrl),
@@ -128,8 +128,6 @@ export const viewport: Viewport = {
   userScalable: false,
 }
 
-const fontsToPreload = ['Marianne-Regular', 'Marianne-Bold', 'Marianne-Medium']
-
 const RootLayout = ({ children }: PropsWithChildren) => {
   // Do we want to disable SSG for CSFR on this website ?
   // const nonce = headers().get('x-sde-script-nonce') ?? undefined
@@ -138,16 +136,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="fr" data-fr-theme="light" data-fr-scheme="light">
       <head>
-        {fontsToPreload.map((font) => (
-          <link
-            key={font}
-            rel="preload"
-            crossOrigin="anonymous"
-            href={`/dsfr/fonts/${font}.woff2`}
-            as="font"
-            type="font/woff2"
-          />
-        ))}
+        <PreloadResources />
         <Dsfr nonce={nonce} />
       </head>
       <body>
