@@ -1,4 +1,15 @@
+import { Metadata } from 'next'
 import { PublicWebAppConfig } from '@sde/web/webAppConfig'
+
+export const metadata: Metadata = {
+  title: "Politique de confidentialité",
+  openGraph: {
+    title: "Politique de confidentialité",
+  },
+  twitter: {
+    title: "Politique de confidentialité",
+  }
+}
 
 const ConfidentialityPage = () => (
   <div className="fr-container landing-main-container fr-my-8w">

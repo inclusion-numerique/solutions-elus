@@ -9,9 +9,23 @@ import { ProjectRegionFilter } from '@sde/web/app/(public)/projets/ProjectRegion
 import ProjectCategoryFilter from '@sde/web/app/(public)/projets/ProjectCategoryFilter'
 import { ProjectsList } from '@sde/web/app/(public)/projets/ProjectsList'
 import { getProjectCategories } from '@sde/web/legacyProject/categories'
+import { Metadata } from 'next'
 
 // Need to SSR since search params are dynamic. This avoids flickering on page load
 export const revalidate = 0
+
+export const metadata: Metadata = {
+  title: "Projets",
+  description: "Retrouvez ici les projets et réalisations des collectivités",
+  openGraph: {
+    title: "Projets",
+    description: "Retrouvez ici les projets et réalisations des collectivités",
+  },
+  twitter: {
+    title: "Projets",
+    description: "Retrouvez ici les projets et réalisations des collectivités",
+  }
+}
 
 const ProjectsPage = async ({
   searchParams,

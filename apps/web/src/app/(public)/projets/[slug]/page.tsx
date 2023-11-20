@@ -1,12 +1,13 @@
-import { Metadata } from 'next'
+import { Metadata, ResolvingMetadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import React from 'react'
 import { getProject } from '@sde/web/legacyProject/projectsList'
 import { prismaClient } from '@sde/web/prismaClient'
-import { getServerUrl } from '@sde/web/utils/baseUrl'
-import { getProjectPath } from '@sde/web/project/project'
+import { getProjectFilePath, getProjectPath } from '@sde/web/project/project'
+import { PublicWebAppConfig } from '@sde/web/webAppConfig'
 import Project from './Project'
+import { AnctCard } from './AnctCard'
 
 export const dynamic = 'force-static'
 
@@ -16,26 +17,60 @@ export const generateStaticParams = (): Promise<{ slug: string }[]> =>
     select: { slug: true },
   })
 
-export async function generateMetadata({
-  params,
-}: {
+type Props = {
   params: { slug: string }
-}): Promise<Metadata> {
+}
+
+export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
   const project = await getProject(params.slug)
+
   if (!project) {
     notFound()
-    return {}
   }
+
+  const program = project.program?.name
+  const parentMetadata = await parent
+  const previousKeywords = parentMetadata.keywords || []
+
   return {
+    title: project.title,
+    description: project.subtitle,
+    keywords: [
+      ...(program ? [program] : []),
+      ...project.categories,
+      ...previousKeywords,
+    ],
+    alternates: {
+      canonical: `${PublicWebAppConfig.mainLiveUrl}${getProjectPath(project)}`,
+    },
     openGraph: {
-      type: 'website',
-      url: getServerUrl(getProjectPath(project)),
-      title: project.title,
+      type: 'article',
+      locale: 'fr_FR',
+      url: `${PublicWebAppConfig.mainLiveUrl}${getProjectPath(project)}`,
+      siteName: PublicWebAppConfig.projectTitle,
+      title: `${project.title} | ${PublicWebAppConfig.projectTitle}`,
       description: project.subtitle,
+      tags: [...project.categories, ...program ? [program] : []],
+      publishedTime: project.inaugurationDate ? project.inaugurationDate.toISOString() : project.created.toISOString(),
       images: [
         {
-          url: getServerUrl(project.coverImage),
-          alt: project.coverImageAlt || undefined,
+          url: `${PublicWebAppConfig.mainLiveUrl}${getProjectFilePath(project.coverImage)}`,
+          alt: project.coverImageAlt || project.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: project.title,
+      description: project.subtitle,
+      site: "@ANCTerritoires",
+      siteId: "2527819680",
+      creator: "@ANCTerritoires",
+      creatorId: "2527819680",
+      images: [
+        {
+          url: `${PublicWebAppConfig.mainLiveUrl}${getProjectFilePath(project.coverImage)}`,
+          alt: project.coverImageAlt || project.title,
         },
       ],
     },
@@ -123,6 +158,7 @@ const ProjectPage = async ({ params }: { params: { slug: string } }) => {
         Retour à la liste des projets
       </Link>
       <Project project={project} collectiviteUrl={collectiviteUrl} />
+      <AnctCard />
     </div>
   )
 }
