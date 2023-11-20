@@ -1,11 +1,11 @@
-import { Metadata } from 'next'
+import { Metadata, ResolvingMetadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import React from 'react'
 import { getProject } from '@sde/web/legacyProject/projectsList'
 import { prismaClient } from '@sde/web/prismaClient'
-import { getServerUrl } from '@sde/web/utils/baseUrl'
-import { getProjectPath } from '@sde/web/project/project'
+import { getProjectFilePath, getProjectPath } from '@sde/web/project/project'
+import { PublicWebAppConfig } from '@sde/web/webAppConfig'
 import Project from './Project'
 import { AnctCard } from './AnctCard'
 
@@ -17,28 +17,56 @@ export const generateStaticParams = (): Promise<{ slug: string }[]> =>
     select: { slug: true },
   })
 
-export async function generateMetadata({
-  params,
-}: {
+type Props = {
   params: { slug: string }
-}): Promise<Metadata> {
+}
+
+export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
   const project = await getProject(params.slug)
+
   if (!project) {
     notFound()
-    return {}
   }
+
+  const program = project.program?.name
+  const parentMetadata = await parent
+  const previousKeywords = parentMetadata.keywords || []
+  const previousImages = parentMetadata.openGraph?.images || []
+
   return {
+    title: project.title,
+    description: project.subtitle,
+    keywords: [
+      ...(program ? [program] : []),
+      ...project.categories,
+      ...previousKeywords,
+    ],
     openGraph: {
-      type: 'website',
-      url: getServerUrl(getProjectPath(project)),
+      type: 'article',
+      url: `${PublicWebAppConfig.mainLiveUrl}${getProjectPath(project)}`,
+      title: project.title,
+      description: project.subtitle,
+      tags: [...project.categories, ...program ? [program] : []],
+      publishedTime: project.inaugurationDate ? project.inaugurationDate.toISOString() : project.created.toISOString(),
+      images: [
+        {
+          url: `${PublicWebAppConfig.mainLiveUrl}${getProjectFilePath(project.coverImage)}`,
+          alt: project.coverImageAlt || project.title,
+        },
+        ...previousImages,
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
       title: project.title,
       description: project.subtitle,
       images: [
         {
-          url: getServerUrl(project.coverImage),
-          alt: project.coverImageAlt || undefined,
+          url: `${PublicWebAppConfig.mainLiveUrl}${getProjectFilePath(project.coverImage)}`,
+          alt: project.coverImageAlt || project.title,
         },
-      ],
+        ...previousImages,
+      ]
     },
   }
 }

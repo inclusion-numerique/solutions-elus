@@ -5,10 +5,10 @@
 import { arrayFromEnvironmentVariable } from '@sde/config/arrayFromEnvironmentVariable'
 
 export const projectTitle = "Solutions d'élus"
+export const projectDescription = "Ensemble, partageons les solutions des territoires. Retrouvez ici les projets et réalisations des collectivités."
 export const projectSlug = 'solutionsdelus'
 export const mainLiveUrl = 'https://solutionsdelus.gouv.fr'
-export const repositoryUrl =
-  'https://github.com/inclusion-numerique/solutions-elus'
+export const repositoryUrl = 'https://github.com/inclusion-numerique/solutions-elus'
 
 export const databaseInstanceName = process.env.DATABASE_INSTANCE_NAME ?? ''
 export const containerNamespaceName = process.env.CONTAINER_NAMESPACE_NAME ?? ''

@@ -1,5 +1,19 @@
+import { Metadata } from 'next'
 import styles from '@sde/web/app/(public)/PublicLayout.module.css'
 import ShareProjectForm from '@sde/web/app/(public)/ShareProjectForm'
+
+export const metadata: Metadata = {
+  title: "Partager",
+  description: "Partagez ici vos projets et réalisations en tant qu'élu",
+  openGraph: {
+    title: "Partager",
+    description: "Partagez ici vos projets et réalisations en tant qu'élu",
+  },
+  twitter: {
+    title: "Partager",
+    description: "Partagez ici vos projets et réalisations en tant qu'élu",
+  }
+}
 
 export default function ShareProjectPage() {
   return (

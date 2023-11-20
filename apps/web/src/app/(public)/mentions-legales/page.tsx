@@ -1,4 +1,15 @@
+import { Metadata } from 'next'
 import { PublicWebAppConfig } from '@sde/web/webAppConfig'
+
+export const metadata: Metadata = {
+  title: "Mentions légales",
+  openGraph: {
+    title: "Mentions légales",
+  },
+  twitter: {
+    title: "Mentions légales",
+  }
+}
 
 const LegalPage = () => (
   <div className="fr-container landing-main-container fr-my-8w">

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { PublicWebAppConfig } from '@sde/web/webAppConfig'
 
 const PublicFooter = () => (
   <footer id="footer" role="contentinfo" className="fr-footer">
@@ -136,7 +137,7 @@ const PublicFooter = () => (
           <li className="fr-footer__bottom-item">
             <a
               className="fr-footer__bottom-link"
-              href="https://github.com/inclusion-numerique/solutions-elus"
+              href={PublicWebAppConfig.repository}
               target="_blank"
               rel="noreferrer"
               title="Code source"

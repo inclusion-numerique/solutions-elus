@@ -1,4 +1,15 @@
+import { Metadata } from 'next'
 import { PublicWebAppConfig } from '@sde/web/webAppConfig'
+
+export const metadata: Metadata = {
+  title: "Accessibilité",
+  openGraph: {
+    title: "Accessibilité",
+  },
+  twitter: {
+    title: "Accessibilité",
+  }
+}
 
 const AccessibilityStatementPage = () => (
   <div className="fr-container landing-main-container fr-my-8w">
