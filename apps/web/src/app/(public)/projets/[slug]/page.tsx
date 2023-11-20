@@ -61,25 +61,26 @@ type Localization = {
 
 const getCollectiviteUrl = async (localization: Localization) => {
   const res = await fetch(`https://api.collectivite.fr/api/commune/search/${encodeURIComponent(localization.label)}`)
-  const data = await res.json()
+  const data: Collectivite[] = await res.json()
 
-  const sameName = data.filter((item: Collectivite) => item.city.toLowerCase() === localization.label.toLowerCase())
-  const target = sameName.find((item: Collectivite) => 
-    item.zip_code ? item.zip_code.startsWith(localization.department || '') : true
-  )
-  const slug = target.slug_alias || target.slug || ""
+  const sameName = data.filter(item => item.city.toLowerCase() === localization.label.toLowerCase())
+  const target = sameName.find(item => {
+    if (item.region === "Corse") return localization.regionName ? item.region === localization.regionName : true
+    return localization.department ? item.zip_code.startsWith(localization.department) : true
+  })
+  const slug = target?.slug_alias || target?.slug
 
-  return `https://collectivite.fr/${slug}`;
+  if (slug) return `https://collectivite.fr/${slug}`;
+  return null
 };
 
 const ProjectPage = async ({ params }: { params: { slug: string } }) => {
   const project = await getProject(params.slug)
   if (!project) {
     notFound()
-    return {}
   }
-  const collectiviteUrl = project.localization.echelon === 'commune' ?
-    await getCollectiviteUrl(project.localization) : ""
+  
+  const collectiviteUrl = await getCollectiviteUrl(project.localization)
 
   return (
     <div className="fr-container">
