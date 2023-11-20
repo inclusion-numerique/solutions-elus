@@ -111,6 +111,16 @@ const PublicFooter = () => (
             </a>
           </li>
           <li className="fr-footer__bottom-item">
+            <button
+              id="gestion-des-cookies"
+              className="fr-footer__bottom-link fr-link--icon-left fr-icon-settings-5-line"
+              data-fr-opened="false"
+              aria-controls="fr-consent-modal"
+            >
+              Gestion des cookies
+            </button>
+          </li>
+          <li className="fr-footer__bottom-item">
             <a
               className="fr-footer__bottom-link fr-link--icon-left fr-icon-user-setting-line"
               href="/connexion/login"
