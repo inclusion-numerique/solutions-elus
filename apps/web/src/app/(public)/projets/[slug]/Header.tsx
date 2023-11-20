@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 import { ProjectItem } from '@sde/web/legacyProject/projectsList'
 import Icon from '@sde/web/components/Icon/Icon'
 import { getProjectLocalizationLabelWithDepartments } from '@sde/web/project/project'
@@ -11,15 +12,19 @@ const Header = ({ project }: { project: ProjectItem }) => (
       Publié le {dateAsDay(project.created)}
     </p>
     <h1 className="fr-mb-2v">{project.title}</h1>
-    {project.categories.map((category) => (
-      <div
-        className="fr-tag fr-mt-2v fr-mr-2v"
-        key={category}
-        aria-pressed="false"
-      >
-        {category}
-      </div>
-    ))}
+    <ul className="fr-tags-group fr-mt-4v">
+      {project.categories.map((category) => (
+        <li key={category}>
+          <Link
+            className="fr-tag"
+            aria-pressed="false"
+            href={`/projets/?thematiques=${encodeURIComponent(category)}`}
+          >
+            {category}
+          </Link>
+        </li>
+      ))}
+    </ul>
     <div className={`${styles.metaInfos} fr-mt-12v`}>
       <div className={styles.metaInfo}>
         <Icon name="fr-icon-map-pin-2-line" />
