@@ -4,8 +4,8 @@ import { getProjectFilePath, getProjectPath } from '@sde/web/project/project'
 import { formatInteger } from '@sde/web/utils/formatInteger'
 import { dateAsDay } from '@sde/web/utils/dateAsDay'
 import { textToParagraphs } from '@sde/web/utils/textParser'
-import { getServerUrl } from '@sde/web/utils/baseUrl'
 import { YoutubeVideo } from '@sde/web/app/(public)/projets/[slug]/YoutubeVideo'
+import { PublicWebAppConfig } from '@sde/web/webAppConfig'
 import Header from './Header'
 import Localization from './Localization'
 import Blocs from './Blocs'
@@ -64,7 +64,7 @@ const Project = ({ project, collectiviteUrl }: { project: ProjectItem, collectiv
 
           <SocialNetworks
             className="fr-hidden-lg fr-mt-12v"
-            url={getServerUrl(getProjectPath(project))}
+            url={`${PublicWebAppConfig.mainLiveUrl}${getProjectPath(project)}`}
           />
           <Localization project={project} collectiviteUrl={collectiviteUrl} className="fr-hidden-lg fr-mt-12v" />
           <Blocs className="fr-mt-6v" project={project} />
@@ -129,7 +129,7 @@ const Project = ({ project, collectiviteUrl }: { project: ProjectItem, collectiv
           <div className={styles.coverImageContainer}>{coverPicture}</div>
           <SocialNetworks
             className="fr-mt-8v"
-            url={getServerUrl(getProjectPath(project))}
+            url={`${PublicWebAppConfig.mainLiveUrl}${getProjectPath(project)}`}
           />
           <Localization className="fr-mt-8v" project={project} collectiviteUrl={collectiviteUrl} />
         </div>
