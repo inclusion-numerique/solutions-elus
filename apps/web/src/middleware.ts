@@ -37,22 +37,22 @@ const middleware = (request: NextRequest) => {
    * initial HTTP connection is still vulnerable to a man-in-the-middle attack."
    * But they keep applying this redirect in recommended SSL configs: https://ssl-config.mozilla.org/
    */
-  if (
-    isProd &&
-    // We redirect if protocol is not secure https
-    (forwardedProto === 'http' ||
-      // If we have a base url defined and the host is different
-      // we redirect to the main domain defined in base_url
-      (!!baseUrl && requestHost !== baseUrl))
-  ) {
-    const domain = baseUrl || requestHost
-    const httpsBase = `https://${domain ?? ''}`
-    const requestUrl = new URL(request.url)
-    const path = `${requestUrl.pathname}${requestUrl.search}`
-    const redirectTo = `${httpsBase}${path}`
+  // if (
+  //   isProd &&
+  //   // We redirect if protocol is not secure https
+  //   (forwardedProto === 'http' ||
+  //     // If we have a base url defined and the host is different
+  //     // we redirect to the main domain defined in base_url
+  //     (!!baseUrl && requestHost !== baseUrl))
+  // ) {
+  //   const domain = baseUrl || requestHost
+  //   const httpsBase = `https://${domain ?? ''}`
+  //   const requestUrl = new URL(request.url)
+  //   const path = `${requestUrl.pathname}${requestUrl.search}`
+  //   const redirectTo = `${httpsBase}${path}`
 
-    return NextResponse.redirect(redirectTo)
-  }
+  //   return NextResponse.redirect(redirectTo)
+  // }
 
   const response = NextResponse.next()
 

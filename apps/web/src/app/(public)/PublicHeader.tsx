@@ -135,6 +135,15 @@ const PublicHeader = () => (
                 Voir les projets
               </Link>
             </li>
+            <li>
+              <Link
+                className="fr-btn"
+                href="/salon-des-maires"
+                aria-controls="modal-menu-mobile"
+              >
+                Salon des maires
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

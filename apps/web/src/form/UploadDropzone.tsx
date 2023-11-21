@@ -82,7 +82,6 @@ const Dropzone = ({
 
   return (
     <div {...getRootProps()}>
-      Yo Yo Yo
       <input {...getInputProps({ onChange })} />
     </div>
   )

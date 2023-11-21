@@ -3,9 +3,12 @@ import { getServerUrl } from '@sde/web/utils/baseUrl'
 import { dashboardRootPath } from '@sde/web/dashboard/dashboard'
 
 export const shareProjectSubmissionsCsvFilename = () =>
-  `Solutions d'élus - ${new Date().toISOString().slice(0, 10)}.csv`
+  `Solutions d'élus - Projets - ${new Date().toISOString().slice(0, 10)}.csv`
 
-const csvHeaders = [
+export const getLeadSubmissionsCsvFilename = () =>
+  `Solutions d'élus - Contacts - ${new Date().toISOString().slice(0, 10)}.csv`
+
+const projectsCsvHeaders = [
   'Référence',
   'Date',
   'Type de collectivité',
@@ -25,6 +28,18 @@ const csvHeaders = [
   'Lien',
 ]
 
+const leadsCsvHeaders = [
+  'Référence',
+  'Date',
+  'Type de collectivité',
+  'Collectivité',
+  'Code postal',
+  'Point de contact',
+  'Email',
+  'Téléphone',
+  'Lien',
+]
+
 export const generateShareProjectSubmissionsData = async (): Promise<
   string[][]
 > => {
@@ -33,7 +48,7 @@ export const generateShareProjectSubmissionsData = async (): Promise<
   })
 
   return [
-    csvHeaders,
+    projectsCsvHeaders,
     ...rows.map(
       ({
         reference,
@@ -67,7 +82,39 @@ export const generateShareProjectSubmissionsData = async (): Promise<
         partners,
         tech,
         attachments.length.toString(),
-        `${getServerUrl(`${dashboardRootPath}/${reference}`)}`,
+        `${getServerUrl(`${dashboardRootPath}/projets/${reference}`)}`,
+      ],
+    ),
+  ]
+}
+
+export const generateGetLeadSubmissionsData = async (): Promise<
+  string[][]
+> => {
+  const rows = await prismaClient.getLeadFormSubmission.findMany({
+    include: { community: true },
+  })
+
+  return [
+    leadsCsvHeaders,
+    ...rows.map(
+      ({
+        reference,
+        created,
+        community,
+        name,
+        email,
+        phone,
+      }) => [
+        reference,
+        created.toISOString(),
+        community.scale,
+        community.name,
+        community.zipcodes.join(', '),
+        name,
+        email,
+        phone ?? '',
+        `${getServerUrl(`${dashboardRootPath}/contacts/${reference}`)}`,
       ],
     ),
   ]

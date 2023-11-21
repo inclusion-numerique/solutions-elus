@@ -1,5 +1,4 @@
 import z, { string } from 'zod'
-import { Options } from '@sde/web/utils/options'
 
 export const ShareProjectFormDataValidation = z.object({
   community: z.object(

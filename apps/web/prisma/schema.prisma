@@ -84,6 +84,17 @@ model ShareProjectFormSubmission {
   communityId String
 }
 
+model GetLeadFormSubmission {
+  id          String   @id @db.Uuid
+  reference   String   @unique
+  name        String
+  email       String
+  phone       String?
+  created     DateTime @default(now())
+  community   Community    @relation(fields: [communityId], references: [id])
+  communityId String
+}
+
 model Community {
   id                 String                       @id
   name               String
@@ -91,6 +102,7 @@ model Community {
   scale              String
   zipcodes           String[]
   projectSubmissions ShareProjectFormSubmission[]
+  leadSubmissions    GetLeadFormSubmission[]
 }
 
 model Attachment {

@@ -65,7 +65,7 @@
     "js-file-downloader": "^1.1.25",
     "maplibre-gl": "^3.5.2",
     "nanoid": "^3.3.6",
-    "next": "^14.0.1",
+    "next": "^14.0.3",
     "next-auth": "^4.24.4",
     "next-sitemap": "^4.2.3",
     "node-html-parser": "^6.1.11",
@@ -94,7 +94,7 @@
     "zustand": "^4.4.5"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^14.0.1",
+    "@next/bundle-analyzer": "^14.0.3",
     "@sde/test": "*",
     "@types/file-saver": "^2.0.6",
     "@types/js-cookie": "^3.0.5",
