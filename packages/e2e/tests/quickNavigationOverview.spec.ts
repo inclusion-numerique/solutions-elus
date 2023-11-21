@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 
 test('homepage has title and links to projects page', async ({ page }) => {
-  await page.goto('http://localhost:3000/')
+  await page.goto('/')
 
   // Expect a title "to contain" a substring.
   await expect(page).toHaveTitle(/Solutions d'élus/)
