@@ -44,7 +44,6 @@ export const LeftHeader = () => (
             top: share ? share.offsetTop : 936,
             behavior: 'smooth',
           })
-          // share?.scrollIntoView({ behavior: 'smooth' })
         }}
         className="fr-btn fr-btn--secondary fr-icon-arrow-down-line"
       >
