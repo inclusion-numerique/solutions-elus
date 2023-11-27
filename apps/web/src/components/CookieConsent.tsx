@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react"
 import { useLocalStorage } from "usehooks-ts"
-import { Matomo } from "../app/Matomo"
+import { Matomo } from "./Matomo"
+import { AdForm } from "./AdForm"
 
 type CookieConsentModel = {
   isSet: boolean
@@ -10,6 +11,9 @@ type CookieConsentModel = {
     mandatory: true
     analytics: {
       matomo: boolean
+    };
+    marketing: {
+      adform: boolean
     }
   }
 }
@@ -21,6 +25,9 @@ const defaultConsent: CookieConsentModel = {
     analytics: {
       matomo: false,
     },
+    marketing: {
+      adform: false,
+    },
   },
 };
 
@@ -30,6 +37,9 @@ const fullConsent: CookieConsentModel = {
     mandatory: true,
     analytics: {
       matomo: true,
+    },
+    marketing: {
+      adform: true,
     },
   }
 }
@@ -41,6 +51,10 @@ const CookieConsent = () => {
     <>
       {(cookieConsent?.consent?.analytics?.matomo) && (
         <Matomo nonce={undefined} />
+      )}
+
+      {(cookieConsent?.consent?.marketing?.adform) && (
+        <AdForm nonce={undefined} />
       )}
 
       <CookieModal cookieConsent={cookieConsent} setCookieConsent={setCookieConsent} />
@@ -101,6 +115,10 @@ export const CookieModal = ({cookieConsent, setCookieConsent}: CookieModalProps)
   const handleConfirm = () => {
     setCookieConsent(form)
   }
+
+  useEffect(() => {
+    console.log(form)
+  }, [form])
 
   return (
     <dialog id="fr-consent-modal" className="fr-modal" role="dialog" aria-labelledby="fr-consent-modal-title">
@@ -175,7 +193,9 @@ export const CookieModal = ({cookieConsent, setCookieConsent}: CookieModalProps)
                   {/* Analytics */}
                   <div className="fr-consent-service">
                     <fieldset aria-labelledby="analytics-legend analytics-desc" role="group" className="fr-fieldset fr-fieldset--inline">
-                      <legend id="analytics-legend" className="fr-consent-service__title">Analyse d&apos;audience</legend>
+                      <legend id="analytics-legend" className="fr-consent-service__title">
+                        Analyse d&apos;audience
+                      </legend>
                       <div className="fr-consent-service__radios">
                         <div className="fr-radio-group">
                           <input
@@ -228,7 +248,7 @@ export const CookieModal = ({cookieConsent, setCookieConsent}: CookieModalProps)
                         </button>
                       </div>
                       <div className="fr-consent-services fr-collapse" id="analytics-collapse">
-                        {/* Sous finalités */}
+                        {/* Matomo */}
                         <div className="fr-consent-service">
                           <fieldset aria-labelledby="analytics-matomo-legend analytics-matomo-desc" role="group" className="fr-fieldset fr-fieldset--inline">
                             <legend id="analytics-matomo-legend" className="fr-consent-service__title" aria-describedby="analytics-matomo-desc">
@@ -283,6 +303,125 @@ export const CookieModal = ({cookieConsent, setCookieConsent}: CookieModalProps)
                               comprendre comment les visiteurs utilisent notre site web. Les cookies de 
                               Matomo nous aident à améliorer l&apos;expérience utilisateur en analysant 
                               les performances et l&apos;utilisation de notre site.
+                            </p>
+                          </fieldset>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </div>
+                  {/* Marketing */}
+                  <div className="fr-consent-service">
+                    <fieldset aria-labelledby="marketing-legend marketing-desc" role="group" className="fr-fieldset fr-fieldset--inline">
+                      <legend id="marketing-legend" className="fr-consent-service__title">
+                        Marketing
+                      </legend>
+                      <div className="fr-consent-service__radios">
+                        <div className="fr-radio-group">
+                          <input
+                            type="radio"
+                            id="consent-marketing-accept"
+                            name="consent-marketing"
+                            checked={form.isSet && Object.values(form.consent.marketing).every((service) => service === true)}
+                            onChange={(event) => event.target.checked && setForm({
+                              isSet: true,
+                              consent: {
+                                ...form.consent,
+                                marketing: {
+                                  adform: true
+                                }
+                              }
+                            })}
+                          />
+                          <label className="fr-label" htmlFor="consent-marketing-accept">
+                            Accepter
+                          </label>
+                        </div>
+                        <div className="fr-radio-group">
+                          <input
+                            type="radio"
+                            id="consent-marketing-refuse"
+                            name="consent-marketing"
+                            checked={form.isSet && Object.values(form.consent.marketing).every((service) => service === false)}
+                            onChange={(event) => event.target.checked && setForm({
+                              isSet: true,
+                              consent: {
+                                ...form.consent,
+                                marketing: {
+                                  adform: false
+                                }
+                              }
+                            })}
+                          />
+                          <label className="fr-label" htmlFor="consent-marketing-refuse">
+                            Refuser
+                          </label>
+                        </div>
+                      </div>
+                      <p id="marketing-desc" className="fr-consent-service__desc">
+                        Nous utilisons des cookies de marketing pour personnaliser et améliorer 
+                        votre expérience sur notre site, et pour comprendre l&apos;efficacité 
+                        de nos campagnes marketing.
+                      </p>
+                      <div className="fr-consent-service__collapse">
+                        <button className="fr-consent-service__collapse-btn" aria-expanded="false" aria-describedby="marketing-legend" aria-controls="marketing-collapse">
+                          Voir plus de détails
+                        </button>
+                      </div>
+                      <div className="fr-consent-services fr-collapse" id="marketing-collapse">
+                        {/* Adform */}
+                        <div className="fr-consent-service">
+                          <fieldset aria-labelledby="marketing-adform-legend marketing-adform-desc" role="group" className="fr-fieldset fr-fieldset--inline">
+                            <legend id="marketing-adform-legend" className="fr-consent-service__title" aria-describedby="marketing-adform-desc">
+                              Adform
+                            </legend>
+                            <div className="fr-consent-service__radios fr-fieldset--inline">
+                              <div className="fr-radio-group">
+                                <input
+                                  type="radio"
+                                  id="consent-marketing-adform-accept"
+                                  name="consent-marketing-adform"
+                                  checked={form.isSet ? form.consent?.marketing?.adform : false}
+                                  onChange={(event) => event.target.checked && setForm({
+                                    isSet: true,
+                                    consent: {
+                                      ...form.consent,
+                                      marketing: {
+                                        ...form.consent?.marketing,
+                                        adform: true
+                                      }
+                                    }
+                                  })}
+                                />
+                                <label className="fr-label" htmlFor="consent-marketing-adform-accept">
+                                  Accepter
+                                </label>
+                              </div>
+                              <div className="fr-radio-group">
+                                <input
+                                  type="radio"
+                                  id="consent-marketing-adform-refuse"
+                                  name="consent-marketing-adform"
+                                  checked={form.isSet ? !form.consent?.marketing?.adform : false}
+                                  onChange={(event) => event.target.checked && setForm({
+                                    isSet: true,
+                                    consent: {
+                                      ...form.consent,
+                                      marketing: {
+                                        ...form.consent?.marketing,
+                                        adform: false
+                                      }
+                                    }
+                                  })}
+                                />
+                                <label className="fr-label" htmlFor="consent-marketing-adform-refuse">
+                                  Refuser
+                                </label>
+                              </div>
+                            </div>
+                            <p id="service-adform-desc" className="fr-consent-service__desc">
+                              Les cookies d&apos;Adform nous aident à mesurer l&apos;efficacité 
+                              de nos campagnes publicitaires en suivant les interactions des 
+                              utilisateurs avec nos publicités.
                             </p>
                           </fieldset>
                         </div>
