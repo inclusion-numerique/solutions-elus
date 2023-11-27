@@ -5,19 +5,19 @@ const nodeEnvironment = process.env.NODE_ENV
 const isProd = nodeEnvironment === 'production'
 
 const contentSecurityPolicy = `
-  default-src 'self' https://matomo.incubateur.anct.gouv.fr https://sentry.incubateur.net;
-  script-src 'self' https://matomo.incubateur.anct.gouv.fr 'unsafe-inline' 'unsafe-eval';
+  default-src 'self' https://matomo.incubateur.anct.gouv.fr https://*.adform.net https://sentry.incubateur.net;
+  script-src 'self' https://matomo.incubateur.anct.gouv.fr https://*.adform.net 'unsafe-inline' 'unsafe-eval';
   script-src-attr 'none';
   style-src 'self' https: 'unsafe-inline';
   img-src 'self' data:;
-  frame-src https://www.youtube-nocookie.com/;
+  frame-src https://www.youtube-nocookie.com/ https://*.adform.net;
   object-src 'none';
-  connect-src 'self' https://${ServerWebAppConfig.S3.documentsBucket}.${
-  ServerWebAppConfig.S3.host
-} https://matomo.incubateur.anct.gouv.fr https://sentry.incubateur.net https://openmaptiles.geo.data.gouv.fr https://openmaptiles.github.io https://aides-territoires.beta.gouv.fr;
+  connect-src 'self' https://${ServerWebAppConfig.S3.documentsBucket}.${ServerWebAppConfig.S3.host} 
+  https://matomo.incubateur.anct.gouv.fr https://*.adform.net https://sentry.incubateur.net 
+  https://openmaptiles.geo.data.gouv.fr https://openmaptiles.github.io https://aides-territoires.beta.gouv.fr;
   worker-src 'self' blob:;
   font-src 'self' https: data:;
-  frame-ancestors 'self' https://matomo.incubateur.anct.gouv.fr;
+  frame-ancestors 'self' https://matomo.incubateur.anct.gouv.fr https://*.adform.net;
   form-action 'self';
   base-uri 'self';
   ${isProd ? 'upgrade-insecure-requests;' : ''}

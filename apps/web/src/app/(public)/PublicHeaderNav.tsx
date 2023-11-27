@@ -35,15 +35,6 @@ export const PublicHeaderNav = () => {
           Voir les projets
         </Link>
       </li>
-      <li className="fr-nav__item">
-        <Link
-          className="fr-nav__link"
-          aria-current={pathname === '/salon-des-maires' ? 'page' : undefined}
-          href="/salon-des-maires"
-        >
-          Salon des maires
-        </Link>
-      </li>
     </ul>
   )
 }

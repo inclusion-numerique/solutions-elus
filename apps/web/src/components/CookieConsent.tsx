@@ -2,14 +2,18 @@
 
 import { useEffect, useState } from "react"
 import { useLocalStorage } from "usehooks-ts"
-import { Matomo } from "../app/Matomo"
+import { Matomo } from "./Matomo"
+import { AdForm } from "./AdForm"
 
-type CookieConsentModel = {
+interface CookieConsentModel {
   isSet: boolean
   consent: {
     mandatory: true
     analytics: {
       matomo: boolean
+    };
+    marketing: {
+      adform: boolean
     }
   }
 }
@@ -21,6 +25,9 @@ const defaultConsent: CookieConsentModel = {
     analytics: {
       matomo: false,
     },
+    marketing: {
+      adform: false,
+    },
   },
 };
 
@@ -31,16 +38,34 @@ const fullConsent: CookieConsentModel = {
     analytics: {
       matomo: true,
     },
+    marketing: {
+      adform: true,
+    },
   }
 }
 
+const isValid = (value: any): value is CookieConsentModel =>
+    typeof value?.isSet === 'boolean' &&
+    typeof value?.consent?.analytics?.matomo === 'boolean' &&
+    typeof value?.consent?.marketing?.adform === 'boolean';
+
 const CookieConsent = () => {
   const [cookieConsent, setCookieConsent] = useLocalStorage<CookieConsentModel>('cookie-consent', defaultConsent)
+
+  useEffect(() => {
+    if (!isValid(cookieConsent)) {
+      setCookieConsent(defaultConsent)
+    }
+  }, [cookieConsent, setCookieConsent])
 
   if (cookieConsent.isSet === true) return (
     <>
       {(cookieConsent?.consent?.analytics?.matomo) && (
         <Matomo nonce={undefined} />
+      )}
+
+      {(cookieConsent?.consent?.marketing?.adform) && (
+        <AdForm nonce={undefined} />
       )}
 
       <CookieModal cookieConsent={cookieConsent} setCookieConsent={setCookieConsent} />
@@ -102,14 +127,36 @@ export const CookieModal = ({cookieConsent, setCookieConsent}: CookieModalProps)
     setCookieConsent(form)
   }
 
+  const handleCancel = () => {
+    setForm(cookieConsent)
+  }
+
   return (
-    <dialog id="fr-consent-modal" className="fr-modal" role="dialog" aria-labelledby="fr-consent-modal-title">
+    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+    <dialog
+      id="fr-consent-modal"
+      className="fr-modal"
+      role="dialog"
+      aria-labelledby="fr-consent-modal-title"
+      onClose={handleCancel}
+      onClick={(event) => {
+        if (event.target === event.currentTarget) { handleCancel() }
+      }}
+      onKeyDown={(event) => {
+        if (event.key === 'Escape') { handleCancel() }
+      }}
+    >
       <div className="fr-container fr-container--fluid fr-container-md">
         <div className="fr-grid-row fr-grid-row--center">
           <div className="fr-col-12 fr-col-md-10 fr-col-lg-8">
             <div className="fr-modal__body">
               <div className="fr-modal__header">
-                <button className="fr-btn--close fr-btn" aria-controls="fr-consent-modal" title="Fermer">
+                <button
+                  title="Fermer"
+                  className="fr-btn--close fr-btn"
+                  aria-controls="fr-consent-modal"
+                  onClick={handleCancel}
+                >
                   Fermer
                 </button>
               </div>
@@ -131,7 +178,7 @@ export const CookieModal = ({cookieConsent, setCookieConsent}: CookieModalProps)
                             type="radio"
                             id="consent-all-accept"
                             name="consent-all"
-                            checked={form.isSet && Object.values(form.consent).every((finality) => Object.values(finality).every((service) => service === true))}
+                            checked={Object.values(form?.consent).every((finality) => Object.values(finality).every((service) => service === true))}
                             onChange={(event) => event.target.checked && setForm(fullConsent)}
                           />
                           <label className="fr-label" htmlFor="consent-all-accept">
@@ -143,7 +190,7 @@ export const CookieModal = ({cookieConsent, setCookieConsent}: CookieModalProps)
                             type="radio"
                             id="consent-all-refuse"
                             name="consent-all"
-                            checked={form.isSet && Object.values(form.consent).every((finality) => Object.values(finality).every((service) => service === false))}
+                            checked={Object.values(form?.consent).every((finality) => Object.values(finality).every((service) => service === false))}
                             onChange={(event) => event.target.checked && setForm({...defaultConsent, isSet: true })}
                           />
                           <label className="fr-label" htmlFor="consent-all-refuse">
@@ -175,18 +222,20 @@ export const CookieModal = ({cookieConsent, setCookieConsent}: CookieModalProps)
                   {/* Analytics */}
                   <div className="fr-consent-service">
                     <fieldset aria-labelledby="analytics-legend analytics-desc" role="group" className="fr-fieldset fr-fieldset--inline">
-                      <legend id="analytics-legend" className="fr-consent-service__title">Analyse d&apos;audience</legend>
+                      <legend id="analytics-legend" className="fr-consent-service__title">
+                        Analyse d&apos;audience
+                      </legend>
                       <div className="fr-consent-service__radios">
                         <div className="fr-radio-group">
                           <input
                             type="radio"
                             id="consent-analytics-accept"
                             name="consent-analytics"
-                            checked={form.isSet && Object.values(form.consent.analytics).every((service) => service === true)}
+                            checked={form?.consent?.analytics === undefined ?  false : Object.values(form?.consent?.analytics).every((service) => service === true)}
                             onChange={(event) => event.target.checked && setForm({
                               isSet: true,
                               consent: {
-                                ...form.consent,
+                                ...form?.consent,
                                 analytics: {
                                   matomo: true
                                 }
@@ -202,11 +251,11 @@ export const CookieModal = ({cookieConsent, setCookieConsent}: CookieModalProps)
                             type="radio"
                             id="consent-analytics-refuse"
                             name="consent-analytics"
-                            checked={form.isSet && Object.values(form.consent.analytics).every((service) => service === false)}
+                            checked={form?.consent?.analytics === undefined ?  true : Object.values(form?.consent?.analytics).every((service) => service === false)}
                             onChange={(event) => event.target.checked && setForm({
                               isSet: true,
                               consent: {
-                                ...form.consent,
+                                ...form?.consent,
                                 analytics: {
                                   matomo: false
                                 }
@@ -228,7 +277,7 @@ export const CookieModal = ({cookieConsent, setCookieConsent}: CookieModalProps)
                         </button>
                       </div>
                       <div className="fr-consent-services fr-collapse" id="analytics-collapse">
-                        {/* Sous finalités */}
+                        {/* Matomo */}
                         <div className="fr-consent-service">
                           <fieldset aria-labelledby="analytics-matomo-legend analytics-matomo-desc" role="group" className="fr-fieldset fr-fieldset--inline">
                             <legend id="analytics-matomo-legend" className="fr-consent-service__title" aria-describedby="analytics-matomo-desc">
@@ -240,13 +289,13 @@ export const CookieModal = ({cookieConsent, setCookieConsent}: CookieModalProps)
                                   type="radio"
                                   id="consent-analytics-matomo-accept"
                                   name="consent-analytics-matomo"
-                                  checked={form.isSet ? form.consent?.analytics?.matomo : false}
+                                  checked={form?.consent?.analytics?.matomo}
                                   onChange={(event) => event.target.checked && setForm({
                                     isSet: true,
                                     consent: {
-                                      ...form.consent,
+                                      ...form?.consent,
                                       analytics: {
-                                        ...form.consent?.analytics,
+                                        ...form?.consent?.analytics,
                                         matomo: true
                                       }
                                     }
@@ -261,13 +310,13 @@ export const CookieModal = ({cookieConsent, setCookieConsent}: CookieModalProps)
                                   type="radio"
                                   id="consent-analytics-matomo-refuse"
                                   name="consent-analytics-matomo"
-                                  checked={form.isSet ? !form.consent?.analytics?.matomo : false}
+                                  checked={!form?.consent?.analytics?.matomo}
                                   onChange={(event) => event.target.checked && setForm({
                                     isSet: true,
                                     consent: {
-                                      ...form.consent,
+                                      ...form?.consent,
                                       analytics: {
-                                        ...form.consent?.analytics,
+                                        ...form?.consent?.analytics,
                                         matomo: false
                                       }
                                     }
@@ -289,8 +338,136 @@ export const CookieModal = ({cookieConsent, setCookieConsent}: CookieModalProps)
                       </div>
                     </fieldset>
                   </div>
+                  {/* Marketing */}
+                  <div className="fr-consent-service">
+                    <fieldset aria-labelledby="marketing-legend marketing-desc" role="group" className="fr-fieldset fr-fieldset--inline">
+                      <legend id="marketing-legend" className="fr-consent-service__title">
+                        Marketing
+                      </legend>
+                      <div className="fr-consent-service__radios">
+                        <div className="fr-radio-group">
+                          <input
+                            type="radio"
+                            id="consent-marketing-accept"
+                            name="consent-marketing"
+                            checked={form?.consent?.marketing === undefined ?  false : Object.values(form?.consent?.marketing).every((service) => service === true)}
+                            onChange={(event) => event.target.checked && setForm({
+                              isSet: true,
+                              consent: {
+                                ...form?.consent,
+                                marketing: {
+                                  adform: true
+                                }
+                              }
+                            })}
+                          />
+                          <label className="fr-label" htmlFor="consent-marketing-accept">
+                            Accepter
+                          </label>
+                        </div>
+                        <div className="fr-radio-group">
+                          <input
+                            type="radio"
+                            id="consent-marketing-refuse"
+                            name="consent-marketing"
+                            checked={form?.consent?.marketing === undefined ?  true : Object.values(form?.consent?.marketing).every((service) => service === false)}
+                            onChange={(event) => event.target.checked && setForm({
+                              isSet: true,
+                              consent: {
+                                ...form?.consent,
+                                marketing: {
+                                  adform: false
+                                }
+                              }
+                            })}
+                          />
+                          <label className="fr-label" htmlFor="consent-marketing-refuse">
+                            Refuser
+                          </label>
+                        </div>
+                      </div>
+                      <p id="marketing-desc" className="fr-consent-service__desc">
+                        Nous utilisons des cookies de marketing pour personnaliser et améliorer 
+                        votre expérience sur notre site, et pour comprendre l&apos;efficacité 
+                        de nos campagnes marketing.
+                      </p>
+                      <div className="fr-consent-service__collapse">
+                        <button className="fr-consent-service__collapse-btn" aria-expanded="false" aria-describedby="marketing-legend" aria-controls="marketing-collapse">
+                          Voir plus de détails
+                        </button>
+                      </div>
+                      <div className="fr-consent-services fr-collapse" id="marketing-collapse">
+                        {/* Adform */}
+                        <div className="fr-consent-service">
+                          <fieldset aria-labelledby="marketing-adform-legend marketing-adform-desc" role="group" className="fr-fieldset fr-fieldset--inline">
+                            <legend id="marketing-adform-legend" className="fr-consent-service__title" aria-describedby="marketing-adform-desc">
+                              Adform
+                            </legend>
+                            <div className="fr-consent-service__radios fr-fieldset--inline">
+                              <div className="fr-radio-group">
+                                <input
+                                  type="radio"
+                                  id="consent-marketing-adform-accept"
+                                  name="consent-marketing-adform"
+                                  checked={form?.consent?.marketing?.adform}
+                                  onChange={(event) => event.target.checked && setForm({
+                                    isSet: true,
+                                    consent: {
+                                      ...form?.consent,
+                                      marketing: {
+                                        ...form?.consent?.marketing,
+                                        adform: true
+                                      }
+                                    }
+                                  })}
+                                />
+                                <label className="fr-label" htmlFor="consent-marketing-adform-accept">
+                                  Accepter
+                                </label>
+                              </div>
+                              <div className="fr-radio-group">
+                                <input
+                                  type="radio"
+                                  id="consent-marketing-adform-refuse"
+                                  name="consent-marketing-adform"
+                                  checked={!form?.consent?.marketing?.adform}
+                                  onChange={(event) => event.target.checked && setForm({
+                                    isSet: true,
+                                    consent: {
+                                      ...form?.consent,
+                                      marketing: {
+                                        ...form?.consent?.marketing,
+                                        adform: false
+                                      }
+                                    }
+                                  })}
+                                />
+                                <label className="fr-label" htmlFor="consent-marketing-adform-refuse">
+                                  Refuser
+                                </label>
+                              </div>
+                            </div>
+                            <p id="service-adform-desc" className="fr-consent-service__desc">
+                              Les cookies d&apos;Adform nous aident à mesurer l&apos;efficacité 
+                              de nos campagnes publicitaires en suivant les interactions des 
+                              utilisateurs avec nos publicités.
+                            </p>
+                          </fieldset>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </div>
                   {/* Bouton de confirmation/fermeture */}
                   <ul className="fr-consent-manager__buttons fr-btns-group fr-btns-group--right fr-btns-group--inline-sm">
+                    <li>
+                      <button
+                        className="fr-btn fr-btn--secondary"
+                        aria-controls="fr-consent-modal"
+                        onClick={handleCancel}
+                      >
+                        Annuler
+                      </button>
+                    </li>
                     <li>
                       <button
                         className="fr-btn"
