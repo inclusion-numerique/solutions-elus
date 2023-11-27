@@ -39,7 +39,7 @@ const DashboardPage = async () => {
                 <h4 className="fr-card__title">
                   <span className="fr-icon-folder-2-fill fr-mr-2v" />
                   Contacts
-                  <p className="fr-badge fr-badge--sm fr-badge--info fr-ml-4v">Salon des Maires 2023</p>
+                  {/* <p className="fr-badge fr-badge--sm fr-badge--info fr-ml-4v">Salon des Maires 2023</p> */}
                 </h4>
                 <div className="fr-card__desc fr-pt-4v">
                   <p>{leadsCount} contacts ont été enregistrés.</p>
