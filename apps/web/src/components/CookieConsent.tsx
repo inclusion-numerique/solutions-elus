@@ -125,14 +125,36 @@ export const CookieModal = ({cookieConsent, setCookieConsent}: CookieModalProps)
     setCookieConsent(form)
   }
 
+  const handleCancel = () => {
+    setForm(cookieConsent)
+  }
+
   return (
-    <dialog id="fr-consent-modal" className="fr-modal" role="dialog" aria-labelledby="fr-consent-modal-title">
+    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+    <dialog
+      id="fr-consent-modal"
+      className="fr-modal"
+      role="dialog"
+      aria-labelledby="fr-consent-modal-title"
+      onClose={handleCancel}
+      onClick={(event) => {
+        if (event.target === event.currentTarget) { handleCancel() }
+      }}
+      onKeyDown={(event) => {
+        if (event.key === 'Escape') { handleCancel() }
+      }}
+    >
       <div className="fr-container fr-container--fluid fr-container-md">
         <div className="fr-grid-row fr-grid-row--center">
           <div className="fr-col-12 fr-col-md-10 fr-col-lg-8">
             <div className="fr-modal__body">
               <div className="fr-modal__header">
-                <button className="fr-btn--close fr-btn" aria-controls="fr-consent-modal" title="Fermer">
+                <button
+                  title="Fermer"
+                  className="fr-btn--close fr-btn"
+                  aria-controls="fr-consent-modal"
+                  onClick={handleCancel}
+                >
                   Fermer
                 </button>
               </div>
@@ -435,6 +457,15 @@ export const CookieModal = ({cookieConsent, setCookieConsent}: CookieModalProps)
                   </div>
                   {/* Bouton de confirmation/fermeture */}
                   <ul className="fr-consent-manager__buttons fr-btns-group fr-btns-group--right fr-btns-group--inline-sm">
+                    <li>
+                      <button
+                        className="fr-btn fr-btn--secondary"
+                        aria-controls="fr-consent-modal"
+                        onClick={handleCancel}
+                      >
+                        Annuler
+                      </button>
+                    </li>
                     <li>
                       <button
                         className="fr-btn"
