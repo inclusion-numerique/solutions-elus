@@ -10,7 +10,7 @@ const contentSecurityPolicy = `
   script-src-attr 'none';
   style-src 'self' https: 'unsafe-inline';
   img-src 'self' data:;
-  frame-src https://www.youtube-nocookie.com/;
+  frame-src https://www.youtube-nocookie.com/ https://*.adform.net;
   object-src 'none';
   connect-src 'self' https://${ServerWebAppConfig.S3.documentsBucket}.${ServerWebAppConfig.S3.host} 
   https://matomo.incubateur.anct.gouv.fr https://*.adform.net https://sentry.incubateur.net 
