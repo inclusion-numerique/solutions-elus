@@ -162,13 +162,13 @@ const CONFIG: Finality[] = [
         type: 'service',
         name: 'manageo',
         title: 'Manageo',
-        description: 'Manageo est un outil d\'analyse d\'audience que nous utilisons pour comprendre comment les visiteurs utilisent notre site web. Les cookies de Matomo nous aident à améliorer l\'expérience utilisateur en analysant les performances et l\'utilisation de notre site.',
+        description: 'Manageo est un service d\'analyse qui nous permet de comprendre les interactions des visiteurs avec notre site web. Ces données nous aident à optimiser notre contenu et à améliorer l\'expérience utilisateur.',
       },
       {
         type: 'service',
         name: 'infopro',
         title: 'Infopro',
-        description: 'Infopro est un outil d\'analyse d\'audience que nous utilisons pour comprendre comment les visiteurs utilisent notre site web. Les cookies de Matomo nous aident à améliorer l\'expérience utilisateur en analysant les performances et l\'utilisation de notre site.',
+        description: 'Infopro est un service d\'analyse d\'audience qui nous aide à recueillir des informations sur la manière dont les utilisateurs interagissent avec notre site web. Ces données nous permettent d\'optimiser nos services et de mieux répondre aux besoins de nos visiteurs.',
       },
     ],
   },
@@ -188,17 +188,18 @@ const CONFIG: Finality[] = [
         type: 'service',
         name: 'linkedin',
         title: 'LinkedIn',
-        description: 'Les cookies de LinkedIn nous aident à mesurer l\'efficacité de nos campagnes publicitaires en suivant les interactions des utilisateurs avec nos publicités.',
+        description: 'LinkedIn est un service de marketing professionnel qui nous permet de mieux comprendre l\'impact de nos campagnes publicitaires sur la plateforme. Les cookies LinkedIn suivent les interactions des utilisateurs avec nos contenus publicitaires.',
       },
       {
         type: 'service',
         name: 'google-tag-manager',
         title: 'Google Tag Manager',
-        description: 'Les cookies de Google Tag Manager nous aident à mesurer l\'efficacité de nos campagnes publicitaires en suivant les interactions des utilisateurs avec nos publicités.',
+        description: 'Google Tag Manager est un outil de gestion de tags qui facilite l\'implémentation et la gestion des tags de suivi sur notre site web. Il nous permet de personnaliser et d\'optimiser notre stratégie marketing en suivant diverses interactions des utilisateurs.',
       }
     ],
   },
-]
+];
+
 
 type CookieModalProps = {
   cookieConsent: CookieConsentModel
