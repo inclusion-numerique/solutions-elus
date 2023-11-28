@@ -77,7 +77,7 @@ const CookieConsent = () => {
     }
   }, [cookieConsent, setCookieConsent])
 
-  if (cookieConsent.isSet === true) return (
+  if (isValid(cookieConsent) && cookieConsent.isSet === true) return (
     <>
       {(cookieConsent?.consent?.analytics?.matomo) && <Matomo /> }
       {(cookieConsent?.consent?.analytics?.infopro) && <Infopro /> }
@@ -92,7 +92,7 @@ const CookieConsent = () => {
     </>
   )
   
-  if (cookieConsent.isSet === false) return (
+  if (isValid(cookieConsent) && cookieConsent.isSet === false) return (
     <>
       <div id="cookie-consent-banner" className="fr-consent-banner">
         <h2 className="fr-h6">À propos des cookies sur Solution d&apos;élus</h2>
