@@ -131,24 +131,18 @@ export const viewport: Viewport = {
   userScalable: false,
 }
 
-const RootLayout = ({ children }: PropsWithChildren) => {
-  // Do we want to disable SSG for CSFR on this website ?
-  // const nonce = headers().get('x-sde-script-nonce') ?? undefined
-  const nonce = undefined
-
-  return (
-    <html lang="fr" data-fr-theme="light" data-fr-scheme="light">
-      <head>
-        <PreloadResources />
-        <Dsfr nonce={nonce} />
-      </head>
-      <body>
-        <CookieConsent />
-        <EnvInformation />
-        {children}
-      </body>
-    </html>
-  )
-}
+const RootLayout = ({ children }: PropsWithChildren) => (
+  <html lang="fr" data-fr-theme="light" data-fr-scheme="light">
+    <head>
+      <PreloadResources />
+      <Dsfr />
+    </head>
+    <body>
+      <CookieConsent />
+      <EnvInformation />
+      {children}
+    </body>
+  </html>
+)
 
 export default RootLayout
