@@ -5,7 +5,8 @@
 /* Layout setup */
 html,
 body,
-body > div:not(#environment-information):not(#cookie-consent-banner) {
+body > div:not(#environment-information),
+body > div:not(#cookie-consent-banner) {
   min-height: 100% !important;
   height: 100%;
 }
