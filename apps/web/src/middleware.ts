@@ -24,34 +24,6 @@ const contentSecurityPolicy = `
   .trim()
 
 const middleware = (request: NextRequest) => {
-  // const forwardedProto = request.headers.get('X-Forwarded-Proto')
-  // const requestHost = request.headers.get('host')
-  // const baseUrl = process.env.BASE_URL
-
-  /**
-   * https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security
-   * The MDN documentation states "Note: This is more secure than simply
-   * configuring a HTTP to HTTPS (301) redirect on your server, where the
-   * initial HTTP connection is still vulnerable to a man-in-the-middle attack."
-   * But they keep applying this redirect in recommended SSL configs: https://ssl-config.mozilla.org/
-   */
-  // if (
-  //   isProd &&
-  //   // We redirect if protocol is not secure https
-  //   (forwardedProto === 'http' ||
-  //     // If we have a base url defined and the host is different
-  //     // we redirect to the main domain defined in base_url
-  //     (!!baseUrl && requestHost !== baseUrl))
-  // ) {
-  //   const domain = baseUrl || requestHost
-  //   const httpsBase = `https://${domain ?? ''}`
-  //   const requestUrl = new URL(request.url)
-  //   const path = `${requestUrl.pathname}${requestUrl.search}`
-  //   const redirectTo = `${httpsBase}${path}`
-
-  //   return NextResponse.redirect(redirectTo)
-  // }
-
   const response = NextResponse.next()
 
   if (nodeEnvironment === 'development') {
