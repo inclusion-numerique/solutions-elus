@@ -24,9 +24,9 @@ const contentSecurityPolicy = `
   .trim()
 
 const middleware = (request: NextRequest) => {
-  const forwardedProto = request.headers.get('X-Forwarded-Proto')
-  const requestHost = request.headers.get('host')
-  const baseUrl = process.env.BASE_URL
+  // const forwardedProto = request.headers.get('X-Forwarded-Proto')
+  // const requestHost = request.headers.get('host')
+  // const baseUrl = process.env.BASE_URL
 
   /**
    * https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security
