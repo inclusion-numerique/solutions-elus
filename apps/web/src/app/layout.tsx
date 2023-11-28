@@ -1,10 +1,13 @@
 import '@sde/web/app/app.css'
 import { PropsWithChildren } from 'react'
 import { Metadata, Viewport } from 'next'
+import dynamic from 'next/dynamic'
 import { PublicWebAppConfig, ServerWebAppConfig } from '@sde/web/webAppConfig'
 import { Dsfr } from '@sde/web/app/Dsfr'
 import { EnvInformation } from './EnvInformation'
 import { PreloadResources } from './PreloadResources'
+
+const CookieConsent = dynamic(() => import('@sde/web/components/CookieConsent'), { ssr: false })
 
 export const metadata: Metadata = {
   metadataBase: new URL(PublicWebAppConfig.mainLiveUrl),
@@ -128,23 +131,18 @@ export const viewport: Viewport = {
   userScalable: false,
 }
 
-const RootLayout = ({ children }: PropsWithChildren) => {
-  // Do we want to disable SSG for CSFR on this website ?
-  // const nonce = headers().get('x-sde-script-nonce') ?? undefined
-  const nonce = undefined
-
-  return (
-    <html lang="fr" data-fr-theme="light" data-fr-scheme="light">
-      <head>
-        <PreloadResources />
-        <Dsfr nonce={nonce} />
-      </head>
-      <body>
-        <EnvInformation />
-        {children}
-      </body>
-    </html>
-  )
-}
+const RootLayout = ({ children }: PropsWithChildren) => (
+  <html lang="fr" data-fr-theme="light" data-fr-scheme="light">
+    <head>
+      <PreloadResources />
+      <Dsfr />
+    </head>
+    <body>
+      <CookieConsent />
+      <EnvInformation />
+      {children}
+    </body>
+  </html>
+)
 
 export default RootLayout

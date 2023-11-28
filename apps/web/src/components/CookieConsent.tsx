@@ -1,9 +1,11 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { useLocalStorage } from "usehooks-ts"
-import { Matomo } from "./Matomo"
-import { AdForm } from "./AdForm"
+/* eslint-disable eslint-comments/disable-enable-pair */
+/* eslint-disable prefer-object-spread */
+
+import { useEffect, useState } from "react";
+import { useLocalStorage } from "usehooks-ts";
+import { Matomo, Infopro, Manageo, AdForm, LinkedIn, GoogleTagManager } from "@sde/web/components/scripts";
 
 interface CookieConsentModel {
   isSet: boolean
@@ -11,9 +13,13 @@ interface CookieConsentModel {
     mandatory: true
     analytics: {
       matomo: boolean
+      infopro: boolean
+      manageo: boolean
     };
     marketing: {
       adform: boolean
+      linkedin: boolean
+      'google-tag-manager': boolean
     }
   }
 }
@@ -24,9 +30,13 @@ const defaultConsent: CookieConsentModel = {
     mandatory: true,
     analytics: {
       matomo: false,
+      infopro: false,
+      manageo: false,
     },
     marketing: {
       adform: false,
+      linkedin: false,
+      'google-tag-manager': false,
     },
   },
 };
@@ -37,17 +47,26 @@ const fullConsent: CookieConsentModel = {
     mandatory: true,
     analytics: {
       matomo: true,
+      infopro: true,
+      manageo: true,
     },
     marketing: {
       adform: true,
+      linkedin: true,
+      'google-tag-manager': true,
     },
   }
 }
 
 const isValid = (value: any): value is CookieConsentModel =>
     typeof value?.isSet === 'boolean' &&
+    typeof value?.consent?.mandatory === 'boolean' &&
     typeof value?.consent?.analytics?.matomo === 'boolean' &&
-    typeof value?.consent?.marketing?.adform === 'boolean';
+    typeof value?.consent?.analytics?.infopro === 'boolean' &&
+    typeof value?.consent?.analytics?.manageo === 'boolean' &&
+    typeof value?.consent?.marketing?.adform === 'boolean' &&
+    typeof value?.consent?.marketing?.linkedin === 'boolean' &&
+    typeof value?.consent?.marketing?.['google-tag-manager'] === 'boolean';
 
 const CookieConsent = () => {
   const [cookieConsent, setCookieConsent] = useLocalStorage<CookieConsentModel>('cookie-consent', defaultConsent)
@@ -58,23 +77,24 @@ const CookieConsent = () => {
     }
   }, [cookieConsent, setCookieConsent])
 
-  if (cookieConsent.isSet === true) return (
+  if (isValid(cookieConsent) && cookieConsent.isSet === true) return (
     <>
-      {(cookieConsent?.consent?.analytics?.matomo) && (
-        <Matomo nonce={undefined} />
-      )}
+      {(cookieConsent?.consent?.analytics?.matomo) && <Matomo /> }
+      {(cookieConsent?.consent?.analytics?.infopro) && <Infopro /> }
+      {(cookieConsent?.consent?.analytics?.manageo) && <Manageo /> }
 
-      {(cookieConsent?.consent?.marketing?.adform) && (
-        <AdForm nonce={undefined} />
-      )}
+      {(cookieConsent?.consent?.marketing?.adform) && <AdForm /> }
+      {(cookieConsent?.consent?.marketing?.linkedin) && <LinkedIn /> }
+      {(cookieConsent?.consent?.marketing?.['google-tag-manager']) && <GoogleTagManager /> }
+      
 
       <CookieModal cookieConsent={cookieConsent} setCookieConsent={setCookieConsent} />
     </>
   )
   
-  if (cookieConsent.isSet === false) return (
+  if (isValid(cookieConsent) && cookieConsent.isSet === false) return (
     <>
-      <div className="fr-consent-banner">
+      <div id="cookie-consent-banner" className="fr-consent-banner">
         <h2 className="fr-h6">À propos des cookies sur Solution d&apos;élus</h2>
         <div className="fr-consent-banner__content">
           <p className="fr-text--sm">
@@ -109,6 +129,77 @@ const CookieConsent = () => {
 };
 
 export default CookieConsent;
+
+interface Finality {
+  type: 'finality'
+  name: 'analytics' | 'marketing'
+  title: string
+  description: string
+  services: Service[]
+}
+
+interface Service {
+  type: 'service'
+  name: 'matomo' | 'infopro' | 'manageo' | 'adform' | 'linkedin' | 'google-tag-manager'
+  title: string
+  description: string
+}
+
+const CONFIG: Finality[] = [
+  {
+    type: 'finality',
+    name: 'analytics',
+    title: 'Analyse d\'audience',
+    description: 'Nous utilisons des cookies d\'analyse d\'audience pour nous aider à comprendre comment les visiteurs interagissent avec ce site web.',
+    services: [
+      {
+        type: 'service',
+        name: 'matomo',
+        title: 'Matomo',
+        description: 'Matomo est un outil d\'analyse d\'audience que nous utilisons pour comprendre comment les visiteurs utilisent notre site web. Les cookies de Matomo nous aident à améliorer l\'expérience utilisateur en analysant les performances et l\'utilisation de notre site.',
+      },
+      {
+        type: 'service',
+        name: 'manageo',
+        title: 'Manageo',
+        description: 'Manageo est un service d\'analyse qui nous permet de comprendre les interactions des visiteurs avec notre site web. Ces données nous aident à optimiser notre contenu et à améliorer l\'expérience utilisateur.',
+      },
+      {
+        type: 'service',
+        name: 'infopro',
+        title: 'Infopro',
+        description: 'Infopro est un service d\'analyse d\'audience qui nous aide à recueillir des informations sur la manière dont les utilisateurs interagissent avec notre site web. Ces données nous permettent d\'optimiser nos services et de mieux répondre aux besoins de nos visiteurs.',
+      },
+    ],
+  },
+  {
+    type: 'finality',
+    name: 'marketing',
+    title: 'Marketing',
+    description: 'Nous utilisons des cookies de marketing pour personnaliser et améliorer votre expérience sur notre site, et pour comprendre l\'efficacité de nos campagnes marketing.',
+    services: [
+      {
+        type: 'service',
+        name: 'adform',
+        title: 'Adform',
+        description: 'Les cookies d\'Adform nous aident à mesurer l\'efficacité de nos campagnes publicitaires en suivant les interactions des utilisateurs avec nos publicités.',
+      },
+      {
+        type: 'service',
+        name: 'linkedin',
+        title: 'LinkedIn',
+        description: 'LinkedIn est un service de marketing professionnel qui nous permet de mieux comprendre l\'impact de nos campagnes publicitaires sur la plateforme. Les cookies LinkedIn suivent les interactions des utilisateurs avec nos contenus publicitaires.',
+      },
+      {
+        type: 'service',
+        name: 'google-tag-manager',
+        title: 'Google Tag Manager',
+        description: 'Google Tag Manager est un outil de gestion de tags qui facilite l\'implémentation et la gestion des tags de suivi sur notre site web. Il nous permet de personnaliser et d\'optimiser notre stratégie marketing en suivant diverses interactions des utilisateurs.',
+      }
+    ],
+  },
+];
+
 
 type CookieModalProps = {
   cookieConsent: CookieConsentModel
@@ -219,244 +310,131 @@ export const CookieModal = ({cookieConsent, setCookieConsent}: CookieModalProps)
                       </p>
                     </fieldset>
                   </div>
-                  {/* Analytics */}
-                  <div className="fr-consent-service">
-                    <fieldset aria-labelledby="analytics-legend analytics-desc" role="group" className="fr-fieldset fr-fieldset--inline">
-                      <legend id="analytics-legend" className="fr-consent-service__title">
-                        Analyse d&apos;audience
-                      </legend>
-                      <div className="fr-consent-service__radios">
-                        <div className="fr-radio-group">
-                          <input
-                            type="radio"
-                            id="consent-analytics-accept"
-                            name="consent-analytics"
-                            checked={form?.consent?.analytics === undefined ?  false : Object.values(form?.consent?.analytics).every((service) => service === true)}
-                            onChange={(event) => event.target.checked && setForm({
-                              isSet: true,
-                              consent: {
-                                ...form?.consent,
-                                analytics: {
-                                  matomo: true
+
+                  {CONFIG.map((finality) => (
+                    <div className="fr-consent-service" key={finality.name}>
+                      <fieldset aria-labelledby={`${finality.name}-legend ${finality.name}-desc`} role="group" className="fr-fieldset fr-fieldset--inline">
+                        <legend id={`${finality.name}-legend`} className="fr-consent-service__title">
+                          {finality.title}
+                        </legend>
+                        <div className="fr-consent-service__radios">
+                          <div className="fr-radio-group">
+                            <input
+                              type="radio"
+                              id={`consent-${finality.name}-accept`}
+                              name={`consent-${finality.name}`}
+                              checked={Object.values(form?.consent[finality.name]).every((service) => service === true)}
+                              onChange={(event) => event.target.checked && setForm({
+                                isSet: true,
+                                consent: {
+                                  ...form?.consent,
+                                  [finality.name]: 
+                                    Object.assign({}, form?.consent[finality.name], {
+                                      [finality.services[0].name]: true,
+                                      [finality.services[1].name]: true,
+                                      [finality.services[2].name]: true,
+                                    }),
                                 }
-                              }
-                            })}
-                          />
-                          <label className="fr-label" htmlFor="consent-analytics-accept">
-                            Accepter
-                          </label>
-                        </div>
-                        <div className="fr-radio-group">
-                          <input
-                            type="radio"
-                            id="consent-analytics-refuse"
-                            name="consent-analytics"
-                            checked={form?.consent?.analytics === undefined ?  true : Object.values(form?.consent?.analytics).every((service) => service === false)}
-                            onChange={(event) => event.target.checked && setForm({
-                              isSet: true,
-                              consent: {
-                                ...form?.consent,
-                                analytics: {
-                                  matomo: false
+                              })}
+                            />
+                            <label className="fr-label" htmlFor={`consent-${finality.name}-accept`}>
+                              Accepter
+                            </label>
+                          </div>
+                          <div className="fr-radio-group">
+                            <input
+                              type="radio"
+                              id={`consent-${finality.name}-refuse`}
+                              name={`consent-${finality.name}`}
+                              checked={Object.values(form?.consent[finality.name]).every((service) => service === false)}
+                              onChange={(event) => event.target.checked && setForm({
+                                isSet: true,
+                                consent: {
+                                  ...form?.consent,
+                                  [finality.name]: 
+                                    Object.assign({}, form?.consent[finality.name], {
+                                      [finality.services[0].name]: false,
+                                      [finality.services[1].name]: false,
+                                      [finality.services[2].name]: false,
+                                    }),
                                 }
-                              }
-                            })}
-                          />
-                          <label className="fr-label" htmlFor="consent-analytics-refuse">
-                            Refuser
-                          </label>
+                              })}
+                            />
+                            <label className="fr-label" htmlFor={`consent-${finality.name}-refuse`}>
+                              Refuser
+                            </label>
+                          </div>
                         </div>
-                      </div>
-                      <p id="analytics-desc" className="fr-consent-service__desc">
-                        Nous utilisons des cookies d&apos;analyse d&apos;audience pour nous aider à 
-                        comprendre comment les visiteurs interagissent avec ce site web.
-                      </p>
-                      <div className="fr-consent-service__collapse">
-                        <button className="fr-consent-service__collapse-btn" aria-expanded="false" aria-describedby="analytics-legend" aria-controls="analytics-collapse">
-                          Voir plus de détails
-                        </button>
-                      </div>
-                      <div className="fr-consent-services fr-collapse" id="analytics-collapse">
-                        {/* Matomo */}
-                        <div className="fr-consent-service">
-                          <fieldset aria-labelledby="analytics-matomo-legend analytics-matomo-desc" role="group" className="fr-fieldset fr-fieldset--inline">
-                            <legend id="analytics-matomo-legend" className="fr-consent-service__title" aria-describedby="analytics-matomo-desc">
-                              Matomo
-                            </legend>
-                            <div className="fr-consent-service__radios fr-fieldset--inline">
-                              <div className="fr-radio-group">
-                                <input
-                                  type="radio"
-                                  id="consent-analytics-matomo-accept"
-                                  name="consent-analytics-matomo"
-                                  checked={form?.consent?.analytics?.matomo}
-                                  onChange={(event) => event.target.checked && setForm({
-                                    isSet: true,
-                                    consent: {
-                                      ...form?.consent,
-                                      analytics: {
-                                        ...form?.consent?.analytics,
-                                        matomo: true
-                                      }
-                                    }
-                                  })}
-                                />
-                                <label className="fr-label" htmlFor="consent-analytics-matomo-accept">
-                                  Accepter
-                                </label>
-                              </div>
-                              <div className="fr-radio-group">
-                                <input
-                                  type="radio"
-                                  id="consent-analytics-matomo-refuse"
-                                  name="consent-analytics-matomo"
-                                  checked={!form?.consent?.analytics?.matomo}
-                                  onChange={(event) => event.target.checked && setForm({
-                                    isSet: true,
-                                    consent: {
-                                      ...form?.consent,
-                                      analytics: {
-                                        ...form?.consent?.analytics,
-                                        matomo: false
-                                      }
-                                    }
-                                  })}
-                                />
-                                <label className="fr-label" htmlFor="consent-analytics-matomo-refuse">
-                                  Refuser
-                                </label>
-                              </div>
+                        <p id={`${finality.name}-desc`} className="fr-consent-service__desc">
+                          {finality.description}
+                        </p>
+                        <div className="fr-consent-service__collapse">
+                          <button className="fr-consent-service__collapse-btn" aria-expanded="false" aria-describedby={`${finality.name}-legend`} aria-controls={`${finality.name}-collapse`}>
+                            Voir plus de détails
+                          </button>
+                        </div>
+                        <div className="fr-consent-services fr-collapse" id={`${finality.name}-collapse`}>
+                          {finality.services.map((service) => (
+                            <div className="fr-consent-service" key={service.name}>
+                              <fieldset aria-labelledby={`${finality.name}-${service.name}-legend ${finality.name}-${service.name}-desc`} role="group" className="fr-fieldset fr-fieldset--inline">
+                                <legend id={`${finality.name}-${service.name}-legend`} className="fr-consent-service__title" aria-describedby={`${finality.name}-${service.name}-desc`}>
+                                  {service.title}
+                                </legend>
+                                <div className="fr-consent-service__radios fr-fieldset--inline">
+                                  <div className="fr-radio-group">
+                                    <input
+                                      type="radio"
+                                      id={`consent-${finality.name}-${service.name}-accept`}
+                                      name={`consent-${finality.name}-${service.name}`}
+                                      checked={(form?.consent[finality.name] as any)[service.name]}
+                                      onChange={(event) => event.target.checked && setForm({
+                                        isSet: true,
+                                        consent: {
+                                          ...form?.consent,
+                                          [finality.name]:
+                                            Object.assign({}, form?.consent[finality.name], {
+                                              [service.name]: true,
+                                            }),
+                                        }
+                                      })}
+                                    />
+                                    <label className="fr-label" htmlFor={`consent-${finality.name}-${service.name}-accept`}>
+                                      Accepter
+                                    </label>
+                                  </div>
+                                  <div className="fr-radio-group">
+                                    <input
+                                      type="radio"
+                                      id={`consent-${finality.name}-${service.name}-refuse`}
+                                      name={`consent-${finality.name}-${service.name}`}
+                                      checked={!(form?.consent[finality.name] as any)[service.name]}
+                                      onChange={(event) => event.target.checked && setForm({
+                                        isSet: true,
+                                        consent: {
+                                          ...form?.consent,
+                                          [finality.name]: 
+                                            Object.assign({}, form?.consent[finality.name], {
+                                              [service.name]: false,
+                                            }),
+                                        }
+                                      })}
+                                    />
+                                    <label className="fr-label" htmlFor={`consent-${finality.name}-${service.name}-refuse`}>
+                                      Refuser
+                                    </label>
+                                  </div>
+                                </div>
+                                <p id={`${finality.name}-${service.name}-desc`} className="fr-consent-service__desc">
+                                  {service.description}
+                                </p>
+                              </fieldset>
                             </div>
-                            <p id="service-matomo-desc" className="fr-consent-service__desc">
-                              Matomo est un outil d&apos;analyse d&apos;audience que nous utilisons pour 
-                              comprendre comment les visiteurs utilisent notre site web. Les cookies de 
-                              Matomo nous aident à améliorer l&apos;expérience utilisateur en analysant 
-                              les performances et l&apos;utilisation de notre site.
-                            </p>
-                          </fieldset>
+                          ))}
                         </div>
-                      </div>
-                    </fieldset>
-                  </div>
-                  {/* Marketing */}
-                  <div className="fr-consent-service">
-                    <fieldset aria-labelledby="marketing-legend marketing-desc" role="group" className="fr-fieldset fr-fieldset--inline">
-                      <legend id="marketing-legend" className="fr-consent-service__title">
-                        Marketing
-                      </legend>
-                      <div className="fr-consent-service__radios">
-                        <div className="fr-radio-group">
-                          <input
-                            type="radio"
-                            id="consent-marketing-accept"
-                            name="consent-marketing"
-                            checked={form?.consent?.marketing === undefined ?  false : Object.values(form?.consent?.marketing).every((service) => service === true)}
-                            onChange={(event) => event.target.checked && setForm({
-                              isSet: true,
-                              consent: {
-                                ...form?.consent,
-                                marketing: {
-                                  adform: true
-                                }
-                              }
-                            })}
-                          />
-                          <label className="fr-label" htmlFor="consent-marketing-accept">
-                            Accepter
-                          </label>
-                        </div>
-                        <div className="fr-radio-group">
-                          <input
-                            type="radio"
-                            id="consent-marketing-refuse"
-                            name="consent-marketing"
-                            checked={form?.consent?.marketing === undefined ?  true : Object.values(form?.consent?.marketing).every((service) => service === false)}
-                            onChange={(event) => event.target.checked && setForm({
-                              isSet: true,
-                              consent: {
-                                ...form?.consent,
-                                marketing: {
-                                  adform: false
-                                }
-                              }
-                            })}
-                          />
-                          <label className="fr-label" htmlFor="consent-marketing-refuse">
-                            Refuser
-                          </label>
-                        </div>
-                      </div>
-                      <p id="marketing-desc" className="fr-consent-service__desc">
-                        Nous utilisons des cookies de marketing pour personnaliser et améliorer 
-                        votre expérience sur notre site, et pour comprendre l&apos;efficacité 
-                        de nos campagnes marketing.
-                      </p>
-                      <div className="fr-consent-service__collapse">
-                        <button className="fr-consent-service__collapse-btn" aria-expanded="false" aria-describedby="marketing-legend" aria-controls="marketing-collapse">
-                          Voir plus de détails
-                        </button>
-                      </div>
-                      <div className="fr-consent-services fr-collapse" id="marketing-collapse">
-                        {/* Adform */}
-                        <div className="fr-consent-service">
-                          <fieldset aria-labelledby="marketing-adform-legend marketing-adform-desc" role="group" className="fr-fieldset fr-fieldset--inline">
-                            <legend id="marketing-adform-legend" className="fr-consent-service__title" aria-describedby="marketing-adform-desc">
-                              Adform
-                            </legend>
-                            <div className="fr-consent-service__radios fr-fieldset--inline">
-                              <div className="fr-radio-group">
-                                <input
-                                  type="radio"
-                                  id="consent-marketing-adform-accept"
-                                  name="consent-marketing-adform"
-                                  checked={form?.consent?.marketing?.adform}
-                                  onChange={(event) => event.target.checked && setForm({
-                                    isSet: true,
-                                    consent: {
-                                      ...form?.consent,
-                                      marketing: {
-                                        ...form?.consent?.marketing,
-                                        adform: true
-                                      }
-                                    }
-                                  })}
-                                />
-                                <label className="fr-label" htmlFor="consent-marketing-adform-accept">
-                                  Accepter
-                                </label>
-                              </div>
-                              <div className="fr-radio-group">
-                                <input
-                                  type="radio"
-                                  id="consent-marketing-adform-refuse"
-                                  name="consent-marketing-adform"
-                                  checked={!form?.consent?.marketing?.adform}
-                                  onChange={(event) => event.target.checked && setForm({
-                                    isSet: true,
-                                    consent: {
-                                      ...form?.consent,
-                                      marketing: {
-                                        ...form?.consent?.marketing,
-                                        adform: false
-                                      }
-                                    }
-                                  })}
-                                />
-                                <label className="fr-label" htmlFor="consent-marketing-adform-refuse">
-                                  Refuser
-                                </label>
-                              </div>
-                            </div>
-                            <p id="service-adform-desc" className="fr-consent-service__desc">
-                              Les cookies d&apos;Adform nous aident à mesurer l&apos;efficacité 
-                              de nos campagnes publicitaires en suivant les interactions des 
-                              utilisateurs avec nos publicités.
-                            </p>
-                          </fieldset>
-                        </div>
-                      </div>
-                    </fieldset>
-                  </div>
+                      </fieldset>
+                    </div>
+                  ))}
+                  
                   {/* Bouton de confirmation/fermeture */}
                   <ul className="fr-consent-manager__buttons fr-btns-group fr-btns-group--right fr-btns-group--inline-sm">
                     <li>
