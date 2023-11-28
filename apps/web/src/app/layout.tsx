@@ -1,10 +1,13 @@
 import '@sde/web/app/app.css'
 import { PropsWithChildren } from 'react'
 import { Metadata, Viewport } from 'next'
+import dynamic from 'next/dynamic'
 import { PublicWebAppConfig, ServerWebAppConfig } from '@sde/web/webAppConfig'
 import { Dsfr } from '@sde/web/app/Dsfr'
 import { EnvInformation } from './EnvInformation'
 import { PreloadResources } from './PreloadResources'
+
+const CookieConsent = dynamic(() => import('@sde/web/components/CookieConsent'), { ssr: false })
 
 export const metadata: Metadata = {
   metadataBase: new URL(PublicWebAppConfig.mainLiveUrl),
@@ -140,6 +143,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
         <Dsfr nonce={nonce} />
       </head>
       <body>
+        <CookieConsent />
         <EnvInformation />
         {children}
       </body>

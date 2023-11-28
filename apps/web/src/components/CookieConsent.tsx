@@ -94,7 +94,7 @@ const CookieConsent = () => {
   
   if (cookieConsent.isSet === false) return (
     <>
-      <div className="fr-consent-banner">
+      <div id="cookie-consent-banner" className="fr-consent-banner">
         <h2 className="fr-h6">À propos des cookies sur Solution d&apos;élus</h2>
         <div className="fr-consent-banner__content">
           <p className="fr-text--sm">

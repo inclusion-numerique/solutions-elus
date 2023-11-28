@@ -7,7 +7,7 @@ const CookieConsent = dynamic(() => import('@sde/web/components/CookieConsent'),
 
 const PublicLayout = ({ children }: PropsWithChildren) => (
   <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100%' }}>
-    <CookieConsent />
+    {/* <CookieConsent /> */}
     <PublicHeader />
     <div style={{ flex: 1 }}>
       <div>{children}</div>
