@@ -11,10 +11,10 @@ const Manageo = () => {
   }
 
   return (
-    <noscript>
+    <>
       <img src="https://secure.adnxs.com/seg?t=2&add=35313705" width="1" height="1" alt="" />
       <img src="https://secure.adnxs.com/px?id=1726839&t=2" width="1" height="1" alt="" />
-    </noscript>
+    </>
   );
 }
 
