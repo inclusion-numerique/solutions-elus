@@ -11,10 +11,8 @@ const GoogleTagManager = () => {
 
   return (
     <>
-      {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document, react/self-closing-comp */}
-      <Script id="google-tag-manager" src="https://www.googletagmanager.com/gtag/js?id=DC-3689183" strategy="beforeInteractive" async></Script>
-      {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document, react/self-closing-comp */}
-      <Script id="googe-analytics" src="/scripts/google-analytics.min.js" strategy="beforeInteractive"></Script>
+      <Script async id="google-tag-manager" src="https://www.googletagmanager.com/gtag/js?id=DC-3689183" strategy="afterInteractive"/>
+      <Script id="googe-analytics" src="/scripts/google-analytics.min.js" strategy="afterInteractive"/>
       <Script id="google-analytics-conversion" src="/scripts/google-analytics-conversion.min.js" strategy="afterInteractive"/>
       <noscript>
         {/* eslint-disable-next-line @next/next/no-img-element, no-template-curly-in-string */}
