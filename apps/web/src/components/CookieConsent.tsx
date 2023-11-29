@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { Matomo, Infopro, Manageo, AdForm, LinkedIn, GoogleTagManager } from "@sde/web/components/scripts";
 
-interface CookieConsentModel {
+export interface CookieConsentModel {
   isSet: boolean
   consent: {
     mandatory: true

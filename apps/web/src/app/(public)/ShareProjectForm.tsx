@@ -1,20 +1,19 @@
 'use client'
 
-import Link from 'next/link'
-import { Controller, useForm } from 'react-hook-form'
-import { trpc } from '@sde/web/trpc'
-import { zodResolver } from '@hookform/resolvers/zod/dist/zod'
-import { withTrpc } from '@sde/web/withTrpc'
-import {
-  ShareProjectData,
-  ShareProjectFormDataValidation,
-} from '@sde/web/shareProject/project'
-import { InputFormField } from '@sde/web/form/InputFormField'
 import { useMemo } from 'react'
+import Link from 'next/link'
+import { zodResolver } from '@hookform/resolvers/zod/dist/zod'
+import { Controller, useForm } from 'react-hook-form'
+import { useReadLocalStorage } from 'usehooks-ts'
+import { trpc } from '@sde/web/trpc'
+import { withTrpc } from '@sde/web/withTrpc'
+import { ShareProjectData, ShareProjectFormDataValidation } from '@sde/web/shareProject/project'
+import { InputFormField } from '@sde/web/form/InputFormField'
 import AttachmentUploader from '@sde/web/attachments/AttachmentUploader'
 import { generateReference } from '@sde/web/shareProject/generateReference'
 import { RadioFormField } from '@sde/web/form/RadioFormField'
 import { CommunitySearchFormField } from '@sde/web/form/CommunitySearchFormField'
+import { CookieConsentModel } from '@sde/web/components/CookieConsent'
 
 const projectCategories = [
   'Accès aux soins',
@@ -32,6 +31,9 @@ const projectCategories = [
 ].map((category) => ({ name: category, value: category }))
 
 const ShareProjectForm = () => {
+  const isProd = process.env.NODE_ENV === 'production'
+  const cookieConsent = useReadLocalStorage<CookieConsentModel>('cookie-consent')
+
   const createProject = trpc.createProject.useMutation()
 
   // Unique client side reference for this forms
@@ -51,6 +53,11 @@ const ShareProjectForm = () => {
   const onSubmit = async (data: ShareProjectData) => {
     try {
       await createProject.mutateAsync(data)
+      if (isProd && !!cookieConsent && cookieConsent?.isSet && cookieConsent?.consent?.marketing?.['google-tag-manager']) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        gtag("event","conversion",{ allow_custom_scripts: !0, send_to: "DC-3689183/solelus/2023-0+unique" });
+      }
     } catch {
       // Error message will be in hook result
     }
@@ -75,6 +82,12 @@ const ShareProjectForm = () => {
           <Link href="/" className="fr-btn fr-btn--secondary">
             Retour à l&apos;accueil
           </Link>
+          <>
+          <noscript>
+            {/* eslint-disable-next-line @next/next/no-img-element, no-template-curly-in-string */}
+            <img src="https://ad.doubleclick.net/ddm/activity/src=3689183;type=solelus;cat=2023-0;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;tfua=;npa=;gdpr=${GDPR};gdpr_consent=${GDPR_CONSENT_755};ord=1;num=1?" width="1" height="1" alt=""/>
+          </noscript>
+        </>
         </>
       ) : (
         <>
