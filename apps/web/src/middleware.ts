@@ -10,7 +10,7 @@ const contentSecurityPolicy = `
   script-src-attr 'none';
   style-src 'self' https: 'unsafe-inline';
   img-src 'self' data: https://secure.adnxs.com https://www.googletagmanager.com https://*.doubleclick.net https://snap.licdn.com https://px.ads.linkedin.com https://*.seadform.net;
-  frame-src https://www.youtube-nocookie.com/ https://*.adform.net https://secure.adnxs.com https://www.googletagmanager.com https://*.doubleclick.net https://snap.licdn.com https://px.ads.linkedin.com https://*.seadform.net;
+  frame-src https://www.youtube-nocookie.com/ https://matomo.incubateur.anct.gouv.fr https://*.adform.net https://secure.adnxs.com https://www.googletagmanager.com https://*.doubleclick.net https://snap.licdn.com https://px.ads.linkedin.com https://*.seadform.net;
   object-src 'none';
   connect-src 'self' https://${ServerWebAppConfig.S3.documentsBucket}.${ServerWebAppConfig.S3.host} https://matomo.incubateur.anct.gouv.fr https://*.adform.net https://sentry.incubateur.net https://openmaptiles.geo.data.gouv.fr https://openmaptiles.github.io https://aides-territoires.beta.gouv.fr https://secure.adnxs.com https://www.googletagmanager.com https://*.doubleclick.net https://snap.licdn.com https://px.ads.linkedin.com https://*.seadform.net;
   worker-src 'self' blob:;

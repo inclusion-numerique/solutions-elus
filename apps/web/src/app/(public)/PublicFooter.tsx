@@ -30,7 +30,7 @@ const PublicFooter = () => (
           <div className="fr-footer__brand fr-enlarge-link fr-p-4v">
             <a
               href="https://conseil-refondation.fr/"
-              title="Site Web du conseil national de la refondation (CNR)"
+              title="Site Web du Conseil National de la Refondation (CNR)"
               className="fr-footer__brand-link"
             >
               <picture>
@@ -38,7 +38,8 @@ const PublicFooter = () => (
                   alt="Logo du Conseil National de la Refondation"
                   src="/images/cnr_logo_horizontal.svg"
                   className="fr-footer__logo"
-                  height={54}
+                  width={223}
+                  height={67}
                   style={{ verticalAlign: 'middle' }}
                 />
               </picture>
@@ -49,7 +50,7 @@ const PublicFooter = () => (
           <div className="fr-footer__brand fr-enlarge-link fr-p-4v">
             <a
               href="https://agence-cohesion-territoires.gouv.fr/"
-              title="Site Web de l'Agence Nationale de la Cohésion des Territoires"
+              title="Site Web de l'Agence Nationale de la Cohésion des Territoires (ANCT)"
               className="fr-footer__brand-link"
             >
               <picture>
@@ -57,6 +58,7 @@ const PublicFooter = () => (
                   src="/images/logo-anct.svg"
                   alt="Logo de l'Agence Nationale de la Cohésion des Territoires"
                   width={200}
+                  height={73}
                   className="fr-footer__logo"
                 />
               </picture>

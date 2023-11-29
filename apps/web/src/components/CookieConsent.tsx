@@ -7,17 +7,17 @@ import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { Matomo, Infopro, Manageo, AdForm, LinkedIn, GoogleTagManager } from "@sde/web/components/scripts";
 
-interface CookieConsentModel {
+export interface CookieConsentModel {
   isSet: boolean
   consent: {
     mandatory: true
     analytics: {
       matomo: boolean
-      infopro: boolean
-      manageo: boolean
     };
     marketing: {
       adform: boolean
+      infopro: boolean
+      manageo: boolean
       linkedin: boolean
       'google-tag-manager': boolean
     }
@@ -30,11 +30,11 @@ const defaultConsent: CookieConsentModel = {
     mandatory: true,
     analytics: {
       matomo: false,
-      infopro: false,
-      manageo: false,
     },
     marketing: {
       adform: false,
+      infopro: false,
+      manageo: false,
       linkedin: false,
       'google-tag-manager': false,
     },
@@ -47,11 +47,11 @@ const fullConsent: CookieConsentModel = {
     mandatory: true,
     analytics: {
       matomo: true,
-      infopro: true,
-      manageo: true,
     },
     marketing: {
       adform: true,
+      infopro: true,
+      manageo: true,
       linkedin: true,
       'google-tag-manager': true,
     },
@@ -62,9 +62,9 @@ const isValid = (value: any): value is CookieConsentModel =>
     typeof value?.isSet === 'boolean' &&
     typeof value?.consent?.mandatory === 'boolean' &&
     typeof value?.consent?.analytics?.matomo === 'boolean' &&
-    typeof value?.consent?.analytics?.infopro === 'boolean' &&
-    typeof value?.consent?.analytics?.manageo === 'boolean' &&
     typeof value?.consent?.marketing?.adform === 'boolean' &&
+    typeof value?.consent?.marketing?.infopro === 'boolean' &&
+    typeof value?.consent?.marketing?.manageo === 'boolean' &&
     typeof value?.consent?.marketing?.linkedin === 'boolean' &&
     typeof value?.consent?.marketing?.['google-tag-manager'] === 'boolean';
 
@@ -73,6 +73,7 @@ const CookieConsent = () => {
 
   useEffect(() => {
     if (!isValid(cookieConsent)) {
+      window.localStorage.removeItem('cookie-consent')
       setCookieConsent(defaultConsent)
     }
   }, [cookieConsent, setCookieConsent])
@@ -80,10 +81,10 @@ const CookieConsent = () => {
   if (isValid(cookieConsent) && cookieConsent.isSet === true) return (
     <>
       {(cookieConsent?.consent?.analytics?.matomo) && <Matomo /> }
-      {(cookieConsent?.consent?.analytics?.infopro) && <Infopro /> }
-      {(cookieConsent?.consent?.analytics?.manageo) && <Manageo /> }
 
       {(cookieConsent?.consent?.marketing?.adform) && <AdForm /> }
+      {(cookieConsent?.consent?.marketing?.infopro) && <Infopro /> }
+      {(cookieConsent?.consent?.marketing?.manageo) && <Manageo /> }
       {(cookieConsent?.consent?.marketing?.linkedin) && <LinkedIn /> }
       {(cookieConsent?.consent?.marketing?.['google-tag-manager']) && <GoogleTagManager /> }
       
@@ -130,6 +131,8 @@ const CookieConsent = () => {
 
 export default CookieConsent;
 
+// ---------------------------------------------------------------------------------------------
+
 interface Finality {
   type: 'finality'
   name: 'analytics' | 'marketing'
@@ -143,6 +146,7 @@ interface Service {
   name: 'matomo' | 'infopro' | 'manageo' | 'adform' | 'linkedin' | 'google-tag-manager'
   title: string
   description: string
+  policy?: string
 }
 
 const CONFIG: Finality[] = [
@@ -157,18 +161,7 @@ const CONFIG: Finality[] = [
         name: 'matomo',
         title: 'Matomo',
         description: 'Matomo est un outil d\'analyse d\'audience que nous utilisons pour comprendre comment les visiteurs utilisent notre site web. Les cookies de Matomo nous aident à améliorer l\'expérience utilisateur en analysant les performances et l\'utilisation de notre site.',
-      },
-      {
-        type: 'service',
-        name: 'manageo',
-        title: 'Manageo',
-        description: 'Manageo est un service d\'analyse qui nous permet de comprendre les interactions des visiteurs avec notre site web. Ces données nous aident à optimiser notre contenu et à améliorer l\'expérience utilisateur.',
-      },
-      {
-        type: 'service',
-        name: 'infopro',
-        title: 'Infopro',
-        description: 'Infopro est un service d\'analyse d\'audience qui nous aide à recueillir des informations sur la manière dont les utilisateurs interagissent avec notre site web. Ces données nous permettent d\'optimiser nos services et de mieux répondre aux besoins de nos visiteurs.',
+        policy: 'https://fr.matomo.org/privacy/'
       },
     ],
   },
@@ -183,23 +176,39 @@ const CONFIG: Finality[] = [
         name: 'adform',
         title: 'Adform',
         description: 'Les cookies d\'Adform nous aident à mesurer l\'efficacité de nos campagnes publicitaires en suivant les interactions des utilisateurs avec nos publicités.',
+        policy: 'https://site.adform.com/privacy-center/overview/'
+      },
+      {
+        type: 'service',
+        name: 'infopro',
+        title: 'Infopro',
+        description: 'Infopro est un service d\'analyse marketing qui nous aide à recueillir des informations sur la manière dont les utilisateurs interagissent avec notre site web. Ces données nous permettent d\'optimiser nos services et de mieux répondre aux besoins marketing de nos visiteurs.',
+        policy: 'https://support.google.com/admanager/answer/2839090?hl=fr'
+      },
+      {
+        type: 'service',
+        name: 'manageo',
+        title: 'Manageo',
+        description: 'Manageo est un service d\'analyse marketing qui nous permet de comprendre les interactions des utilisateurs sur notre site web. Ces données nous aident à optimiser notre contenu et à améliorer l\'expérience utilisateur dans le domaine du marketing.',
+        policy: 'https://about.ads.microsoft.com/en-us/solutions/xandr/digital-platform-cookie-policy'
       },
       {
         type: 'service',
         name: 'linkedin',
         title: 'LinkedIn',
         description: 'LinkedIn est un service de marketing professionnel qui nous permet de mieux comprendre l\'impact de nos campagnes publicitaires sur la plateforme. Les cookies LinkedIn suivent les interactions des utilisateurs avec nos contenus publicitaires.',
+        policy: 'https://fr.linkedin.com/legal/cookie-policy'
       },
       {
         type: 'service',
         name: 'google-tag-manager',
         title: 'Google Tag Manager',
         description: 'Google Tag Manager est un outil de gestion de tags qui facilite l\'implémentation et la gestion des tags de suivi sur notre site web. Il nous permet de personnaliser et d\'optimiser notre stratégie marketing en suivant diverses interactions des utilisateurs.',
+        policy: 'https://policies.google.com/privacy?hl=fr'
       }
     ],
   },
 ];
-
 
 type CookieModalProps = {
   cookieConsent: CookieConsentModel
@@ -261,7 +270,7 @@ export const CookieModal = ({cookieConsent, setCookieConsent}: CookieModalProps)
                     <fieldset className="fr-fieldset fr-fieldset--inline">
                       <legend id="finality-legend" className="fr-consent-service__title">
                         Préférences pour tous les services. <br/>
-                        <a href="/confidentialite">Données personnelles et cookies</a>
+                        <a href="/confidentialite" target='_blank'>Données personnelles et cookies</a>
                       </legend>
                       <div className="fr-consent-service__radios">
                         <div className="fr-radio-group">
@@ -328,12 +337,13 @@ export const CookieModal = ({cookieConsent, setCookieConsent}: CookieModalProps)
                                 isSet: true,
                                 consent: {
                                   ...form?.consent,
-                                  [finality.name]: 
-                                    Object.assign({}, form?.consent[finality.name], {
-                                      [finality.services[0].name]: true,
-                                      [finality.services[1].name]: true,
-                                      [finality.services[2].name]: true,
-                                    }),
+                                  [finality.name]: Object.assign({}, form?.consent[finality.name], (() => {
+                                    const result: {[key: string]: boolean} = {}
+                                    for (const service of finality.services) {
+                                      result[service.name] = true
+                                    }
+                                    return result
+                                  })()),
                                 }
                               })}
                             />
@@ -351,12 +361,13 @@ export const CookieModal = ({cookieConsent, setCookieConsent}: CookieModalProps)
                                 isSet: true,
                                 consent: {
                                   ...form?.consent,
-                                  [finality.name]: 
-                                    Object.assign({}, form?.consent[finality.name], {
-                                      [finality.services[0].name]: false,
-                                      [finality.services[1].name]: false,
-                                      [finality.services[2].name]: false,
-                                    }),
+                                  [finality.name]: Object.assign({}, form?.consent[finality.name], (() => {
+                                    const result: {[key: string]: boolean} = {}
+                                    for (const service of finality.services) {
+                                      result[service.name] = false
+                                    }
+                                    return result
+                                  })()),
                                 }
                               })}
                             />
@@ -375,7 +386,7 @@ export const CookieModal = ({cookieConsent, setCookieConsent}: CookieModalProps)
                         </div>
                         <div className="fr-consent-services fr-collapse" id={`${finality.name}-collapse`}>
                           {finality.services.map((service) => (
-                            <div className="fr-consent-service" key={service.name}>
+                            <div className="fr-consent-service fr-py-2v" key={service.name}>
                               <fieldset aria-labelledby={`${finality.name}-${service.name}-legend ${finality.name}-${service.name}-desc`} role="group" className="fr-fieldset fr-fieldset--inline">
                                 <legend id={`${finality.name}-${service.name}-legend`} className="fr-consent-service__title" aria-describedby={`${finality.name}-${service.name}-desc`}>
                                   {service.title}
@@ -391,10 +402,9 @@ export const CookieModal = ({cookieConsent, setCookieConsent}: CookieModalProps)
                                         isSet: true,
                                         consent: {
                                           ...form?.consent,
-                                          [finality.name]:
-                                            Object.assign({}, form?.consent[finality.name], {
-                                              [service.name]: true,
-                                            }),
+                                          [finality.name]: Object.assign({}, form?.consent[finality.name], {
+                                            [service.name]: true,
+                                          }),
                                         }
                                       })}
                                     />
@@ -412,10 +422,9 @@ export const CookieModal = ({cookieConsent, setCookieConsent}: CookieModalProps)
                                         isSet: true,
                                         consent: {
                                           ...form?.consent,
-                                          [finality.name]: 
-                                            Object.assign({}, form?.consent[finality.name], {
-                                              [service.name]: false,
-                                            }),
+                                          [finality.name]: Object.assign({}, form?.consent[finality.name], {
+                                            [service.name]: false,
+                                          }),
                                         }
                                       })}
                                     />
@@ -426,6 +435,18 @@ export const CookieModal = ({cookieConsent, setCookieConsent}: CookieModalProps)
                                 </div>
                                 <p id={`${finality.name}-${service.name}-desc`} className="fr-consent-service__desc">
                                   {service.description}
+                                  <br/>
+                                  <a href={`/confidentialite#${service.name}`} target='_blank'>
+                                    En savoir plus
+                                  </a>
+                                  {service.policy && (
+                                    <>
+                                      &nbsp; | &nbsp;
+                                      <a href={service.policy} target='_blank'>
+                                        Site officiel
+                                      </a>
+                                    </>
+                                  )}
                                 </p>
                               </fieldset>
                             </div>
