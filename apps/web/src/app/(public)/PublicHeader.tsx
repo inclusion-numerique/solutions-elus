@@ -67,6 +67,8 @@ const PublicHeader = () => (
                 alt="Logo du Conseil National de la Refondation"
                 src="/images/cnr_logo_horizontal.svg"
                 className="fr-p-2v"
+                width={239}
+                height={83}
               />
             </picture>
             <picture>
@@ -74,6 +76,7 @@ const PublicHeader = () => (
                 alt="Logo de l'Agence Nationale de la Cohésion des Territoires"
                 src="/images/logo-anct.svg"
                 className="fr-p-2v fr-ml-4w"
+                width={190}
                 height={80}
               />
             </picture>

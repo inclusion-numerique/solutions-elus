@@ -70,8 +70,10 @@ export default async function HomePage() {
               <picture>
                 <img
                   src="/dsfr/artwork/pictograms/buildings/city-hall.svg"
-                  alt="Boite email"
-                  style={{ textAlign: 'center', width: 96 }}
+                  alt="Illustration d'une mairie française"
+                  width={96}
+                  height={96}
+                  style={{ textAlign: 'center' }}
                 />
               </picture>
               <h2 className="fr-mt-1v" style={{ textAlign: 'center' }}>
