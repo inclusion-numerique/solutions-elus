@@ -3,11 +3,11 @@ import Script from 'next/script'
 const GoogleTagManager = () => {
   const isProd = process.env.NODE_ENV === 'production'
 
-  // if (!isProd) {
-  //   // eslint-disable-next-line no-console
-  //   console.warn('Google Tag Manager tracking is disabled in non-production environment');
-  //   return;
-  // }
+  if (!isProd) {
+    // eslint-disable-next-line no-console
+    console.warn('Google Tag Manager tracking is disabled in non-production environment');
+    return;
+  }
 
   return (
     <>
