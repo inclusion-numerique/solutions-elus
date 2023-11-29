@@ -146,6 +146,7 @@ interface Service {
   name: 'matomo' | 'infopro' | 'manageo' | 'adform' | 'linkedin' | 'google-tag-manager'
   title: string
   description: string
+  policy?: string
 }
 
 const CONFIG: Finality[] = [
@@ -160,6 +161,7 @@ const CONFIG: Finality[] = [
         name: 'matomo',
         title: 'Matomo',
         description: 'Matomo est un outil d\'analyse d\'audience que nous utilisons pour comprendre comment les visiteurs utilisent notre site web. Les cookies de Matomo nous aident à améliorer l\'expérience utilisateur en analysant les performances et l\'utilisation de notre site.',
+        policy: 'https://fr.matomo.org/privacy/'
       },
     ],
   },
@@ -174,31 +176,35 @@ const CONFIG: Finality[] = [
         name: 'adform',
         title: 'Adform',
         description: 'Les cookies d\'Adform nous aident à mesurer l\'efficacité de nos campagnes publicitaires en suivant les interactions des utilisateurs avec nos publicités.',
+        policy: 'https://site.adform.com/privacy-center/overview/'
       },
       {
         type: 'service',
         name: 'infopro',
         title: 'Infopro',
         description: 'Infopro est un service d\'analyse marketing qui nous aide à recueillir des informations sur la manière dont les utilisateurs interagissent avec notre site web. Ces données nous permettent d\'optimiser nos services et de mieux répondre aux besoins marketing de nos visiteurs.',
-
+        policy: 'https://support.google.com/admanager/answer/2839090?hl=fr'
       },
       {
         type: 'service',
         name: 'manageo',
         title: 'Manageo',
         description: 'Manageo est un service d\'analyse marketing qui nous permet de comprendre les interactions des utilisateurs sur notre site web. Ces données nous aident à optimiser notre contenu et à améliorer l\'expérience utilisateur dans le domaine du marketing.',
+        policy: 'https://about.ads.microsoft.com/en-us/solutions/xandr/digital-platform-cookie-policy'
       },
       {
         type: 'service',
         name: 'linkedin',
         title: 'LinkedIn',
         description: 'LinkedIn est un service de marketing professionnel qui nous permet de mieux comprendre l\'impact de nos campagnes publicitaires sur la plateforme. Les cookies LinkedIn suivent les interactions des utilisateurs avec nos contenus publicitaires.',
+        policy: 'https://fr.linkedin.com/legal/cookie-policy'
       },
       {
         type: 'service',
         name: 'google-tag-manager',
         title: 'Google Tag Manager',
         description: 'Google Tag Manager est un outil de gestion de tags qui facilite l\'implémentation et la gestion des tags de suivi sur notre site web. Il nous permet de personnaliser et d\'optimiser notre stratégie marketing en suivant diverses interactions des utilisateurs.',
+        policy: 'https://policies.google.com/privacy?hl=fr'
       }
     ],
   },
@@ -264,7 +270,7 @@ export const CookieModal = ({cookieConsent, setCookieConsent}: CookieModalProps)
                     <fieldset className="fr-fieldset fr-fieldset--inline">
                       <legend id="finality-legend" className="fr-consent-service__title">
                         Préférences pour tous les services. <br/>
-                        <a href="/confidentialite">Données personnelles et cookies</a>
+                        <a href="/confidentialite" target='_blank'>Données personnelles et cookies</a>
                       </legend>
                       <div className="fr-consent-service__radios">
                         <div className="fr-radio-group">
@@ -380,7 +386,7 @@ export const CookieModal = ({cookieConsent, setCookieConsent}: CookieModalProps)
                         </div>
                         <div className="fr-consent-services fr-collapse" id={`${finality.name}-collapse`}>
                           {finality.services.map((service) => (
-                            <div className="fr-consent-service" key={service.name}>
+                            <div className="fr-consent-service fr-py-2v" key={service.name}>
                               <fieldset aria-labelledby={`${finality.name}-${service.name}-legend ${finality.name}-${service.name}-desc`} role="group" className="fr-fieldset fr-fieldset--inline">
                                 <legend id={`${finality.name}-${service.name}-legend`} className="fr-consent-service__title" aria-describedby={`${finality.name}-${service.name}-desc`}>
                                   {service.title}
@@ -429,6 +435,18 @@ export const CookieModal = ({cookieConsent, setCookieConsent}: CookieModalProps)
                                 </div>
                                 <p id={`${finality.name}-${service.name}-desc`} className="fr-consent-service__desc">
                                   {service.description}
+                                  <br/>
+                                  <a href={`/confidentialite#${service.name}`} target='_blank'>
+                                    En savoir plus
+                                  </a>
+                                  {service.policy && (
+                                    <>
+                                      &nbsp; | &nbsp;
+                                      <a href={service.policy} target='_blank'>
+                                        Site officiel
+                                      </a>
+                                    </>
+                                  )}
                                 </p>
                               </fieldset>
                             </div>

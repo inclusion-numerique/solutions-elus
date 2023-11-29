@@ -327,7 +327,7 @@ const ConfidentialityPage = () => (
         <div className="fr-mb-3w" id="piwik-consent">
           <iframe
             style={{ border: 0, height: 200, width: 600 }}
-            src="https://matomo.incubateur.anct.gouv.fr/index.php?module=CoreAdminHome&action=optOut&language=en&backgroundColor=&fontColor=&fontSize=16px&fontFamily=Helvetica"
+            src="https://matomo.incubateur.anct.gouv.fr/index.php?module=CoreAdminHome&action=optOut&language=fr&backgroundColor=&fontColor=&fontSize=16px&fontFamily=Helvetica"
           />
         </div>
 
