@@ -98,7 +98,7 @@ const PublicHeader = () => (
         </nav>
       </div>
     </div>
-    <div id="modal-menu-mobile" className="fr-header__menu fr-modal">
+    <div id="modal-menu-mobile" className="fr-header__menu fr-modal" aria-label="Menu principal">
       <div className="fr-container">
         <button
           aria-controls="modal-menu-mobile"
