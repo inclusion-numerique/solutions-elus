@@ -5,17 +5,17 @@ const nodeEnvironment = process.env.NODE_ENV
 const isProd = nodeEnvironment === 'production'
 
 const contentSecurityPolicy = `
-  default-src 'self' https://matomo.incubateur.anct.gouv.fr https://*.adform.net https://sentry.incubateur.net https://*.adnxs.com https://*.googletagmanager.com https://*.doubleclick.net https://*.licdn.com https://*.linkedin.com https://*.seadform.net https://*.google.com;
-  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://matomo.incubateur.anct.gouv.fr https://*.adform.net https://*.adnxs.com https://*.googletagmanager.com https://*.doubleclick.net https://*.licdn.com https://*.linkedin.com https://*.seadform.net https://*.google.com;
+  default-src 'self' https://matomo.incubateur.anct.gouv.fr https://*.adform.net https://sentry.incubateur.net https://*.adnxs.com https://*.googletagmanager.com https://*.doubleclick.net https://*.licdn.com https://*.linkedin.com https://*.seadform.net https://*.google.com https://*.google.fr;
+  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://matomo.incubateur.anct.gouv.fr https://*.adform.net https://*.adnxs.com https://*.googletagmanager.com https://*.doubleclick.net https://*.licdn.com https://*.linkedin.com https://*.seadform.net https://*.google.com https://*.google.fr;
   script-src-attr 'none';
   style-src 'self' https: 'unsafe-inline';
-  img-src 'self' data: https://*.adnxs.com https://*.googletagmanager.com https://*.doubleclick.net https://*.licdn.com https://*.linkedin.com https://*.seadform.net https://*.google.com;
-  frame-src https://www.youtube-nocookie.com/ https://matomo.incubateur.anct.gouv.fr https://*.adform.net https://*.adnxs.com https://*.googletagmanager.com https://*.doubleclick.net https://*.licdn.com https://*.linkedin.com https://*.seadform.net https://*.google.com;
+  img-src 'self' data: https://*.adnxs.com https://*.googletagmanager.com https://*.doubleclick.net https://*.licdn.com https://*.linkedin.com https://*.seadform.net https://*.google.com https://*.google.fr;
+  frame-src https://www.youtube-nocookie.com/ https://matomo.incubateur.anct.gouv.fr https://*.adform.net https://*.adnxs.com https://*.googletagmanager.com https://*.doubleclick.net https://*.licdn.com https://*.linkedin.com https://*.seadform.net https://*.google.com https://*.google.fr;
   object-src 'none';
-  connect-src 'self' https://${ServerWebAppConfig.S3.documentsBucket}.${ServerWebAppConfig.S3.host} https://matomo.incubateur.anct.gouv.fr https://*.adform.net https://sentry.incubateur.net https://openmaptiles.geo.data.gouv.fr https://openmaptiles.github.io https://aides-territoires.beta.gouv.fr https://*.adnxs.com https://*.googletagmanager.com https://*.doubleclick.net https://*.licdn.com https://*.linkedin.com https://*.seadform.net https://*.google.com;
+  connect-src 'self' https://${ServerWebAppConfig.S3.documentsBucket}.${ServerWebAppConfig.S3.host} https://matomo.incubateur.anct.gouv.fr https://*.adform.net https://sentry.incubateur.net https://openmaptiles.geo.data.gouv.fr https://openmaptiles.github.io https://aides-territoires.beta.gouv.fr https://*.adnxs.com https://*.googletagmanager.com https://*.doubleclick.net https://*.licdn.com https://*.linkedin.com https://*.seadform.net https://*.google.com https://*.google.fr;
   worker-src 'self' blob:;
   font-src 'self' https: data:;
-  frame-ancestors 'self' https://matomo.incubateur.anct.gouv.fr https://*.adform.net https://*.adnxs.com https://*.googletagmanager.com https://*.doubleclick.net https://*.licdn.com https://*.linkedin.com https://*.seadform.net https://*.google.com;
+  frame-ancestors 'self' https://matomo.incubateur.anct.gouv.fr https://*.adform.net https://*.adnxs.com https://*.googletagmanager.com https://*.doubleclick.net https://*.licdn.com https://*.linkedin.com https://*.seadform.net https://*.google.com https://*.google.fr;
   form-action 'self';
   base-uri 'self';
   ${isProd ? 'upgrade-insecure-requests;' : ''}
