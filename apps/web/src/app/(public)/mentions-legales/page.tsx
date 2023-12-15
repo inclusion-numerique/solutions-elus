@@ -3,11 +3,31 @@ import { PublicWebAppConfig } from '@sde/web/webAppConfig'
 
 export const metadata: Metadata = {
   title: "Mentions légales",
+  description: PublicWebAppConfig.projectDescription,
   openGraph: {
     title: "Mentions légales",
+    description: PublicWebAppConfig.projectDescription,
+    images: [
+      {
+        url: new URL("/images/village.webp", PublicWebAppConfig.mainLiveUrl),
+        width: 1920,
+        height: 1280,
+        alt: PublicWebAppConfig.projectTitle,
+      },
+    ]
   },
   twitter: {
+    card: "summary",
     title: "Mentions légales",
+    description: PublicWebAppConfig.projectDescription,
+    images: [
+      {
+        url: new URL("/images/village.webp", PublicWebAppConfig.mainLiveUrl),
+        width: 1920,
+        height: 1280,
+        alt: PublicWebAppConfig.projectTitle,
+      },
+    ]
   }
 }
 
