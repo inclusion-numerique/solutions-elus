@@ -29,10 +29,19 @@ export const PublicHeaderNav = () => {
       <li className="fr-nav__item">
         <Link
           className="fr-nav__link"
-          aria-current={pathname === '/projets' ? 'page' : undefined}
+          aria-current={(pathname && pathname.startsWith('/projets')) ? 'page' : undefined}
           href="/projets"
         >
           Voir les projets
+        </Link>
+      </li>
+      <li className="fr-nav__item">
+        <Link
+          className="fr-nav__link"
+          aria-current={pathname === '/contact' ? 'page' : undefined}
+          href="/contact"
+        >
+          Contact
         </Link>
       </li>
     </ul>

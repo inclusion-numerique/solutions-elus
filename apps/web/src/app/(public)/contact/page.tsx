@@ -1,14 +1,14 @@
 import { Metadata } from 'next'
-import styles from '@sde/web/app/(public)/PublicLayout.module.css'
-import ShareProjectForm from '@sde/web/app/(public)/ShareProjectForm'
 import { PublicWebAppConfig } from '@sde/web/webAppConfig'
+import styles from '../PublicLayout.module.css'
+import GetLeadsForm from './GetLeadsForm'
 
 export const metadata: Metadata = {
-  title: "Partager",
-  description: "Partagez ici vos projets et réalisations en tant qu'élu",
+  title: "Contact",
+  description: "J'aimerais être recontacté pour partager le projet de ma collectivité.",
   openGraph: {
-    title: "Partager",
-    description: "Partagez ici vos projets et réalisations en tant qu'élu",
+    title: "Contact",
+    description: "J'aimerais être recontacté pour partager le projet de ma collectivité.",
     images: [
       {
         url: new URL("/images/village.webp", PublicWebAppConfig.mainLiveUrl),
@@ -20,8 +20,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary",
-    title: "Partager",
-    description: "Partagez ici vos projets et réalisations en tant qu'élu",
+    title: "Contact",
+    description: "J'aimerais être recontacté pour partager le projet de ma collectivité.",
     images: [
       {
         url: new URL("/images/village.webp", PublicWebAppConfig.mainLiveUrl),
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   }
 }
 
-export default function ShareProjectPage() {
+export default function ContactPage() {
   return (
     <div className={`${styles.withImageBackground}`}>
       <div className="fr-container fr-py-20v" style={{ position: 'relative' }}>
@@ -42,7 +42,7 @@ export default function ShareProjectPage() {
             <h1 className={`fr-display--xs ${styles.titleOnBackground}`}>
               Ensemble, partageons les solutions des territoires
             </h1>
-            <ShareProjectForm />
+            <GetLeadsForm />
           </div>
         </div>
       </div>

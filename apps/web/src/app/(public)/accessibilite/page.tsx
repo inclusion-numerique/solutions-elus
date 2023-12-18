@@ -2,12 +2,32 @@ import { Metadata } from 'next'
 import { PublicWebAppConfig } from '@sde/web/webAppConfig'
 
 export const metadata: Metadata = {
-  title: "Accessibilité",
+  title: "Politique de confidentialité",
+  description: PublicWebAppConfig.projectDescription,
   openGraph: {
-    title: "Accessibilité",
+    title: "Politique de confidentialité",
+    description: PublicWebAppConfig.projectDescription,
+    images: [
+      {
+        url: new URL("/images/village.webp", PublicWebAppConfig.mainLiveUrl),
+        width: 1920,
+        height: 1280,
+        alt: PublicWebAppConfig.projectTitle,
+      },
+    ]
   },
   twitter: {
-    title: "Accessibilité",
+    card: "summary",
+    title: "Politique de confidentialité",
+    description: PublicWebAppConfig.projectDescription,
+    images: [
+      {
+        url: new URL("/images/village.webp", PublicWebAppConfig.mainLiveUrl),
+        width: 1920,
+        height: 1280,
+        alt: PublicWebAppConfig.projectTitle,
+      },
+    ]
   }
 }
 

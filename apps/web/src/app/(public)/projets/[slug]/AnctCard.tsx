@@ -1,7 +1,7 @@
 
 
 export const AnctCard = () => (
-  <div className="fr-card fr-enlarge-link fr-card--horizontal fr-card--horizontal-tier fr-my-8w">
+  <div className="fr-card fr-enlarge-link fr-card--horizontal fr-card--horizontal-tier">
     <div className="fr-card__header">
       <div className="fr-card__img fr-p-16v">
         <picture

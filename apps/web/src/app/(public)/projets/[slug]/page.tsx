@@ -6,8 +6,10 @@ import { getProject } from '@sde/web/legacyProject/projectsList'
 import { prismaClient } from '@sde/web/prismaClient'
 import { getProjectFilePath, getProjectPath } from '@sde/web/project/project'
 import { PublicWebAppConfig } from '@sde/web/webAppConfig'
+import { getRelatedProjects } from '@sde/web/legacyProject/relatedProjects'
 import Project from './Project'
 import { AnctCard } from './AnctCard'
+import { RelatedProjects } from './RelatedProjects'
 
 export const dynamic = 'force-static'
 
@@ -114,6 +116,8 @@ const ProjectPage = async ({ params }: { params: { slug: string } }) => {
   if (!project) {
     notFound()
   }
+
+  const projects = await getRelatedProjects(project)
   
   const collectiviteUrl = await getCollectiviteUrl(project.localization)
 
@@ -159,6 +163,7 @@ const ProjectPage = async ({ params }: { params: { slug: string } }) => {
       </Link>
       <Project project={project} collectiviteUrl={collectiviteUrl} />
       <AnctCard />
+      <RelatedProjects projects={projects} />
     </div>
   )
 }

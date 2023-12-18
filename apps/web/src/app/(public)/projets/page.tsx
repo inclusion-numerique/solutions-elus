@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import styles from '@sde/web/app/(public)/PublicLayout.module.css'
 import { getProjectsList } from '@sde/web/legacyProject/projectsList'
 import { District } from '@sde/web/anctProjects'
@@ -9,7 +10,7 @@ import { ProjectRegionFilter } from '@sde/web/app/(public)/projets/ProjectRegion
 import ProjectCategoryFilter from '@sde/web/app/(public)/projets/ProjectCategoryFilter'
 import { ProjectsList } from '@sde/web/app/(public)/projets/ProjectsList'
 import { getProjectCategories } from '@sde/web/legacyProject/categories'
-import { Metadata } from 'next'
+import { PublicWebAppConfig } from '@sde/web/webAppConfig'
 
 // Need to SSR since search params are dynamic. This avoids flickering on page load
 export const revalidate = 0
@@ -20,10 +21,26 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Projets",
     description: "Retrouvez ici les projets et réalisations des collectivités",
+    images: [
+      {
+        url: new URL("/images/village.webp", PublicWebAppConfig.mainLiveUrl),
+        width: 1920,
+        height: 1280,
+        alt: PublicWebAppConfig.projectTitle,
+      },
+    ]
   },
   twitter: {
     title: "Projets",
     description: "Retrouvez ici les projets et réalisations des collectivités",
+    images: [
+      {
+        url: new URL("/images/village.webp", PublicWebAppConfig.mainLiveUrl),
+        width: 1920,
+        height: 1280,
+        alt: PublicWebAppConfig.projectTitle,
+      },
+    ]
   }
 }
 
