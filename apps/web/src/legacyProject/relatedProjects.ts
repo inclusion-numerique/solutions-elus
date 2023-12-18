@@ -2,12 +2,23 @@ import { prismaClient } from '@sde/web/prismaClient'
 import { ProjectItem } from './projectsList'
 
 const searchParser = (search: string) => {
-  const terms = search.split(' ')
+  const terms = search.split(/\s+/)
   const filtered = terms.filter((term) => term.length > 5)
   const sorted = filtered.sort((a, b) => b.length - a.length)
   const encoded = sorted.map((term) => encodeURIComponent(term))
   return encoded.join(' | ')
 };
+
+const parseQuery = (query: string) => (
+  query
+    .trim()
+    .replace(/[!&()*:|]/g, ' ')
+    .split(/\s+/)
+    .filter((term) => term.length > 5)
+    .sort((a, b) => b.length - a.length)
+    // .map((term) => encodeURIComponent(term))
+    .join(' | ')
+);
 
 export const getRelatedProjects = (project: ProjectItem) =>
   prismaClient.project.findMany({
@@ -19,7 +30,7 @@ export const getRelatedProjects = (project: ProjectItem) =>
       AND: [
         {
           title: {
-            search: searchParser(project.title),
+            search: parseQuery(project.title),
             mode: 'insensitive'
           },
         },
@@ -30,13 +41,13 @@ export const getRelatedProjects = (project: ProjectItem) =>
                 hasSome: project.categories,
               },
             },
-            // {
-            //   program: {
-            //     name: {
-            //       startsWith: project.program?.name || "",
-            //     }
-            //   }
-            // },
+            {
+              program: {
+                name: {
+                  startsWith: project.program?.name || "",
+                }
+              }
+            },
           ]
         }
       ],
@@ -59,7 +70,7 @@ export const getRelatedProjects = (project: ProjectItem) =>
       {
         _relevance: {
           fields: ['title'],
-          search: searchParser(project.title),
+          search: parseQuery(project.title),
           sort: 'desc',
         }
       },
