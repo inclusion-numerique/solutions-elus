@@ -1,14 +1,6 @@
 import { prismaClient } from '@sde/web/prismaClient'
 import { ProjectItem } from './projectsList'
 
-const searchParser = (search: string) => {
-  const terms = search.split(/\s+/)
-  const filtered = terms.filter((term) => term.length > 5)
-  const sorted = filtered.sort((a, b) => b.length - a.length)
-  const encoded = sorted.map((term) => encodeURIComponent(term))
-  return encoded.join(' | ')
-};
-
 const parseQuery = (query: string) => (
   query
     .trim()
@@ -16,7 +8,6 @@ const parseQuery = (query: string) => (
     .split(/\s+/)
     .filter((term) => term.length > 5)
     .sort((a, b) => b.length - a.length)
-    // .map((term) => encodeURIComponent(term))
     .join(' | ')
 );
 

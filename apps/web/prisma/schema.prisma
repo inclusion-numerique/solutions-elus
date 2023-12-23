@@ -95,6 +95,19 @@ model GetLeadFormSubmission {
   communityId String
 }
 
+model LandingPageSEO {
+  id          String   @id @default(uuid()) @db.Uuid
+  gristId     Int      @unique
+  slug        String   @unique
+  title       String
+  description String
+  text        String?
+  keywords    String?
+  image       String?
+  created     DateTime @default(now())
+  updated     DateTime @default(now())
+}
+
 model Community {
   id                 String                       @id
   name               String

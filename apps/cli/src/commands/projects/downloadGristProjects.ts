@@ -7,6 +7,7 @@ import {
   listPrograms,
   listProjectRecords,
   listThematiques,
+  listPagesRecords,
 } from '@sde/cli/grist/grist'
 import { isDefinedAndNotNull } from '@sde/web/utils/isDefinedAndNotNull'
 
@@ -52,6 +53,8 @@ export const downloadGristProjects = new Command()
         project.fields.A_publier_le && project.fields.A_publier_le <= now,
     )
 
+    const landingPages = await listPagesRecords()
+
     // To avoid pagination logic (50 000 records and 500 max items per page)
     // And long running time, only fetch required localizations
     const localisationIds = [
@@ -84,6 +87,7 @@ export const downloadGristProjects = new Command()
     output(`- ${projectsToPublish.length} projects`)
     output(`- ${programs.records.length} programs`)
     output(`- ${thematiques.records.length} thematiques`)
+    output(`- ${landingPages.records.length} landing pages`)
     output(
       `- ${localisations.records.length} localisations (only relevant ones)`,
     )
@@ -106,6 +110,7 @@ export const downloadGristProjects = new Command()
       programs.records,
       thematiques.records,
       attachments,
+      landingPages.records,
     )
     output(`Grist data has been inserted into database successfully`)
   })
