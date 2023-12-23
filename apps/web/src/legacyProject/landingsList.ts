@@ -5,14 +5,6 @@ export const getLandingsList = () =>
     select: {
       slug: true,
     },
-    orderBy: [
-      {
-        published: 'desc',
-      },
-      {
-        created: 'desc',
-      },
-    ],
   })
 
 export const getLanding = (slug: string) =>
