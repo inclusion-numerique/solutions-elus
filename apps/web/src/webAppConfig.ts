@@ -38,6 +38,7 @@ export const ServerWebAppConfig = {
     localisationTableId: process.env.GRIST_LOCALISATION_TABLE_ID ?? '',
     programTableId: process.env.GRIST_PROGRAM_TABLE_ID ?? '',
     thematiqueTableId: process.env.GRIST_THEMATIQUE_TABLE_ID ?? '',
+    pagesTableId: process.env.GRIST_PAGES_TABLE_ID ?? '',
   },
   S3: {
     documentsBucket: process.env.DOCUMENTS_BUCKET ?? '',

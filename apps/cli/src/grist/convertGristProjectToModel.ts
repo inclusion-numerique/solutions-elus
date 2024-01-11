@@ -3,6 +3,7 @@ import { prismaClient } from '@sde/web/prismaClient'
 import slug from 'slug'
 import {
   GristLocalisation,
+  GristPage,
   GristProgram,
   GristProject,
   GristThematique,
@@ -120,4 +121,17 @@ export const convertGristProjectToModel = (
     published: project.fields.A_publier_le
       ? new Date(project.fields.A_publier_le * 1000)
       : new Date(),
+  }))
+
+export const convertGristPageToModel = (pages: GristPage[]) =>
+  pages.map((page) => ({
+    gristId: page.id,
+    slug: page.fields.Slug,
+    title: page.fields.Title,
+    description: page.fields.Description,
+    text: page.fields.Text,
+    keywords: page.fields.Title.split(' ').join(', '),
+    image: '../village.webp',
+    created: new Date(),
+    updated: new Date(),
   }))
