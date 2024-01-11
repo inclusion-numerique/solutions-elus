@@ -1,7 +1,7 @@
 import { prismaClient } from '@sde/web/prismaClient'
 import { ProjectItem } from './projectsList'
 
-const parseQuery = (query: string) => (
+const searchParser = (query: string) => (
   query
     .trim()
     .replace(/[!&()*:|]/g, ' ')
@@ -21,7 +21,7 @@ export const getRelatedProjects = (project: ProjectItem) =>
       AND: [
         {
           title: {
-            search: parseQuery(project.title),
+            search: searchParser(project.title),
             mode: 'insensitive'
           },
         },
@@ -61,7 +61,7 @@ export const getRelatedProjects = (project: ProjectItem) =>
       {
         _relevance: {
           fields: ['title'],
-          search: parseQuery(project.title),
+          search: searchParser(project.title),
           sort: 'desc',
         }
       },
