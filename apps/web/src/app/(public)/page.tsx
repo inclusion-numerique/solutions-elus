@@ -32,7 +32,7 @@ export default async function HomePage() {
                 « La transition écologique est le défi majeur pour notre pays.
                 Les collectivités territoriales sont en première ligne pour y
                 faire face. Le partage de solutions concrètes, des réussites
-                faites ici ou là, est indispensable pour accélération la
+                faites ici ou là, est indispensable pour accélérer la
                 transition écologique de nos territoires. Ensemble, partageons
                 les solutions. »
               </p>
