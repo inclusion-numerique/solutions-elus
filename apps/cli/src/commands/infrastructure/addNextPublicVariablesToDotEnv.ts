@@ -13,7 +13,7 @@ export const addNextPublicVariablesToDotEnv = new Command()
     await appendEnvVariablesToDotEnvFile({
       comment: 'Next public environment needed at build time',
       environmentVariables: [
-        { name: 'NEXT_PUBLIC_SENTRY_ENVIRONMENT', value: namespace },
+        { name: 'NEXT_PUBLIC_SENTRY_ENVIRONMENT', value: namespace || '' },
         { name: 'NEXT_PUBLIC_TERRITOIRES_JWT', value: territoiresJWT },
       ],
     })
