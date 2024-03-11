@@ -23,6 +23,7 @@ export const searchCommunity = async (searchQuery: string) => {
   const result = await axios.get<SirenCommunitySearchResponse>(basequery, {
     headers: {
       Accept: 'application/json',
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_TERRITOIRES_JWT}`,
     },
   })
 
