@@ -262,6 +262,8 @@ jobs:
       - checkout
       - install_dependencies
       - create_dotenv_file
+      - add_secrets_to_dotenv_file
+      - setup_next_public_env
       - run:
           name: 'Prisma generate'
           command: pnpm --silent -F @sde/web prisma:generate
