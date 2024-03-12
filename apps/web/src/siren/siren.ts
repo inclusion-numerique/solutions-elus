@@ -16,13 +16,17 @@ export type Etablissement = {
 }
 
 export const searchCommunity = async (searchQuery: string) => {
-  const basequery = `https://aides-territoires.beta.gouv.fr/api/perimeters/?q=${encodeURIComponent(
-    `"${searchQuery.trim()}"`,
-  )}&is_visible_to_users=true&is_non_obsolete=true`
-
-  const result = await axios.get<SirenCommunitySearchResponse>(basequery, {
+  const result = await axios.get<SirenCommunitySearchResponse>("https://aides-territoires.beta.gouv.fr/api/perimeters", {
+    params: {
+      q: searchQuery.trim(),
+      page: 1,
+      itemsPerPage: 50,
+      is_visible_to_users: true,
+      is_non_obsolete: true,
+    },
     headers: {
       Accept: 'application/json',
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_TERRITOIRES_JWT}`,
     },
   })
 

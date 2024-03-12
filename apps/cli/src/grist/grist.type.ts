@@ -122,6 +122,16 @@ export const grisThematiqueValidation = z.object({
   }),
 })
 
+export const gristPageValidation = z.object({
+  id: z.number().int(),
+  fields: z.object({
+    Slug: z.string(),
+    Title: z.string(),
+    Description: z.string(),
+    Text: z.string(),
+  }),
+})
+
 export type GristProjectFields = z.infer<typeof gristProjectFieldsValidation>
 
 export type GristProject = z.infer<typeof gristProjectValidation>
@@ -131,3 +141,5 @@ export type GristLocalisation = z.infer<typeof grisLocalisationValidation>
 export type GristProgram = z.infer<typeof grisProgramValidation>
 
 export type GristThematique = z.infer<typeof grisThematiqueValidation>
+
+export type GristPage = z.infer<typeof gristPageValidation>

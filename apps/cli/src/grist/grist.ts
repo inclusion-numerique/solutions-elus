@@ -10,12 +10,15 @@ import {
   convertGristLocalisationToModel,
   convertGristProgramToModel,
   convertGristProjectToModel,
+  convertGristPageToModel,
 } from './convertGristProjectToModel'
 import {
   grisLocalisationValidation,
   grisProgramValidation,
   grisThematiqueValidation,
   GristLocalisation,
+  GristPage,
+  gristPageValidation,
   GristProgram,
   GristProject,
   GristProjectFields,
@@ -155,6 +158,9 @@ export const listLocalisations = (options: ListRecordsOptions) =>
 export const listProjectRecords = () =>
   listRecords(ServerWebAppConfig.Grist.tableId, gristProjectValidation)
 
+export const listPagesRecords = () =>
+  listRecords(ServerWebAppConfig.Grist.pagesTableId, gristPageValidation)
+
 const attachmentsPath = resolve(
   'apps',
   'web',
@@ -229,6 +235,7 @@ export const insertInDataBase = async (
   programs: GristProgram[],
   thematiques: GristThematique[],
   attachments: Map<number, string>,
+  pages: GristPage[],
 ) => {
   if (!prismaClient) {
     return
@@ -239,6 +246,8 @@ export const insertInDataBase = async (
     prismaClient.project.deleteMany(),
     prismaClient.localization.deleteMany(),
     prismaClient.program.deleteMany(),
+    prismaClient.landingPageSEO.deleteMany(),
+
     prismaClient.localization.createMany({
       data: convertGristLocalisationToModel(localisations),
       skipDuplicates: true,
@@ -249,6 +258,10 @@ export const insertInDataBase = async (
     }),
     prismaClient.project.createMany({
       data: convertGristProjectToModel(projects, thematiques, attachments),
+      skipDuplicates: true,
+    }),
+    prismaClient.landingPageSEO.createMany({
+      data: convertGristPageToModel(pages),
       skipDuplicates: true,
     }),
   ])

@@ -265,6 +265,9 @@ jobs:
       - run:
           name: 'Prisma generate'
           command: pnpm --silent -F @sde/web prisma:generate
+      - add_secrets_to_dotenv_file
+      - setup_docker_web_env
+      - setup_next_public_env
       - run:
           name: 'Test @sde/web'
           command: pnpm --silent -F @sde/web test
