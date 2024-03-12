@@ -2,12 +2,11 @@ import { searchCommunity } from '@sde/web/siren/siren'
 
 describe('siren', () => {
   it('Searches with multiple words', async () => {
-    const query = 'lyon 1er'
-    const result = await searchCommunity(query)
-    const lyonCity = result.results.find((result) => result.id === '98461-lyon')
-    expect(lyonCity).toStrictEqual({
+    const result = await searchCommunity('lyon 1er')
+    const lyon = result.results.find((result) => result.id === '98461-lyon')
+    expect(lyon).toStrictEqual({
       id: "98461-lyon",
-      text: "",
+      text: "Lyon (Commune - 69001, 69002, 69003, 69004, 69005, 69006, 69007, 69008, 69009)",
       name: "Lyon",
       scale: "Commune",
       zipcodes: ["69001", "69002", "69003", "69004", "69005", "69006", "69007", "69008", "69009"],
@@ -20,7 +19,7 @@ describe('siren', () => {
     expect(result.results).toStrictEqual([
       {
         id: "85429-grenoble",
-        text: "",
+        text: "Grenoble (Commune - 38000, 38100)",
         name: "Grenoble",
         scale: "Commune",
         zipcodes: ["38000", "38100"],
@@ -28,7 +27,7 @@ describe('siren', () => {
       },
       {
         id: "108176-grenoble-alpes-metropole",
-        text: "",
+        text: "Grenoble-Alpes-Métropole (EPCI)",
         name: "Grenoble-Alpes-Métropole",
         scale: "EPCI",
         zipcodes: [],
@@ -36,7 +35,7 @@ describe('siren', () => {
       },
       {
         id: "109526-scot-de-la-region-urbaine-de-grenoble",
-        text: "",
+        text: "SCOT DE LA REGION URBAINE DE GRENOBLE (Ad-hoc)",
         name: "SCOT DE LA REGION URBAINE DE GRENOBLE",
         scale: "Ad-hoc",
         zipcodes: [],
