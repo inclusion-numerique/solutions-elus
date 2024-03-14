@@ -406,6 +406,7 @@ jobs:
           command: pnpm --silent -F @sde/web prisma:generate
       - add_secrets_to_dotenv_file
       - setup_docker_web_env
+      - setup_next_public_env
       - run:
           name: 'Setup and export database password'
           command: |

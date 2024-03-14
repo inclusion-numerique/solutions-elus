@@ -16,7 +16,7 @@ export type Etablissement = {
 }
 
 export const searchCommunity = async (searchQuery: string) => {
-  const result = await axios.get<SirenCommunitySearchResponse>("https://aides-territoires.beta.gouv.fr/api/perimeters", {
+  const result = await axios.get<SirenCommunitySearchResponse>("https://aides-territoires.beta.gouv.fr/api/perimeters/", {
     params: {
       q: searchQuery.trim(),
       page: 1,
